@@ -73,7 +73,7 @@ class DownloadEngine(session: DownloadSession) : DownloadSession by session, Dow
         }
 
         private fun createBroadcastIntent(context: Context, subject: Subject) =
-            context.intent<su.android.Receiver>()
+            context.intent<su.android.core.Receiver>()
                 .setAction(ACTION)
                 .putExtra(SUBJECT_KEY, subject)
 
