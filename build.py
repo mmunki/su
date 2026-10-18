@@ -172,7 +172,7 @@ def build_apk(module: str):
     build_type = "Release" if args.release else "Debug"
     gradle_args = [
         gradlew,
-        f"assemble{build_type}",
+        f"{module}:assemble{build_type}",
         f"-PconfigPath={props}",
         f"-PabiList={','.join(build_abis.keys())}",
         "--daemon",
@@ -190,8 +190,10 @@ def build_apk(module: str):
         error(f"Build {module} failed!")
 
     build_type = build_type.lower()
-    apk = f"app-{build_type}.apk"
-    source = Path("app", "build", "outputs", "apk", build_type, apk)
+    paths = module.split(":")
+
+    apk = f"{paths[-1]}-{build_type}.apk"
+    source = Path("app", *paths, "build", "outputs", "apk", build_type, apk)
     target = config["outdir"] / apk
     mv(source, target)
     return target
@@ -199,7 +201,7 @@ def build_apk(module: str):
 
 def build_app():
     header("* Building the SuperSU app")
-    apk = build_apk("apk")
+    apk = build_apk(":apk")
 
     build_type = "release" if args.release else "debug"
 
@@ -208,28 +210,28 @@ def build_app():
     mv(source, target)
     header(f"Output: {target}")
 
-    source = Path("app", "src", "main", "assets", "stub.apk")
+    source = Path("app", "core", "src", build_type, "assets", "stub.apk")
     target = config["outdir"] / f"stub-{build_type}.apk"
     cp(source, target)
 
 
 def build_stub():
     header("* Building the stub app")
-    # Stub APK is now bundled in assets, just copy it
-    import shutil
-    stub_source = Path("app", "src", "main", "assets", "stub.apk")
-    if stub_source.exists():
-        target = config["outdir"] / "stub-debug.apk" if not args.release else config["outdir"] / "stub-release.apk"
-        shutil.copy2(stub_source, target)
-        header(f"Output: {target}")
-    else:
-        header("Stub APK not found in assets, skipping.")
+    apk = build_apk(":stub")
+    header(f"Output: {apk}")
 
 
 def build_test():
-    header("* Building the test app (skipped - test module removed)")
-    # Test module was removed from the project
-    args.release = old_release if 'old_release' in dir() else args.release
+    old_release = args.release
+    args.release = True
+    try:
+        header("* Building the test app")
+        source = build_apk(":test")
+        target = source.parent / "test.apk"
+        mv(source, target)
+        header(f"Output: {target}")
+    finally:
+        args.release = old_release
 
 
 def cleanup():

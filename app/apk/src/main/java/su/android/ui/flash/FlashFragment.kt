@@ -1,0 +1,143 @@
+package su.android.ui.flash
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.ActivityInfo
+import android.net.Uri
+import android.os.Bundle
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
+import androidx.navigation.NavDeepLinkBuilder
+import su.android.MainDirections
+import su.android.R
+import su.android.arch.BaseFragment
+import su.android.arch.viewModel
+import su.android.core.Const
+import su.android.core.cmp
+import su.android.databinding.FragmentFlashBinding
+import su.android.ui.MainActivity
+import su.android.core.R as CoreR
+
+class FlashFragment : BaseFragment<FragmentFlashBinding>(), MenuProvider {
+
+    override val layoutRes = R.layout.fragment_flash
+    override val viewModel by viewModel<FlashViewModel>()
+    override val snackbarView: View get() = binding.snackbarContainer
+    override val snackbarAnchorView: View?
+        get() = if (binding.restartBtn.isShown) binding.restartBtn else super.snackbarAnchorView
+
+    private var defaultOrientation = -1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.args = FlashFragmentArgs.fromBundle(requireArguments())
+    }
+
+    override fun onStart() {
+        super.onStart()
+        activity?.setTitle(CoreR.string.flash_screen_title)
+
+        viewModel.state.observe(this) {
+            activity?.supportActionBar?.setSubtitle(
+                when (it) {
+                    FlashViewModel.State.FLASHING -> CoreR.string.flashing
+                    FlashViewModel.State.SUCCESS -> CoreR.string.done
+                    FlashViewModel.State.FAILED -> CoreR.string.failure
+                }
+            )
+            if (it == FlashViewModel.State.SUCCESS && viewModel.showReboot) {
+                binding.restartBtn.apply {
+                    if (!this.isVisible) this.show()
+                    if (!this.isFocused) this.requestFocus()
+                }
+            }
+        }
+    }
+
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_flash, menu)
+    }
+
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
+        return viewModel.onMenuItemClicked(item)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        defaultOrientation = activity?.requestedOrientation ?: -1
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        if (savedInstanceState == null) {
+            viewModel.startFlashing()
+        }
+    }
+
+    @SuppressLint("WrongConstant")
+    override fun onDestroyView() {
+        if (defaultOrientation != -1) {
+            activity?.requestedOrientation = defaultOrientation
+        }
+        super.onDestroyView()
+    }
+
+    override fun onKeyEvent(event: KeyEvent): Boolean {
+        return when (event.keyCode) {
+            KeyEvent.KEYCODE_VOLUME_UP,
+            KeyEvent.KEYCODE_VOLUME_DOWN -> true
+            else -> false
+        }
+    }
+
+    override fun onBackPressed(): Boolean {
+        if (viewModel.flashing.value == true)
+            return true
+        return super.onBackPressed()
+    }
+
+    override fun onPreBind(binding: FragmentFlashBinding) = Unit
+
+    companion object {
+
+        private fun createIntent(context: Context, args: FlashFragmentArgs) =
+            NavDeepLinkBuilder(context)
+                .setGraph(R.navigation.main)
+                .setComponentName(MainActivity::class.java.cmp(context.packageName))
+                .setDestination(R.id.flashFragment)
+                .setArguments(args.toBundle())
+                .createPendingIntent()
+
+        private fun flashType(isSecondSlot: Boolean) =
+            if (isSecondSlot) Const.Value.FLASH_INACTIVE_SLOT else Const.Value.FLASH_DIRECT
+
+        fun flash(isSecondSlot: Boolean) = MainDirections.actionFlashFragment(
+            action = flashType(isSecondSlot)
+        )
+
+        fun patch(uri: Uri) = MainDirections.actionFlashFragment(
+            action = Const.Value.PATCH_FILE,
+            additionalData = uri
+        )
+
+        fun uninstall() = MainDirections.actionFlashFragment(
+            action = Const.Value.UNINSTALL
+        )
+
+        /* Installing is understood as flashing modules / zips */
+
+        fun installIntent(context: Context, file: Uri) = FlashFragmentArgs(
+            action = Const.Value.FLASH_ZIP,
+            additionalData = file,
+        ).let { createIntent(context, it) }
+
+        fun install(file: Uri) = MainDirections.actionFlashFragment(
+            action = Const.Value.FLASH_ZIP,
+            additionalData = file,
+        )
+    }
+
+}

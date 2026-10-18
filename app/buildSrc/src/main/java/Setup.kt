@@ -166,10 +166,10 @@ fun Project.setupCoreLib() {
                 into(outputFolder)
 
                 into("META-INF/com/google/android") {
-                    from(rootFile("app/src/main/assets/update_binary.sh")) {
+                    from(rootFile("scripts/update_binary.sh")) {
                         rename { "update-binary" }
                     }
-                    from(rootFile("app/src/main/assets/flash_script.sh")) {
+                    from(rootFile("scripts/flash_script.sh")) {
                         rename { "updater-script" }
                     }
                 }
@@ -179,15 +179,21 @@ fun Project.setupCoreLib() {
                 it.addGeneratedSourceDirectory(syncResources, SyncWithDir::outputFolder)
             }
 
+            val stubTask = tasks.getByPath(":stub:comment$variantCapped")
             val syncAssets = tasks.register("sync${variantCapped}Assets", SyncWithDir::class) {
                 outputFolder.set(layout.buildDirectory.dir("$variantName/assets"))
                 into(outputFolder)
 
                 inputs.property("version", Config.version)
                 inputs.property("versionCode", Config.versionCode)
-                from(rootFile("app/src/main/assets")) {
+                from(rootFile("scripts")) {
                     include("util_functions.sh", "boot_patch.sh", "addon.d.sh",
                         "app_functions.sh", "uninstaller.sh", "module_installer.sh")
+                }
+                from(rootFile("tools/bootctl"))
+                from(stubTask) {
+                    include { it.name.endsWith(".apk") }
+                    rename { "stub.apk" }
                 }
                 filesMatching("**/util_functions.sh") {
                     filter {
@@ -287,7 +293,8 @@ fun Project.setupAppCommon() {
                 this.transformationRequest = transformationRequest
                 this.signingConfig = signingConfig
                 this.comment = "version=${Config.version}\n" +
-                               "versionCode=${Config.versionCode}\n"
+                               "versionCode=${Config.versionCode}\n" +
+                               "stubVersion=${Config.stubVersion}\n"
                 this.outFolder.set(layout.buildDirectory.dir("outputs/apk/${variant.name}"))
             }
         }
@@ -298,10 +305,10 @@ fun Project.setupMainApk() {
     setupAppCommon()
 
     androidApp {
-        namespace = "android.sum"
+        namespace = "su.android"
 
         defaultConfig {
-            applicationId = "android.sum"
+            applicationId = "su.android"
             vectorDrawables.useSupportLibrary = true
             versionName = Config.version
             versionCode = Config.versionCode
@@ -333,4 +340,29 @@ const val SHAMIKO_DOWNLOAD_URL =
 const val SHAMIKO_CHECKSUM =
     "93754a038c2d8f0e985bad45c7303b96f70a93d8335060e50146f028d3a9b13f"
 
+fun Project.setupTestApk() {
+    setupAppCommon()
 
+    androidComponents {
+        onVariants { variant ->
+            val variantName = variant.name
+            val variantCapped = variantName.replaceFirstChar { it.uppercase() }
+
+            val dlTask = tasks.register("download${variantCapped}Lsposed", SyncWithDir::class) {
+                outputFolder.set(layout.buildDirectory.dir("$variantName/lsposed"))
+                into(outputFolder)
+
+                from(downloadFile(LSPOSED_DOWNLOAD_URL, LSPOSED_CHECKSUM)) {
+                    rename { "lsposed.zip" }
+                }
+                from(downloadFile(SHAMIKO_DOWNLOAD_URL, SHAMIKO_CHECKSUM)) {
+                    rename { "shamiko.zip" }
+                }
+            }
+
+            variant.sources.assets?.let {
+                it.addGeneratedSourceDirectory(dlTask, SyncWithDir::outputFolder)
+            }
+        }
+    }
+}

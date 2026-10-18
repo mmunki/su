@@ -8,3 +8,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "SuperSU"
+include(":apk", ":core", ":shared", ":stub", ":test")
