@@ -1,7 +1,6 @@
 [versions]
 kotlin = "2.3.0"
 android = "9.0.1"
-ksp = "2.3.4"
 rikka = "1.3.0"
 navigation = "2.9.7"
 libsu = "6.0.0"
@@ -55,7 +54,7 @@ rikka-layoutinflater = { module = "dev.rikka.rikkax.layoutinflater:layoutinflate
 rikka-insets = { module = "dev.rikka.rikkax.insets:insets", version.ref = "rikka" }
 
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "android" }
-ksp-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+android-kapt-plugin = { module = "com.android.legacy-kapt:com.android.legacy-kapt.gradle.plugin", version.ref = "android" }
 navigation-safe-args-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 moshi-plugin = { module = "dev.zacsweers.moshix:dev.zacsweers.moshix.gradle.plugin", version = "0.34.4" }
 

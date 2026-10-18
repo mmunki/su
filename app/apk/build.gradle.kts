@@ -1,16 +1,21 @@
 plugins {
     id("com.android.application")
     kotlin("plugin.parcelize")
+    id("com.android.legacy-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("dev.zacsweers.moshix")
-    id("com.google.devtools.ksp")
 }
 
 setupMainApk()
 setupCoreLib()
 
-ksp {
-    arg("room.generateKotlin", "true")
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+    mapDiagnosticLocations = true
+    javacOptions {
+        option("-Xmaxerrs", "1000")
+    }
 }
 
 android {
@@ -65,7 +70,7 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+    kapt(libs.room.compiler)
 
     implementation(libs.core.splashscreen)
     implementation(libs.core.ktx)
@@ -91,6 +96,9 @@ dependencies {
     implementation(libs.transition)
     implementation(libs.fragment.ktx)
     implementation(libs.appcompat)
+
+    // Make sure kapt runs with a proper kotlin-stdlib
+    kapt(kotlin("stdlib"))
 }
 
 tasks.matching { it.name.contains("JniLibs") }.configureEach {
