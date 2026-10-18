@@ -24,7 +24,7 @@ import su.android.events.SnackbarEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class ModuleViewModel : AsyncLoadViewModel() {
 

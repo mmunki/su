@@ -2,7 +2,7 @@ package su.android.ui.home
 
 import su.android.R
 import su.android.databinding.RvItem
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 interface Dev {
     val name: String

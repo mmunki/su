@@ -21,7 +21,7 @@ import su.android.utils.MotionRevealHelper
 import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.addItemSpacing
 import rikka.recyclerview.fixEdgeEffect
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class LogFragment : BaseFragment<FragmentLogBinding>(), MenuProvider {
 

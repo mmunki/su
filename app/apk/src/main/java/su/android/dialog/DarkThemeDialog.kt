@@ -7,7 +7,7 @@ import su.android.arch.UIActivity
 import su.android.core.Config
 import su.android.events.DialogBuilder
 import su.android.view.MaterialDialog
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class DarkThemeDialog : DialogBuilder {
 

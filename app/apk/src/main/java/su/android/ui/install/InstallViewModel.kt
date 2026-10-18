@@ -14,7 +14,7 @@ import su.android.BR
 import su.android.R
 import su.android.arch.BaseViewModel
 import su.android.core.AppContext
-import su.android.core.BuildConfig.APP_VERSION_CODE
+import su.android.BuildConfig.APP_VERSION_CODE
 import su.android.core.Config
 import su.android.core.Info
 import su.android.core.base.ContentResultCallback
@@ -32,7 +32,7 @@ import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class InstallViewModel(svc: NetworkService, markwon: Markwon) : BaseViewModel() {
 

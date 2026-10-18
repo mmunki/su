@@ -10,7 +10,7 @@ import su.android.core.model.policy.LogEntry
 import su.android.databinding.DiffItem
 import su.android.databinding.ObservableRvItem
 import su.android.databinding.set
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class LogEntryItem(val log: LogEntry) : ObservableRvItem(), DiffItem<LogEntryItem> {
 

@@ -2,21 +2,42 @@
 <resources>
 
     <style name="ThemeFoundationMD3.Azure" parent="ThemeFoundationMD3">
+        <!-- Material 3 color roles -->
         <item name="colorPrimary">#007AFF</item>
-        <item name="colorPrimaryVariant">#80007AFF</item>
-        <item name="colorSecondary">#0051A8</item>
-        <item name="colorSecondaryVariant">#800051A8</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceVariant">#1C1C1E</item>
-        <item name="colorSurfaceSurfaceVariant">#2C2C2E</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorOnPrimaryVariant">#D9FFFFFF</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorOnBackground">?colorOnSurface</item>
+        <item name="colorPrimaryContainer">#00497D</item>
+        <item name="colorOnPrimaryContainer">#D3E4FF</item>
+
+        <item name="colorSecondary">#A9C7FF</item>
+        <item name="colorOnSecondary">#002E69</item>
+        <item name="colorSecondaryContainer">#004494</item>
+        <item name="colorOnSecondaryContainer">#D6E3FF</item>
+
+        <item name="colorTertiary">#007AFF</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
+        <item name="colorTertiaryContainer">#00497D</item>
+        <item name="colorOnTertiaryContainer">#CEE5FF</item>
+
         <item name="colorError">#FF453A</item>
         <item name="colorOnError">#000000</item>
+        <item name="colorErrorContainer">#93000A</item>
+        <item name="colorOnErrorContainer">#FFDAD6</item>
+
+        <item name="colorBackground">?colorSurface</item>
+        <item name="colorOnBackground">?colorOnSurface</item>
+        <item name="colorSurface">#000000</item>
         <item name="colorOnSurface">#FFFFFF</item>
-        <item name="colorOnSurfaceVariant">#99FFFFFF</item>
+        <item name="colorSurfaceVariant">#1C1C1E</item>
+        <item name="colorOnSurfaceVariant">#C4C7CF</item>
+        <item name="colorSurfaceContainerLowest">#0A0A0C</item>
+        <item name="colorSurfaceContainerLow">#131316</item>
+        <item name="colorSurfaceContainer">#1C1C1F</item>
+        <item name="colorSurfaceContainerHigh">#26262A</item>
+        <item name="colorSurfaceContainerHighest">#313135</item>
+        <item name="colorOutline">#8E9199</item>
+
+        <!-- App specific tokens -->
+        <item name="colorSurfaceSurfaceVariant">#2C2C2E</item>
         <item name="colorDisabled">#8E8E93</item>
         <item name="colorDisabledVariant">#668E8E93</item>
     </style>

@@ -18,7 +18,7 @@ import su.android.R
 import su.android.core.ktx.toast
 import su.android.view.MaterialDialog.ButtonType
 import com.topjohnwu.superuser.Shell
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 object InfoDialog {
 

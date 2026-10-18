@@ -54,7 +54,7 @@
                 android:textAppearance="@style/AppearanceFoundation.Title"
                 android:textStyle="bold" />
 
-            <ProgressBar
+            <com.google.android.material.progressindicator.LinearProgressIndicator
                 style="@style/WidgetFoundation.ProgressBar.Indeterminate"
                 goneUnless="@{viewModel.loading}"
                 android:layout_marginTop="@dimen/l1" />

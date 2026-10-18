@@ -15,7 +15,7 @@ import rikka.recyclerview.addEdgeSpacing
 import rikka.recyclerview.addInvalidateItemDecorationsObserver
 import rikka.recyclerview.addItemSpacing
 import rikka.recyclerview.fixEdgeEffect
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class ModuleFragment : BaseFragment<FragmentModuleBinding>() {
 

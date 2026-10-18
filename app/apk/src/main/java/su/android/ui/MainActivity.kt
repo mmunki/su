@@ -39,7 +39,7 @@ import su.android.view.MaterialDialog
 import su.android.view.Shortcuts
 import kotlinx.coroutines.launch
 import java.io.File
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class MainViewModel : BaseViewModel()
 

@@ -98,22 +98,22 @@
         <item name="tint">@color/color_on_primary_transient</item>
     </style>
 
-    <style name="WidgetFoundation.Checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="WidgetFoundation.Checkbox" parent="Widget.Material3.CompoundButton.CheckBox">
         <item name="android:paddingStart">@dimen/l1</item>
         <item name="android:paddingEnd">@dimen/l1</item>
     </style>
 
-    <style name="WidgetFoundation.RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <style name="WidgetFoundation.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
         <item name="android:paddingStart">@dimen/l1</item>
         <item name="android:paddingEnd">@dimen/l1</item>
     </style>
 
-    <style name="WidgetFoundation.ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="WidgetFoundation.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
         <item name="android:indeterminate">false</item>
         <item name="android:layout_height">4dp</item>
     </style>
 
-    <style name="WidgetFoundation.ProgressBar.Indeterminate" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="WidgetFoundation.ProgressBar.Indeterminate" parent="Widget.Material3.LinearProgressIndicator">
         <item name="android:indeterminate">true</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">100dp</item>

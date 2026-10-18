@@ -16,7 +16,7 @@ import su.android.arch.viewModel
 import su.android.core.Info
 import su.android.core.download.DownloadEngine
 import su.android.databinding.FragmentHomeBinding
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), MenuProvider {
 

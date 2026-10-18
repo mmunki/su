@@ -3,9 +3,12 @@ plugins {
     kotlin("plugin.parcelize")
     id("com.android.legacy-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("dev.zacsweers.moshix")
+    id("com.google.devtools.ksp")
 }
 
 setupMainApk()
+setupCoreLib()
 
 kapt {
     correctErrorTypes = true
@@ -16,9 +19,15 @@ kapt {
     }
 }
 
+ksp {
+    arg("room.generateKotlin", "true")
+}
+
 android {
     buildFeatures {
         dataBinding = true
+        aidl = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -26,7 +35,12 @@ android {
     }
 
     defaultConfig {
+        buildConfigField("String", "APP_PACKAGE_NAME", "\"su.android\"")
+        buildConfigField("int", "APP_VERSION_CODE", "${Config.versionCode}")
+        buildConfigField("String", "APP_VERSION_NAME", "\"${Config.version}\"")
+        buildConfigField("int", "STUB_VERSION", Config.stubVersion)
         proguardFile("proguard-rules.pro")
+        proguardFile("proguard-rules-core.pro")
     }
 
     buildTypes {
@@ -38,8 +52,40 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
+    implementation(files("../lib/native.jar"))
+    api(project(":shared"))
     coreLibraryDesugaring(libs.jdk.libs)
+
+    api(libs.timber)
+    api(libs.markwon.core)
+    implementation(libs.bcpkix)
+    implementation(libs.commons.compress)
+
+    api(libs.libsu.core)
+    api(libs.libsu.service)
+    api(libs.libsu.nio)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.retrofit.scalars)
+
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.okhttp.dnsoverhttps)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    implementation(libs.core.splashscreen)
+    implementation(libs.core.ktx)
+    implementation(libs.activity)
+    implementation(libs.collection.ktx)
+    implementation(libs.profileinstaller)
+    implementation(libs.material)
+
+    compileOnly(libs.test.junit)
+    compileOnly(libs.test.uiautomator)
 
     implementation(libs.indeterminate.checkbox)
     implementation(libs.rikka.layoutinflater)
@@ -55,8 +101,11 @@ dependencies {
     implementation(libs.transition)
     implementation(libs.fragment.ktx)
     implementation(libs.appcompat)
-    implementation(libs.material)
 
     // Make sure kapt runs with a proper kotlin-stdlib
     kapt(kotlin("stdlib"))
+}
+
+tasks.matching { it.name.contains("JniLibs") }.configureEach {
+    enabled = false
 }

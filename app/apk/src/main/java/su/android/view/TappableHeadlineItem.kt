@@ -3,7 +3,7 @@ package su.android.view
 import su.android.R
 import su.android.databinding.DiffItem
 import su.android.databinding.RvItem
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 sealed class TappableHeadlineItem : RvItem(), DiffItem<TappableHeadlineItem> {
 

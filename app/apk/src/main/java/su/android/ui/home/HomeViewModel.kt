@@ -13,7 +13,7 @@ import su.android.arch.AsyncLoadViewModel
 import su.android.arch.ContextExecutor
 import su.android.arch.UIActivity
 import su.android.arch.ViewEvent
-import su.android.core.BuildConfig
+import su.android.BuildConfig
 import su.android.core.Config
 import su.android.core.Info
 import su.android.core.download.Subject
@@ -30,7 +30,7 @@ import su.android.events.SnackbarEvent
 import su.android.utils.asText
 import com.topjohnwu.superuser.Shell
 import kotlin.math.roundToInt
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class HomeViewModel(
     private val svc: NetworkService

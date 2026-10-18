@@ -21,7 +21,7 @@ import su.android.core.Const
 import su.android.core.cmp
 import su.android.databinding.FragmentFlashBinding
 import su.android.ui.MainActivity
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class FlashFragment : BaseFragment<FragmentFlashBinding>(), MenuProvider {
 

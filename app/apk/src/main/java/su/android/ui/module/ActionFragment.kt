@@ -17,7 +17,7 @@ import su.android.arch.BaseFragment
 import su.android.arch.viewModel
 import su.android.core.ktx.toast
 import su.android.databinding.FragmentActionBinding
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 class ActionFragment : BaseFragment<FragmentActionBinding>(), MenuProvider {
 

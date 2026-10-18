@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 abstract class MarkDownDialog : DialogBuilder {
 

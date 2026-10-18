@@ -163,7 +163,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ProgressBar
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
                         style="@style/WidgetFoundation.ProgressBar"
                         gone="@{viewModel.stateManagerProgress == 0 || viewModel.stateManagerProgress == 100}"
                         android:layout_width="match_parent"

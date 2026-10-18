@@ -12,7 +12,7 @@ import su.android.databinding.RvItem
 import su.android.databinding.set
 import su.android.utils.TextHolder
 import su.android.utils.asText
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 object InstallModule : RvItem(), DiffItem<InstallModule> {
     override val layoutRes = R.layout.item_module_download

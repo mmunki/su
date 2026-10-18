@@ -109,7 +109,7 @@
 
         </LinearLayout>
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             style="@style/WidgetFoundation.ProgressBar"
             gone="@{item.checkedPercent == 0}"
             android:layout_width="match_parent"

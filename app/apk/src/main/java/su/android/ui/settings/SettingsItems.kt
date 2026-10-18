@@ -14,7 +14,7 @@ import su.android.databinding.DialogSettingsDownloadPathBinding
 import su.android.databinding.set
 import su.android.utils.asText
 import com.topjohnwu.superuser.Shell
-import su.android.core.R as CoreR
+import su.android.R as CoreR
 
 sealed class SettingsGroupItem : BaseSettingsItem() {
     data class CardGroup(
