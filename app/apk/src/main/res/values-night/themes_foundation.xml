@@ -23,7 +23,6 @@
         <item name="colorErrorContainer">#93000A</item>
         <item name="colorOnErrorContainer">#FFDAD6</item>
 
-        <item name="colorBackground">?colorSurface</item>
         <item name="colorOnBackground">?colorOnSurface</item>
         <item name="colorSurface">#000000</item>
         <item name="colorOnSurface">#FFFFFF</item>

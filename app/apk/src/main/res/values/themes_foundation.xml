@@ -25,7 +25,6 @@
         <item name="colorErrorContainer">#FFDAD6</item>
         <item name="colorOnErrorContainer">#410002</item>
 
-        <item name="colorBackground">?colorSurface</item>
         <item name="colorOnBackground">?colorOnSurface</item>
         <item name="colorSurface">#F2F2F7</item>
         <item name="colorOnSurface">#000000</item>
