@@ -13,3 +13,7 @@ native/out
 # Android Studio
 *.iml
 .idea
+
+# Gradle
+.gradle/
+build/
