@@ -5,12 +5,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.provideDelegate
 import java.io.File
 import java.util.Properties
-import java.util.Random
-
-// Set non-zero value here to fix the random seed for reproducible builds
-// CI builds are always reproducible
-val RAND_SEED = if (System.getenv("CI") != null) 42 else 0
-lateinit var RANDOM: Random
 
 private val props = Properties()
 private var commitHash = ""
@@ -40,11 +34,17 @@ fun Project.rootFile(path: String): File {
     else File(rootProject.file(".."), path)
 }
 
+// Resolve a path relative to the app/ Gradle root (rootProject)
+fun Project.appFile(path: String): File {
+    val file = File(path)
+    return if (file.isAbsolute) file
+    else File(rootProject.projectDir, path)
+}
+
 class SuperSuPlugin : Plugin<Project> {
     override fun apply(project: Project) = project.applyPlugin()
 
     private fun Project.applyPlugin() {
-        initRandom(rootProject.file("dict.txt"))
         props.clear()
 
         // Get gradle properties relevant to the root solution

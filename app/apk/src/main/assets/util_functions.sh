@@ -2,7 +2,8 @@
 # SuperSU General Utility Functions
 ############################################
 
-#MAGISK_VERSION_STUB
+MAGISK_VER='30.7'
+MAGISK_VER_CODE=30700
 
 ###################
 # Global Variables

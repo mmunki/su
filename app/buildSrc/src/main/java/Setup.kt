@@ -5,7 +5,6 @@ import com.android.build.api.instrumentation.FramesComputationMode.COMPUTE_FRAME
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
-import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.api.Action
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -15,7 +14,6 @@ import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.Sync
 import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.exclude
-import org.gradle.kotlin.dsl.filter
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
@@ -166,10 +164,10 @@ fun Project.setupCoreLib() {
                 into(outputFolder)
 
                 into("META-INF/com/google/android") {
-                    from(rootFile("scripts/update_binary.sh")) {
+                    from(appFile("apk/src/main/assets/update_binary.sh")) {
                         rename { "update-binary" }
                     }
-                    from(rootFile("scripts/flash_script.sh")) {
+                    from(appFile("apk/src/main/assets/flash_script.sh")) {
                         rename { "updater-script" }
                     }
                 }
@@ -179,30 +177,13 @@ fun Project.setupCoreLib() {
                 it.addGeneratedSourceDirectory(syncResources, SyncWithDir::outputFolder)
             }
 
-            val stubTask = tasks.getByPath(":stub:comment$variantCapped")
             val syncAssets = tasks.register("sync${variantCapped}Assets", SyncWithDir::class) {
                 outputFolder.set(layout.buildDirectory.dir("$variantName/assets"))
                 into(outputFolder)
 
-                inputs.property("version", Config.version)
-                inputs.property("versionCode", Config.versionCode)
-                from(rootFile("scripts")) {
-                    include("util_functions.sh", "boot_patch.sh", "addon.d.sh",
-                        "app_functions.sh", "uninstaller.sh", "module_installer.sh")
-                }
-                from(rootFile("tools/bootctl"))
-                from(stubTask) {
-                    include { it.name.endsWith(".apk") }
+                from(appFile("tools/bootctl"))
+                from(appFile("stub.apk")) {
                     rename { "stub.apk" }
-                }
-                filesMatching("**/util_functions.sh") {
-                    filter {
-                        it.replace(
-                            "#MAGISK_VERSION_STUB",
-                            "MAGISK_VER='${Config.version}'\nMAGISK_VER_CODE=${Config.versionCode}"
-                        )
-                    }
-                    filter<FixCrLfFilter>("eol" to FixCrLfFilter.CrLf.newInstance("lf"))
                 }
             }
 
@@ -227,13 +208,13 @@ fun Project.setupAppCommon() {
                 if (!storeFilePath.isNullOrEmpty() && !storePassword.isNullOrEmpty()
                     && !keyAlias.isNullOrEmpty() && !keyPassword.isNullOrEmpty()) {
                     // Config থেকে নাও
-                    storeFile = rootFile(storeFilePath)
+                    storeFile = appFile(storeFilePath)
                     this.storePassword = storePassword
                     this.keyAlias = keyAlias
                     this.keyPassword = keyPassword
                 } else {
                     // GitHub secrets থেকে নাও
-                    storeFile = rootFile(System.getenv("KEYSTORE_FILE") ?: "key.jks")
+                    storeFile = appFile(System.getenv("KEYSTORE_FILE") ?: "key.jks")
                     this.storePassword = System.getenv("KEY_PASSWORD") ?: "magisksu"
                     this.keyAlias = System.getenv("KEY_ALIAS") ?: "magiskpro"
                     this.keyPassword = System.getenv("KEY_PASSWORD") ?: "magisksu"
@@ -330,39 +311,3 @@ fun Project.setupMainApk() {
     }
 }
 
-const val LSPOSED_DOWNLOAD_URL =
-    "https://github.com/LSPosed/LSPosed/releases/download/v1.9.2/LSPosed-v1.9.2-7024-zygisk-release.zip"
-const val LSPOSED_CHECKSUM =
-    "0ebc6bcb465d1c4b44b7220ab5f0252e6b4eb7fe43da74650476d2798bb29622"
-
-const val SHAMIKO_DOWNLOAD_URL =
-    "https://github.com/LSPosed/LSPosed.github.io/releases/download/shamiko-383/Shamiko-v1.2.1-383-release.zip"
-const val SHAMIKO_CHECKSUM =
-    "93754a038c2d8f0e985bad45c7303b96f70a93d8335060e50146f028d3a9b13f"
-
-fun Project.setupTestApk() {
-    setupAppCommon()
-
-    androidComponents {
-        onVariants { variant ->
-            val variantName = variant.name
-            val variantCapped = variantName.replaceFirstChar { it.uppercase() }
-
-            val dlTask = tasks.register("download${variantCapped}Lsposed", SyncWithDir::class) {
-                outputFolder.set(layout.buildDirectory.dir("$variantName/lsposed"))
-                into(outputFolder)
-
-                from(downloadFile(LSPOSED_DOWNLOAD_URL, LSPOSED_CHECKSUM)) {
-                    rename { "lsposed.zip" }
-                }
-                from(downloadFile(SHAMIKO_DOWNLOAD_URL, SHAMIKO_CHECKSUM)) {
-                    rename { "shamiko.zip" }
-                }
-            }
-
-            variant.sources.assets?.let {
-                it.addGeneratedSourceDirectory(dlTask, SyncWithDir::outputFolder)
-            }
-        }
-    }
-}

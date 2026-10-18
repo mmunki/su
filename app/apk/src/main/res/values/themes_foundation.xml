@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ThemeFoundationMD2" parent="Foundation.Default" />
+    <style name="ThemeFoundationMD3" parent="Foundation.Default" />
 
-    <style name="ThemeFoundationMD2.Azure" parent="ThemeFoundationMD2">
+    <style name="ThemeFoundationMD3.Azure" parent="ThemeFoundationMD3">
         <item name="colorPrimary">#007AFF</item>
         <item name="colorPrimaryVariant">#80007AFF</item>
         <item name="colorSecondary">#0051A8</item>

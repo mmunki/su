@@ -132,7 +132,7 @@ class MaterialDialog(
 
         val default = MaterialColors.getColor(context, com.google.android.material.R.attr.colorSurface, javaClass.canonicalName)
         val surfaceColor = MaterialColors.getColor(context, R.attr.colorSurfaceSurfaceVariant, default)
-        val materialShapeDrawable = MaterialShapeDrawable(context, null, androidx.appcompat.R.attr.alertDialogStyle, com.google.android.material.R.style.MaterialAlertDialog_MaterialComponents)
+        val materialShapeDrawable = MaterialShapeDrawable(context, null, androidx.appcompat.R.attr.alertDialogStyle, com.google.android.material.R.style.MaterialAlertDialog_Material3)
         materialShapeDrawable.initializeElevationOverlay(context)
         materialShapeDrawable.fillColor = ColorStateList.valueOf(surfaceColor)
         materialShapeDrawable.elevation = context.resources.getDimension(R.dimen.margin_generic)

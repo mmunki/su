@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -xe
-. scripts/test_common.sh
+. "$(dirname "$0")/test_common.sh"
 
 cvd_args="-daemon -enable_sandbox=false -memory_mb=8192 -report_anonymous_usage_stats=n -cpus=$core_count"
 magisk_args='-init_boot_image=supersu_patched.img'

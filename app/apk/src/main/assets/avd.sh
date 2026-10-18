@@ -2,7 +2,7 @@
 
 set -e
 shopt -s extglob
-. scripts/test_common.sh
+. "$(dirname "$0")/test_common.sh"
 
 emu_args_base="-no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -read-only -no-snapshot -cores $core_count"
 log_args="-show-kernel -logcat '' -logcat-output logcat.log"

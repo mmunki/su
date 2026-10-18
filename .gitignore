@@ -4,6 +4,9 @@ out
 *.log
 /notes.md
 
+# Prebuilt stub APK is committed on purpose
+!app/stub.apk
+
 # Built binaries
 native/out
 
