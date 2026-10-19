@@ -14,7 +14,6 @@
 
         <!--region Holo Dark palette-->
         <item name="android:colorBackground">#000000</item>
-        <item name="colorBackground">#000000</item>
         <item name="colorOnBackground">#FFFFFF</item>
 
         <item name="colorSurface">#000000</item>
@@ -90,7 +89,6 @@
 
         <!-- Force the classic dark dialog look on every API level -->
         <item name="android:colorBackground">#1A1A1A</item>
-        <item name="colorBackground">#1A1A1A</item>
         <item name="colorSurface">#1A1A1A</item>
         <item name="colorOnSurface">#FFFFFF</item>
         <item name="colorSurfaceVariant">#242424</item>

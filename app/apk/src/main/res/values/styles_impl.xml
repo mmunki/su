@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="WidgetFoundation.Appbar" parent="Widget.MaterialComponents.AppBarLayout">
+    <style name="WidgetFoundation.Appbar">
         <item name="android:background">?colorSurfaceVariant</item>
         <item name="android:elevation">0dp</item>
     </style>
