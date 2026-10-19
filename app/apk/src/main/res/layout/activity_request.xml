@@ -133,7 +133,7 @@
                     android:layout_weight="1"
                     android:onClick="@{() -> viewModel.denyPressed()}"
                     android:text="@{viewModel.denyText}"
-                    android:textColor="?colorOnSurfaceVariant"
+                    android:textColor="?colorTextSecondary"
                     tools:text="@string/deny" />
 
                 <Button

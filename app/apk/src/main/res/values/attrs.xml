@@ -7,6 +7,8 @@
     <attr name="colorDisabled" format="color" />
     <attr name="colorDisabledVariant" format="color" />
     <attr name="colorSurfaceSurfaceVariant" format="color" />
+    <attr name="colorTextSecondary" format="color" />
+    <attr name="colorBorder" format="color" />
 
     <!--endregion-->
 

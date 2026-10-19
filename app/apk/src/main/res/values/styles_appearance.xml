@@ -37,7 +37,7 @@
     </style>
 
     <style name="AppearanceFoundation.Caption.Variant">
-        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textColor">?attr/colorTextSecondary</item>
     </style>
 
     <style name="AppearanceFoundation.Caption.Primary">
@@ -61,7 +61,7 @@
     </style>
 
     <style name="AppearanceFoundation.Tiny.Variant">
-        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textColor">?attr/colorTextSecondary</item>
     </style>
 
     <!--endregion-->

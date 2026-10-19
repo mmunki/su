@@ -6,13 +6,8 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.text.format.Formatter
-import androidx.annotation.StringRes
 import androidx.databinding.Bindable
-import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
-import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import su.android.BR
 import su.android.R
@@ -22,7 +17,6 @@ import su.android.core.ktx.getLabel
 import su.android.databinding.bindExtra
 import su.android.databinding.diffList
 import su.android.databinding.set
-import su.android.events.SnackbarEvent
 import java.io.File
 import java.security.MessageDigest
 import java.text.DateFormat
@@ -32,15 +26,9 @@ class AppDetailViewModel : AsyncLoadViewModel() {
 
     private var packageName: String = ""
 
-    private var isSystemApp = false
-
-    private var apkPath: String? = null
-
     val items = diffList<AppDetailRvItem>()
 
-    val extraBindings = bindExtra {
-        it.put(BR.viewModel, this)
-    }
+    val extraBindings = bindExtra { }
 
     @get:Bindable
     var loading = true
@@ -49,58 +37,6 @@ class AppDetailViewModel : AsyncLoadViewModel() {
     fun setPackageName(name: String) {
         packageName = name
     }
-
-    // region App actions
-
-    fun disableApp() = runAction(
-        R.string.app_info_action_disable,
-        "pm disable-user --user 0 $packageName"
-    )
-
-    fun enableApp() = runAction(
-        R.string.app_info_action_enable,
-        "pm enable $packageName"
-    )
-
-    fun uninstallApp() = runAction(
-        R.string.app_info_action_uninstall,
-        if (isSystemApp) "pm uninstall --user 0 $packageName"
-        else "pm uninstall $packageName"
-    )
-
-    /**
-     * Apps that were removed for the current user (typically system apps) can be
-     * restored with `pm install-existing`, anything else is installed again from
-     * its APK.
-     */
-    fun reinstallApp() {
-        val apk = apkPath
-        val command = buildString {
-            append("pm install-existing --user 0 $packageName")
-            if (apk != null) append(" || pm install -r ").append(apk)
-        }
-        runAction(R.string.app_info_action_reinstall, command)
-    }
-
-    private fun runAction(@StringRes action: Int, command: String) {
-        viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) { Shell.cmd(command).exec() }
-            val name = AppContext.getString(action)
-            val message = if (result.isSuccess) {
-                AppContext.getString(R.string.app_info_action_done, name)
-            } else {
-                val details = (result.err + result.out).asSequence()
-                    .map { it.trim() }
-                    .lastOrNull { it.isNotEmpty() }
-                    .orEmpty()
-                AppContext.getString(R.string.app_info_action_failed, name, details)
-            }
-            SnackbarEvent(message, Snackbar.LENGTH_LONG).publish()
-            if (result.isSuccess) doLoadWork()
-        }
-    }
-
-    // endregion
 
     override suspend fun doLoadWork() {
         loading = true
@@ -129,10 +65,6 @@ class AppDetailViewModel : AsyncLoadViewModel() {
             context.getString(if (value) R.string.app_info_yes else R.string.app_info_no)
 
         result += AppDetailHeaderItem(label, pkg, versionName, icon)
-
-        isSystemApp = isSystem(app)
-        apkPath = app.sourceDir
-        result += AppDetailActionsItem()
 
         // Application
         result += AppDetailSectionItem(context.getString(R.string.app_info_section_application))

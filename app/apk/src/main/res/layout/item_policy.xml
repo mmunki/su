@@ -121,7 +121,7 @@
                     gone="@{!item.isExpanded}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?colorSurfaceVariant"
+                    android:background="?colorSurfaceSurfaceVariant"
                     android:orientation="horizontal"
                     tools:visibility="visible">
 

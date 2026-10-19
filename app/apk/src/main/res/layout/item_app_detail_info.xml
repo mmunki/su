@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:background="?colorSurfaceVariant"
+        android:background="?colorSurfaceSurfaceVariant"
         android:orientation="horizontal"
         android:padding="@dimen/l1">
 
@@ -38,8 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{item.label}"
-                android:textAppearance="?attr/textAppearanceLabelSmall"
-                android:textColor="?colorOnSurfaceVariant"
+                android:textAppearance="?attr/textAppearanceOverline"
+                android:textColor="?colorTextSecondary"
                 tools:text="Package name" />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/l_25"
                 android:text="@{item.value}"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="?colorOnSurface"
                 android:textIsSelectable="true"
                 tools:text="su.android" />

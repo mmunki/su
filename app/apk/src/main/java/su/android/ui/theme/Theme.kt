@@ -9,7 +9,7 @@ enum class Theme(
 
     Holo(
         themeName = "Holo Dark",
-        themeRes = R.style.ThemeFoundationMD3_Holo
+        themeRes = R.style.ThemeFoundationBase_Holo
     );
 
     val isSelected get() = true

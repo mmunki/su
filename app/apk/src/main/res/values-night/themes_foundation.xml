@@ -1,43 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ThemeFoundationMD3.Holo" parent="ThemeFoundationMD3">
-        <!-- Holo Dark color roles -->
+    <style name="ThemeFoundationBase.Holo" parent="ThemeFoundationBase">
+        <!-- Holo Dark color roles (classic Material only) -->
         <item name="colorPrimary">#33B5E5</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#063B4D</item>
-        <item name="colorOnPrimaryContainer">#B3E5FC</item>
 
         <item name="colorSecondary">#33B5E5</item>
         <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorSecondaryContainer">#0A2A33</item>
-        <item name="colorOnSecondaryContainer">#B3E5FC</item>
-
-        <item name="colorTertiary">#AA66CC</item>
-        <item name="colorOnTertiary">#FFFFFF</item>
-        <item name="colorTertiaryContainer">#331640</item>
-        <item name="colorOnTertiaryContainer">#EADDFF</item>
 
         <item name="colorError">#FF4444</item>
         <item name="colorOnError">#FFFFFF</item>
-        <item name="colorErrorContainer">#5C0F0F</item>
-        <item name="colorOnErrorContainer">#FFDAD6</item>
 
         <item name="colorOnBackground">#FFFFFF</item>
         <item name="colorSurface">#000000</item>
         <item name="colorOnSurface">#FFFFFF</item>
-        <item name="colorSurfaceVariant">#1A1A1A</item>
-        <item name="colorOnSurfaceVariant">#B0B0B0</item>
-        <item name="colorSurfaceContainerLowest">#000000</item>
-        <item name="colorSurfaceContainerLow">#0D0D0D</item>
-        <item name="colorSurfaceContainer">#141414</item>
-        <item name="colorSurfaceContainerHigh">#1C1C1C</item>
-        <item name="colorSurfaceContainerHighest">#242424</item>
-        <item name="colorOutline">#4D4D4D</item>
-        <item name="colorOutlineVariant">#333333</item>
 
         <!-- App specific tokens -->
         <item name="colorSurfaceSurfaceVariant">#1A1A1A</item>
+        <item name="colorTextSecondary">#B0B0B0</item>
+        <item name="colorBorder">#333333</item>
         <item name="colorDisabled">#666666</item>
         <item name="colorDisabledVariant">#44666666</item>
     </style>

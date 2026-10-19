@@ -20,7 +20,7 @@
         android:paddingBottom="@dimen/l_50"
         android:text="@{item.title}"
         android:textAllCaps="true"
-        android:textAppearance="?attr/textAppearanceLabelLarge"
+        android:textAppearance="?attr/textAppearanceButton"
         android:textColor="?colorPrimary"
         android:textStyle="bold"
         tools:text="Application" />

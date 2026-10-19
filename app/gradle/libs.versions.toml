@@ -37,7 +37,7 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version = "1.2.0" }
 transition = { module = "androidx.transition:transition", version = "1.7.0" }
 collection-ktx = { module = "androidx.collection:collection-ktx", version = "1.5.0" }
-material = { module = "com.google.android.material:material", version = "1.13.0" }
+material = { module = "com.google.android.material:material", version = { strictly = "1.4.0" } }
 jdk-libs = { module = "com.android.tools:desugar_jdk_libs_nio", version = "2.1.5" }
 test-runner = { module = "androidx.test:runner", version = "1.7.0" }
 test-rules = { module = "androidx.test:rules", version = "1.7.0" }
