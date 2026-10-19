@@ -52,7 +52,7 @@ class FlashFragment : BaseFragment<FragmentFlashBinding>(), MenuProvider {
             )
             if (it == FlashViewModel.State.SUCCESS && viewModel.showReboot) {
                 binding.restartBtn.apply {
-                    if (!this.isVisible) this.show()
+                    if (!this.isVisible) this.isVisible = true
                     if (!this.isFocused) this.requestFocus()
                 }
             }

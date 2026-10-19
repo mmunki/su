@@ -130,16 +130,17 @@ class MaterialDialog(
         super.setContentView(binding.root)
 
         // Flat, square dialog surface painted with the app owned color roles.
+        val strokeWidth = context.resources.displayMetrics.density.toInt().coerceAtLeast(1)
         val surface = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             setColor(resolveColor(R.attr.colorSurfaceSurfaceVariant, android.graphics.Color.BLACK))
             setStroke(
-                resources.displayMetrics.density.toInt().coerceAtLeast(1),
+                strokeWidth,
                 resolveColor(R.attr.colorBorder, android.graphics.Color.DKGRAY)
             )
         }
 
-        val inset = resources.getDimensionPixelSize(R.dimen.margin_generic)
+        val inset = context.resources.getDimensionPixelSize(R.dimen.margin_generic)
         window?.apply {
             setBackgroundDrawable(InsetDrawable(surface, inset, inset, inset, inset))
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
