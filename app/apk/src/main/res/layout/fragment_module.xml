@@ -38,7 +38,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <su.android.view.MovableFab
             android:id="@+id/fab_install"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:onClick="@{() -> viewModel.installPressed()}"
             app:elevation="0dp"
             app:pressedTranslationZ="0dp"
-            app:srcCompat="@drawable/ic_module_storage" />
+            app:srcCompat="@drawable/ic_add" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
-                style="@style/Widget.Material3.CircularProgressIndicator"
+                style="@style/Widget.MaterialComponents.CircularProgressIndicator"
                 goneUnless="@{viewModel.loading}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

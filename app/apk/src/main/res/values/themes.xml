@@ -1,48 +1,114 @@
 <resources>
 
-    <style name="Base.V23.Theme.Foundation.Light" parent="Theme.Material3.Dark.NoActionBar">
+    <!--
+        Holo Dark based on the classic Material Design (Material Components) theme,
+        i.e. the pre Material 3 / Material You design language.
+    -->
+    <style name="Base.V23.Theme.Foundation" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="dialogTheme">@style/ThemeOverlay.Foundation.Dialog</item>
         <item name="android:statusBarColor">#000000</item>
         <item name="android:navigationBarColor">#000000</item>
         <item name="android:windowLightStatusBar">false</item>
+
+        <!--region Holo Dark palette-->
+        <item name="android:colorBackground">#000000</item>
+        <item name="colorBackground">#000000</item>
+        <item name="colorOnBackground">#FFFFFF</item>
+
+        <item name="colorSurface">#000000</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+        <item name="colorSurfaceVariant">#1A1A1A</item>
+        <item name="colorOnSurfaceVariant">#B0B0B0</item>
+        <item name="colorOutline">#4D4D4D</item>
+        <item name="colorOutlineVariant">#333333</item>
+
         <item name="colorPrimary">#33B5E5</item>
+        <item name="colorPrimaryVariant">#1B7B9E</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
         <item name="colorSecondary">#33B5E5</item>
-        <item name="colorTertiary">#AA66CC</item>
+        <item name="colorSecondaryVariant">#1B7B9E</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <item name="colorError">#FF4444</item>
+        <item name="colorOnError">#FFFFFF</item>
+
+        <!--region Classic Material / Holo control colors-->
+        <item name="colorAccent">#33B5E5</item>
+        <item name="android:colorAccent">#33B5E5</item>
+        <item name="colorControlNormal">#B0B0B0</item>
+        <item name="colorControlActivated">#33B5E5</item>
+        <item name="colorControlHighlight">#4033B5E5</item>
+        <item name="colorButtonNormal">#1A1A1A</item>
+        <item name="colorBackgroundFloating">#1A1A1A</item>
+        <item name="android:colorBackgroundFloating">#1A1A1A</item>
+        <!--endregion-->
+
+        <!-- Flat, non tinted surfaces (classic Material had no tonal elevation) -->
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="elevationOverlayColor">#00000000</item>
+
+        <!--region Material 3 role names kept defined for legacy references-->
+        <item name="colorSurfaceContainerLowest">#000000</item>
+        <item name="colorSurfaceContainerLow">#0D0D0D</item>
+        <item name="colorSurfaceContainer">#141414</item>
+        <item name="colorSurfaceContainerHigh">#1C1C1C</item>
+        <item name="colorSurfaceContainerHighest">#242424</item>
+        <item name="colorPrimaryContainer">#063B4D</item>
+        <item name="colorOnPrimaryContainer">#B3E5FC</item>
+        <item name="colorSecondaryContainer">#0A2A33</item>
+        <item name="colorOnSecondaryContainer">#B3E5FC</item>
+        <item name="colorErrorContainer">#5C0F0F</item>
+        <item name="colorOnErrorContainer">#FFDAD6</item>
+        <!--endregion-->
+
+        <!--region Typography (Material 3 attribute names mapped on classic Material)-->
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.MaterialComponents.Caption</item>
+        <!--endregion-->
+
+        <item name="colorSurfaceSurfaceVariant">#1A1A1A</item>
         <item name="materialCardViewStyle">@style/Widget.Foundation.CardView</item>
     </style>
 
-    <style name="Base.V23.Theme.Foundation" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:windowBackground">?attr/colorSurface</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="dialogTheme">@style/ThemeOverlay.Foundation.Dialog</item>
-        <item name="android:statusBarColor">#000000</item>
-        <item name="android:navigationBarColor">#000000</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="colorPrimary">#33B5E5</item>
-        <item name="colorSecondary">#33B5E5</item>
-        <item name="colorTertiary">#AA66CC</item>
-        <item name="materialCardViewStyle">@style/Widget.Foundation.CardView</item>
-    </style>
+    <style name="Base.V23.Theme.Foundation.Light" parent="Base.V23.Theme.Foundation" />
 
     <style name="Theme.Foundation.Light" parent="Base.V23.Theme.Foundation.Light" />
 
     <style name="Theme.Foundation" parent="Base.V23.Theme.Foundation" />
 
-    <style name="Base.V23.ThemeOverlay.Foundation.Dialog" parent="ThemeOverlay.Material3.Dialog">
+    <style name="Base.V23.ThemeOverlay.Foundation.Dialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
         <item name="android:windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
         <item name="android:windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Foundation.Card</item>
+
+        <!-- Force the classic dark dialog look on every API level -->
+        <item name="android:colorBackground">#1A1A1A</item>
+        <item name="colorBackground">#1A1A1A</item>
+        <item name="colorSurface">#1A1A1A</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+        <item name="colorSurfaceVariant">#242424</item>
+        <item name="colorOnSurfaceVariant">#B0B0B0</item>
+        <item name="colorPrimary">#33B5E5</item>
+        <item name="colorSecondary">#33B5E5</item>
+        <item name="colorAccent">#33B5E5</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#B0B0B0</item>
     </style>
 
     <style name="ThemeOverlay.Foundation.Dialog" parent="Base.V23.ThemeOverlay.Foundation.Dialog" />
 
-    <style name="Widget.Foundation.CardView" parent="Widget.Material3.CardView.Elevated">
+    <style name="Widget.Foundation.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Foundation.Card</item>
     </style>
 
-    <style name="ShapeAppearance.Foundation.Card" parent="ShapeAppearance.Material3.MediumComponent">
+    <style name="ShapeAppearance.Foundation.Card" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">0dp</item>
     </style>

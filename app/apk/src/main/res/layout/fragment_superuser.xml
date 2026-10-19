@@ -47,7 +47,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
-                style="@style/Widget.Material3.CircularProgressIndicator"
+                style="@style/Widget.MaterialComponents.CircularProgressIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/l1" />

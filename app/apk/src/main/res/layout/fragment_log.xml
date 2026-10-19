@@ -25,7 +25,7 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             gone="@{viewModel.loading}"
             android:id="@+id/log_filter_toggle"
-            style="@style/Widget.Material3.FloatingActionButton.Primary"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

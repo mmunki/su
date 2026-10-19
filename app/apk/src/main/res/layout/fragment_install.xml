@@ -33,14 +33,14 @@
             android:paddingTop="@dimen/l_50">
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Elevated"
+                style="@style/WidgetFoundation.Card.Elevated"
                 gone="@{viewModel.skipOptions}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/l1"
                 android:layout_marginEnd="@dimen/l1"
                 android:focusable="false"
-                app:cardCornerRadius="24dp"
+                app:cardCornerRadius="0dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -69,7 +69,7 @@
                             android:textStyle="bold" />
 
                         <Button
-                            style="@style/Widget.Material3.Button.TextButton"
+                            style="@style/WidgetFoundation.Button.Text"
                             gone="@{viewModel.step != 0}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                         tools:layout_gravity="center">
 
                         <CheckBox
-                            style="@style/Widget.Material3.CompoundButton.CheckBox"
+                            style="@style/WidgetFoundation.Checkbox"
                             gone="@{Info.isSAR}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                             tools:checked="true" />
 
                         <CheckBox
-                            style="@style/Widget.Material3.CompoundButton.CheckBox"
+                            style="@style/WidgetFoundation.Checkbox"
                             goneUnless="@{Info.isFDE}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                             app:tint="?colorPrimary" />
 
                         <CheckBox
-                            style="@style/Widget.Material3.CompoundButton.CheckBox"
+                            style="@style/WidgetFoundation.Checkbox"
                             gone="@{Info.ramdisk}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -126,14 +126,14 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Elevated"
+                style="@style/WidgetFoundation.Card.Elevated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/l1"
                 android:layout_marginTop="@dimen/l1"
                 android:layout_marginEnd="@dimen/l1"
                 android:focusable="false"
-                app:cardCornerRadius="24dp"
+                app:cardCornerRadius="0dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -162,7 +162,7 @@
                             android:textStyle="bold" />
 
                         <Button
-                            style="@style/Widget.Material3.Button.TextButton"
+                            style="@style/WidgetFoundation.Button.Text"
                             gone="@{viewModel.step != 1}"
                             isEnabled="@{viewModel.method == @id/method_patch ? viewModel.data != null : viewModel.method != -1}"
                             android:layout_width="wrap_content"
@@ -188,7 +188,7 @@
 
                         <RadioButton
                             android:id="@+id/method_patch"
-                            style="@style/Widget.Material3.CompoundButton.RadioButton"
+                            style="@style/WidgetFoundation.RadioButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/select_patch_file"
@@ -196,7 +196,7 @@
 
                         <RadioButton
                             android:id="@+id/method_direct"
-                            style="@style/Widget.Material3.CompoundButton.RadioButton"
+                            style="@style/WidgetFoundation.RadioButton"
                             gone="@{!viewModel.rooted}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
 
                         <RadioButton
                             android:id="@+id/method_inactive_slot"
-                            style="@style/Widget.Material3.CompoundButton.RadioButton"
+                            style="@style/WidgetFoundation.RadioButton"
                             gone="@{viewModel.noSecondSlot}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -219,7 +219,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Elevated"
+                style="@style/WidgetFoundation.Card.Elevated"
                 gone="@{viewModel.notes.length == 0}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -227,7 +227,7 @@
                 android:layout_marginTop="@dimen/l1"
                 android:layout_marginEnd="@dimen/l1"
                 android:focusable="false"
-                app:cardCornerRadius="24dp"
+                app:cardCornerRadius="0dp"
                 app:cardElevation="2dp">
 
                 <TextView

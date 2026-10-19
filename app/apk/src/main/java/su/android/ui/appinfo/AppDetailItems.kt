@@ -39,6 +39,13 @@ class AppDetailSectionItem(
     override val key get() = "section:$title"
 }
 
+class AppDetailActionsItem : AppDetailRvItem() {
+
+    override val layoutRes get() = R.layout.item_app_detail_actions
+
+    override val key get() = "actions"
+}
+
 class AppDetailInfoItem(
     val icon: Int,
     val label: String,

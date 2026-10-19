@@ -21,7 +21,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/main_toolbar_wrapper"
-            style="@style/Widget.Material3.AppBarLayout"
+            style="@style/WidgetFoundation.Appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?colorSurfaceVariant"
@@ -29,7 +29,7 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/main_toolbar"
-                style="@style/Widget.Material3.Toolbar.Surface"
+                style="@style/WidgetFoundation.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?colorSurfaceVariant"
@@ -45,7 +45,7 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_navigation"
-            style="@style/Widget.Material3.BottomNavigationView"
+            style="@style/Widget.MaterialComponents.BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -53,7 +53,6 @@
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="0dp"
             app:elevation="8dp"
-            app:itemActiveIndicatorStyle="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"
             app:itemIconTint="@color/color_menu_tint"
             app:itemTextColor="@color/color_menu_tint"
             app:labelVisibilityMode="selected"

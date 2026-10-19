@@ -58,6 +58,14 @@
     <string name="app_info_category_productivity">Productivity</string>
     <string name="app_info_category_accessibility">Accessibility</string>
 
+    <string name="app_info_section_actions">Actions</string>
+    <string name="app_info_action_disable">Disable</string>
+    <string name="app_info_action_enable">Enable</string>
+    <string name="app_info_action_uninstall">Uninstall</string>
+    <string name="app_info_action_reinstall">Reinstall</string>
+    <string name="app_info_action_done">%1$s successful</string>
+    <string name="app_info_action_failed">%1$s failed: %2$s</string>
+
     <string name="no_connection">No connection available</string>
     <string name="app_changelog">Changelog</string>
     <string name="loading">Loading…</string>

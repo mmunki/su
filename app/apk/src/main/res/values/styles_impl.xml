@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="WidgetFoundation.Appbar" parent="Widget.Material3.AppBarLayout" />
+    <style name="WidgetFoundation.Appbar" parent="Widget.MaterialComponents.AppBarLayout">
+        <item name="android:background">?colorSurfaceVariant</item>
+        <item name="android:elevation">0dp</item>
+    </style>
 
-    <style name="WidgetFoundation.Toolbar" parent="Widget.Material3.Toolbar.Surface">
+    <style name="WidgetFoundation.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextAppearance">@style/AppearanceFoundation.Title</item>
         <item name="titleTextColor">?colorOnSurface</item>
         <item name="subtitleTextAppearance">@style/AppearanceFoundation.Caption</item>
@@ -11,16 +14,21 @@
         <item name="android:background">?colorSurfaceVariant</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
         <item name="android:layout_height">?actionBarSize</item>
-        <item name="android:theme">@style/ThemeOverlay.Material3.ActionBar</item>
+        <item name="android:elevation">0dp</item>
+        <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Dark</item>
+        <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
     </style>
 
 
-    <style name="WidgetFoundation.Card" parent="Widget.Material3.CardView.Elevated">
+    <style name="WidgetFoundation.Card" parent="Widget.MaterialComponents.CardView">
         <item name="android:focusable">auto</item>
         <item name="cardBackgroundColor">?colorSurfaceVariant</item>
         <item name="cardCornerRadius">0dp</item>
         <item name="cardElevation">0dp</item>
         <item name="cardPreventCornerOverlap">false</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Foundation.Card</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">?colorOutlineVariant</item>
     </style>
 
     <style name="WidgetFoundation.Card.Primary">
@@ -30,17 +38,17 @@
     <style name="WidgetFoundation.Card.Elevated">
         <item name="cardBackgroundColor">?colorSurfaceSurfaceVariant</item>
         <item name="cardCornerRadius">0dp</item>
-        <item name="cardElevation">@dimen/l_125</item>
+        <item name="cardElevation">0dp</item>
     </style>
 
 
-    <style name="WidgetFoundation.Button" parent="Widget.Material3.Button">
+    <style name="WidgetFoundation.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textStyle">bold</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/l_50</item>
     </style>
 
-    <style name="WidgetFoundation.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+    <style name="WidgetFoundation.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textStyle">bold</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/l_50</item>
@@ -55,7 +63,7 @@
         <item name="iconTint">@color/color_error_transient</item>
     </style>
 
-    <style name="WidgetFoundation.Button.Text" parent="Widget.Material3.Button.TextButton">
+    <style name="WidgetFoundation.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textStyle">bold</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/l_50</item>
@@ -98,22 +106,22 @@
         <item name="tint">@color/color_on_primary_transient</item>
     </style>
 
-    <style name="WidgetFoundation.Checkbox" parent="Widget.Material3.CompoundButton.CheckBox">
+    <style name="WidgetFoundation.Checkbox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="android:paddingStart">@dimen/l1</item>
         <item name="android:paddingEnd">@dimen/l1</item>
     </style>
 
-    <style name="WidgetFoundation.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
+    <style name="WidgetFoundation.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
         <item name="android:paddingStart">@dimen/l1</item>
         <item name="android:paddingEnd">@dimen/l1</item>
     </style>
 
-    <style name="WidgetFoundation.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
+    <style name="WidgetFoundation.ProgressBar" parent="Widget.MaterialComponents.LinearProgressIndicator">
         <item name="android:indeterminate">false</item>
         <item name="android:layout_height">4dp</item>
     </style>
 
-    <style name="WidgetFoundation.ProgressBar.Indeterminate" parent="Widget.Material3.LinearProgressIndicator">
+    <style name="WidgetFoundation.ProgressBar.Indeterminate" parent="Widget.MaterialComponents.LinearProgressIndicator">
         <item name="android:indeterminate">true</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">100dp</item>
