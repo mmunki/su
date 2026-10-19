@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Square, flat checked checkbox with a Holo blue fill. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="#33B5E5"
+        android:pathData="M5,5h14v14h-14z"
+        android:strokeColor="#33B5E5"
+        android:strokeWidth="1.5" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M10.2,16.4l-3.6,-3.6l1.4,-1.4l2.2,2.2l6,-6l1.4,1.4z" />
+
+</vector>

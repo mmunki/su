@@ -36,8 +36,8 @@ import su.android.R
 import su.android.core.di.ServiceLocator
 import su.android.core.model.policy.Policy
 import su.android.utils.TextHolder
+import su.android.view.IndeterminateCheckBox
 import com.topjohnwu.superuser.internal.UiThreadHandler
-import com.topjohnwu.widget.IndeterminateCheckBox
 import kotlin.math.roundToInt
 
 @BindingAdapter("gone")

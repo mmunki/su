@@ -82,7 +82,6 @@ dependencies {
     compileOnly(libs.test.junit)
     compileOnly(libs.test.uiautomator)
 
-    implementation(libs.indeterminate.checkbox)
     implementation(libs.rikka.layoutinflater)
     implementation(libs.rikka.insets)
     implementation(libs.rikka.recyclerview)

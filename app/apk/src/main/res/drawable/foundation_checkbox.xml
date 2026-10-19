@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Square checkbox button: just checked and unchecked, the indeterminate state
+     is swapped in programmatically by IndeterminateCheckBox. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/ic_checkbox_checked"
+        android:state_checked="true" />
+
+    <item android:drawable="@drawable/ic_checkbox_unchecked" />
+
+</selector>

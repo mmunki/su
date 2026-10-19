@@ -80,7 +80,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/hide_name"
                     tools:text="su.android" />
 
-                <com.topjohnwu.widget.IndeterminateCheckBox
+                <su.android.view.IndeterminateCheckBox
                     android:id="@+id/hide_expand_icon"
                     state="@={item.state}"
                     android:layout_width="0dp"
