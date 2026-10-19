@@ -20,7 +20,7 @@
     </style>
 
     <!-- Old style dense action bars. -->
-    <style name="WidgetFoundation.AppBar.Brand">
+    <style name="WidgetFoundation.BarBrand">
         <item name="android:layout_width">@dimen/brand_icon_size</item>
         <item name="android:layout_height">@dimen/brand_icon_size</item>
         <item name="android:layout_gravity">center_vertical</item>

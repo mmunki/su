@@ -49,7 +49,7 @@
 
                     <ImageView
                         android:id="@+id/main_bar_brand"
-                        style="@style/WidgetFoundation.AppBar.Brand"
+                        style="@style/WidgetFoundation.BarBrand"
                         android:contentDescription="@string/supersu"
                         android:src="@drawable/ic_app_logo_padded" />
 
