@@ -75,4 +75,8 @@ class AppInfoViewModel : AsyncLoadViewModel() {
         }
         loading = false
     }
+
+    fun openApp(item: AppInfoRvItem) {
+        AppDetailEvent(item.packageName).publish()
+    }
 }

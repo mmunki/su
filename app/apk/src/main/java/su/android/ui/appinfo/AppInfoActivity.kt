@@ -65,8 +65,4 @@ class AppInfoActivity : UIActivity<ActivityAppInfoBinding>() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    fun openApp(item: AppInfoRvItem) {
-        startActivity(AppDetailActivity.intent(this, item.packageName))
-    }
 }
