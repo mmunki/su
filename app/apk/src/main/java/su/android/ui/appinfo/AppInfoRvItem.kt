@@ -18,16 +18,16 @@ class AppInfoRvItem(
 
     override val layoutRes get() = R.layout.item_app_info
 
-    private val app: ApplicationInfo get() = info.applicationInfo
+    private val app: ApplicationInfo? = info.applicationInfo
 
-    val label: String = runCatching { app.getLabel(pm) }.getOrDefault(info.packageName)
+    val label: String = runCatching { app?.getLabel(pm) }.getOrNull() ?: info.packageName
     val packageName: String get() = info.packageName
     val versionName: String = info.versionName.orEmpty()
-    val icon: Drawable = runCatching { app.loadIcon(pm) }.getOrDefault(pm.defaultActivityIcon)
+    val icon: Drawable = runCatching { app?.loadIcon(pm) }.getOrNull() ?: pm.defaultActivityIcon
 
-    val isSystemApp get() = app.flags and ApplicationInfo.FLAG_SYSTEM != 0
+    val isSystemApp get() = (app?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM != 0
 
-    val isApp get() = ProcessCompat.isApplicationUid(app.uid)
+    val isApp get() = ProcessCompat.isApplicationUid(app?.uid ?: 0)
 
     override fun itemSameAs(other: AppInfoRvItem) = packageName == other.packageName
 
