@@ -43,9 +43,11 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:layout_marginBottom="128dp"
+            android:contentDescription="@string/menu_install_module"
             android:onClick="@{() -> viewModel.installPressed()}"
             app:elevation="0dp"
             app:pressedTranslationZ="0dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Foundation.Button"
             app:srcCompat="@drawable/ic_add" />
 
         <LinearLayout

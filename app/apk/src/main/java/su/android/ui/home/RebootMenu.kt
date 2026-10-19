@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.PowerManager
 import android.view.ContextThemeWrapper
 import android.view.MenuItem
+import android.view.View
 import android.widget.PopupMenu
 import androidx.core.content.getSystemService
 import su.android.R
@@ -32,9 +33,9 @@ object RebootMenu {
         return true
     }
 
-    fun inflate(activity: Activity): PopupMenu {
+    fun inflate(activity: Activity, anchor: View): PopupMenu {
         val themeWrapper = ContextThemeWrapper(activity, R.style.Foundation_PopupMenu)
-        val menu = PopupMenu(themeWrapper, activity.findViewById(R.id.action_reboot))
+        val menu = PopupMenu(themeWrapper, anchor)
         activity.menuInflater.inflate(R.menu.menu_reboot, menu.menu)
         menu.setOnMenuItemClickListener(RebootMenu::reboot)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&

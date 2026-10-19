@@ -19,42 +19,52 @@
         <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
     </style>
 
-    <!-- Old style top navigation bar: flat, square, all items on one row. -->
-    <style name="WidgetFoundation.TopNav">
-        <item name="android:background">?colorSurfaceSurfaceVariant</item>
-    </style>
-
-    <style name="WidgetFoundation.TopNav.Item">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/foundation_top_nav_item_background</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingTop">@dimen/l_25</item>
-        <item name="android:paddingBottom">@dimen/l_25</item>
+    <!-- Old style dense action bars. -->
+    <style name="WidgetFoundation.AppBar.Brand">
+        <item name="android:layout_width">@dimen/brand_icon_size</item>
+        <item name="android:layout_height">@dimen/brand_icon_size</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">@dimen/l_50</item>
+        <item name="android:layout_marginEnd">@dimen/l_25</item>
+        <item name="android:background">@drawable/foundation_selectable_item_background_borderless</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 
-    <style name="WidgetFoundation.TopNav.Icon">
-        <item name="android:layout_width">20dp</item>
-        <item name="android:layout_height">20dp</item>
-        <item name="android:duplicateParentState">true</item>
-        <item name="android:tint">@color/color_menu_tint</item>
-    </style>
-
-    <style name="WidgetFoundation.TopNav.Label">
+    <style name="WidgetFoundation.NavToggleBar">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/l_125</item>
-        <item name="android:duplicateParentState">true</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textAppearance">?attr/textAppearanceCaption</item>
-        <item name="android:textColor">@color/color_menu_tint</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="WidgetFoundation.ToolButton">
+        <item name="android:layout_width">@dimen/tool_button_size</item>
+        <item name="android:layout_height">@dimen/tool_button_size</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@drawable/foundation_tool_button_background</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">@dimen/l_25</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:tint">@color/color_tool_tint</item>
+    </style>
+
+    <style name="WidgetFoundation.ToolDivider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">@dimen/tool_divider_height</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">@dimen/l_25</item>
+        <item name="android:layout_marginEnd">@dimen/l_25</item>
+        <item name="android:background">?colorBorder</item>
+    </style>
+
+    <style name="WidgetFoundation.NavToggle" parent="WidgetFoundation.ToolButton">
+        <item name="android:layout_width">@dimen/nav_toggle_size</item>
+        <item name="android:layout_height">@dimen/nav_toggle_size</item>
+    </style>
 
     <style name="WidgetFoundation.Card" parent="Widget.MaterialComponents.CardView">
         <item name="android:focusable">auto</item>

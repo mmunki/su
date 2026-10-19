@@ -2,14 +2,11 @@ package su.android.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import su.android.R
 import su.android.arch.BaseFragment
 import su.android.arch.viewModel
@@ -18,7 +15,7 @@ import su.android.core.download.DownloadEngine
 import su.android.databinding.FragmentHomeBinding
 import su.android.R as CoreR
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), MenuProvider {
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override val layoutRes = R.layout.fragment_home
     override val viewModel by viewModel<HomeViewModel>()
@@ -55,21 +52,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), MenuProvider {
             checkTitle(homeManagerTitle, homeManagerIcon)
         }
 
-        return binding.root
-    }
-
-    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_home, menu)
-        if (!Info.isRooted)
-            menu.removeItem(R.id.action_reboot)
-    }
-
-    override fun onMenuItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_reboot -> activity?.let { RebootMenu.inflate(it).show() }
-            else -> return super.onOptionsItemSelected(item)
+        // The reboot entry lives on the home screen, next to the other system actions,
+        // instead of taking room in the action bar.
+        with(binding.homeReboot) {
+            isVisible = Info.isRooted
+            setOnClickListener { RebootMenu.inflate(requireActivity(), this).show() }
         }
-        return true
+
+        return binding.root
     }
 
     override fun onResume() {

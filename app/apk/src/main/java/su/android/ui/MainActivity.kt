@@ -5,11 +5,14 @@ import android.Manifest.permission.REQUEST_INSTALL_PACKAGES
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.isGone
@@ -22,6 +25,7 @@ import su.android.MainDirections
 import su.android.R
 import su.android.arch.BaseViewModel
 import su.android.arch.NavigationActivity
+import su.android.arch.ToolPaletteProvider
 import su.android.arch.startAnimations
 import su.android.arch.viewModel
 import su.android.core.Config
@@ -64,17 +68,16 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
         }
 
     /**
-     * One entry of the top navigation bar (old style, replaces the bottom bar).
+     * One entry of the primary navigation bar (old style, replaces the bottom bar).
      */
-    private class TopNavItem(
+    private class NavToggle(
         val id: Int,
-        val root: View,
         val icon: ImageView,
         val iconSelected: Int,
         val iconNormal: Int
     )
 
-    private var topNavItems: List<TopNavItem> = emptyList()
+    private var navToggles: List<NavToggle> = emptyList()
 
     private var isRootFragment = true
 
@@ -117,37 +120,46 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             setDisplayHomeAsUpEnabled(!isRootFragment)
             requestNavigationHidden(!isRootFragment)
 
-            topNavItems.forEach { item ->
-                val selected = item.id == destination.id
-                item.root.isSelected = selected
-                item.icon.setImageResource(if (selected) item.iconSelected else item.iconNormal)
+            navToggles.forEach { toggle ->
+                val selected = toggle.id == destination.id
+                toggle.icon.isSelected = selected
+                toggle.icon.setImageResource(if (selected) toggle.iconSelected else toggle.iconNormal)
             }
+
+            binding.mainTools.post { rebuildToolPalette(destination.id) }
         }
 
         setSupportActionBar(binding.mainToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        topNavItems = listOf(
-            TopNavItem(
-                R.id.homeFragment, binding.mainNavHome, binding.mainNavHomeIcon,
+        binding.mainBarBrand.setOnClickListener {
+            if (navigation.currentDestination?.id != R.id.homeFragment) {
+                getScreen(R.id.homeFragment)?.navigate()
+            }
+        }
+
+        navToggles = listOf(
+            NavToggle(
+                R.id.homeFragment, binding.mainNavHome,
                 R.drawable.ic_home_filled, R.drawable.ic_home_outlined
             ),
-            TopNavItem(
-                R.id.superuserFragment, binding.mainNavSuperuser, binding.mainNavSuperuserIcon,
+            NavToggle(
+                R.id.superuserFragment, binding.mainNavSuperuser,
                 R.drawable.ic_superuser_filled, R.drawable.ic_superuser_outlined
             ),
-            TopNavItem(
-                R.id.modulesFragment, binding.mainNavModules, binding.mainNavModulesIcon,
+            NavToggle(
+                R.id.modulesFragment, binding.mainNavModules,
                 R.drawable.ic_module_filled, R.drawable.ic_module_outlined
             ),
-            TopNavItem(
-                R.id.settingsFragment, binding.mainNavSettings, binding.mainNavSettingsIcon,
+            NavToggle(
+                R.id.settingsFragment, binding.mainNavSettings,
                 R.drawable.ic_settings_filled, R.drawable.ic_settings_outlined
             )
         )
-        topNavItems.forEach { item ->
-            item.root.setOnClickListener {
-                if (!item.root.isSelected) {
-                    getScreen(item.id)?.navigate()
+        navToggles.forEach { toggle ->
+            toggle.icon.setOnClickListener {
+                if (!toggle.icon.isSelected) {
+                    getScreen(toggle.id)?.navigate()
                 }
             }
         }
@@ -165,6 +177,80 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
         if (!isRootFragment) {
             requestNavigationHidden(requiresAnimation = savedInstanceState == null)
         }
+
+        binding.mainTools.post {
+            rebuildToolPalette(navigation.currentDestination?.id ?: R.id.homeFragment)
+        }
+    }
+
+    /**
+     * Rebuilds the dense, scrollable tool palette (the second action bar row) out
+     * of the tools provided by the current screen plus the global quick tools.
+     */
+    private fun rebuildToolPalette(destinationId: Int) {
+        val container = binding.mainTools
+        container.removeAllViews()
+
+        val provider = currentFragment as? ToolPaletteProvider
+        if (provider != null && provider.paletteMenuRes != 0) {
+            val holder = PopupMenu(this, container)
+            menuInflater.inflate(provider.paletteMenuRes, holder.menu)
+            val menu = holder.menu
+            for (i in 0 until menu.size()) {
+                val item = menu.getItem(i)
+                val icon = item.icon ?: continue
+                addToolButton(container, icon, item.title) {
+                    provider.onPaletteItemSelected(item.itemId)
+                }
+            }
+        }
+
+        if (container.childCount > 0) {
+            addToolDivider(container)
+        }
+
+        if (destinationId != R.id.logFragment) {
+            addToolButton(container, R.drawable.ic_folder_list, getString(R.string.logs)) {
+                getScreen(R.id.logFragment)?.navigate()
+            }
+        }
+
+        if (destinationId != R.id.denyFragment) {
+            addToolButton(
+                container, R.drawable.ic_shield,
+                getString(R.string.settings_denylist_config_title)
+            ) {
+                getScreen(R.id.denyFragment)?.navigate()
+            }
+        }
+
+        if (destinationId != R.id.settingsFragment) {
+            addToolButton(container, R.drawable.ic_settings_outlined, getString(R.string.settings)) {
+                getScreen(R.id.settingsFragment)?.navigate()
+            }
+        }
+
+        binding.mainToolsScroll.isVisible = container.childCount > 0
+    }
+
+    private fun addToolButton(
+        parent: LinearLayout,
+        iconRes: Int,
+        title: CharSequence?,
+        onClick: () -> Unit
+    ) {
+        val button = layoutInflater.inflate(R.layout.tool_button, parent, false) as ImageView
+        button.setImageResource(iconRes)
+        button.contentDescription = title
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            button.tooltipText = title
+        }
+        button.setOnClickListener { onClick() }
+        parent.addView(button)
+    }
+
+    private fun addToolDivider(parent: LinearLayout) {
+        parent.addView(layoutInflater.inflate(R.layout.tool_divider, parent, false))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -184,15 +270,15 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
     }
 
     internal fun requestNavigationHidden(hide: Boolean = true, requiresAnimation: Boolean = true) {
-        val topNav = binding.mainTopNav
+        val navGroup = binding.mainNavGroup
         if (requiresAnimation) {
             TransitionManager.beginDelayedTransition(
                 binding.mainToolbarWrapper,
                 AutoTransition().setDuration(200)
             )
-            topNav.isVisible = !hide
+            navGroup.isVisible = !hide
         } else {
-            topNav.isGone = hide
+            navGroup.isGone = hide
         }
     }
 
@@ -215,6 +301,7 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             R.id.modulesFragment -> MainDirections.actionModuleFragment()
             R.id.superuserFragment -> MainDirections.actionSuperuserFragment()
             R.id.logFragment -> MainDirections.actionLogFragment()
+            R.id.denyFragment -> MainDirections.actionGlobalDenyFragment()
             R.id.settingsFragment -> MainDirections.actionGlobalSettingsFragment()
             else -> null
         }

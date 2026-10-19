@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Flat, square highlight used by every bar button (no ripples, old style). -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/foundation_top_nav_item_selected"
+        android:state_selected="true" />
+    <item
+        android:drawable="@drawable/foundation_top_nav_item_pressed"
+        android:state_pressed="true" />
+    <item android:drawable="@android:color/transparent" />
+</selector>

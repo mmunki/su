@@ -8,6 +8,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import su.android.R
 import su.android.arch.BaseFragment
+import su.android.arch.ToolPaletteProvider
 import su.android.arch.viewModel
 import su.android.core.utils.MediaStoreUtils.displayName
 import su.android.databinding.FragmentModuleBinding
@@ -17,10 +18,12 @@ import rikka.recyclerview.addItemSpacing
 import rikka.recyclerview.fixEdgeEffect
 import su.android.R as CoreR
 
-class ModuleFragment : BaseFragment<FragmentModuleBinding>() {
+class ModuleFragment : BaseFragment<FragmentModuleBinding>(), ToolPaletteProvider {
 
     override val layoutRes = R.layout.fragment_module
     override val viewModel by viewModel<ModuleViewModel>()
+
+    override val paletteMenuRes = R.menu.menu_module_tools
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +64,16 @@ class ModuleFragment : BaseFragment<FragmentModuleBinding>() {
         
         binding.fabInstall.updateLayoutParams<androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams> {
             this.bottomMargin = extraBottom
+        }
+    }
+
+    override fun onPaletteItemSelected(id: Int): Boolean {
+        return when (id) {
+            R.id.action_install_module -> {
+                viewModel.installPressed()
+                true
+            }
+            else -> false
         }
     }
 

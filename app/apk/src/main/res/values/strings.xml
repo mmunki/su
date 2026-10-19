@@ -283,4 +283,6 @@
     <string name="uninstall">Uninstall</string>
 <string name="uninstall_summary">Complete removal or restore stock image</string>
 
+    <string name="menu_install_module">Install module</string>
+
 </resources>

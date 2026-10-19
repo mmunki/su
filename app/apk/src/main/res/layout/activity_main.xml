@@ -4,9 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--
-        Old style layout: a flat top bar made of the title toolbar plus the
-        navigation row (which replaced the bottom navigation bar). The app bar
-        is part of the layout flow, so it always sits above the content.
+        Old style layout: a dense, two row action bar.
+
+        Row one is the primary action bar: a compact branding icon, the primary
+        navigation toggles and the actions of the current screen, all packed
+        tightly together. Row two is a scrollable tool palette holding the
+        smaller, secondary tools of the current screen.
+
+        The app bar is part of the layout flow, so it always sits above the
+        content.
     -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,86 +32,88 @@
             android:background="?colorSurfaceSurfaceVariant"
             app:fitsSystemWindowsInsets="top">
 
+            <!-- Row 1: primary action bar -->
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/main_toolbar"
                 style="@style/WidgetFoundation.Toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/dense_bar_height"
                 android:background="?colorSurfaceSurfaceVariant"
-                tools:title="Home" />
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                tools:title="Home">
 
-            <LinearLayout
-                android:id="@+id/main_top_nav"
-                style="@style/WidgetFoundation.TopNav"
+                <LinearLayout
+                    android:id="@+id/main_bar_group"
+                    style="@style/WidgetFoundation.NavToggleBar">
+
+                    <ImageView
+                        android:id="@+id/main_bar_brand"
+                        style="@style/WidgetFoundation.AppBar.Brand"
+                        android:contentDescription="@string/supersu"
+                        android:src="@drawable/ic_app_logo_padded" />
+
+                    <LinearLayout
+                        android:id="@+id/main_nav_group"
+                        style="@style/WidgetFoundation.NavToggleBar">
+
+                        <ImageView
+                            android:id="@+id/main_nav_home"
+                            style="@style/WidgetFoundation.NavToggle"
+                            android:contentDescription="@string/section_home"
+                            android:src="@drawable/ic_home_outlined" />
+
+                        <ImageView
+                            android:id="@+id/main_nav_superuser"
+                            style="@style/WidgetFoundation.NavToggle"
+                            android:contentDescription="@string/superuser"
+                            android:src="@drawable/ic_superuser_outlined" />
+
+                        <ImageView
+                            android:id="@+id/main_nav_modules"
+                            style="@style/WidgetFoundation.NavToggle"
+                            android:contentDescription="@string/modules"
+                            android:src="@drawable/ic_module_outlined" />
+
+                        <ImageView
+                            android:id="@+id/main_nav_settings"
+                            style="@style/WidgetFoundation.NavToggle"
+                            android:contentDescription="@string/settings"
+                            android:src="@drawable/ic_settings_outlined" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/top_nav_height"
-                android:orientation="horizontal">
+                android:layout_height="1dp"
+                android:background="?colorBorder" />
+
+            <!-- Row 2: dense, scrollable tool palette -->
+            <HorizontalScrollView
+                android:id="@+id/main_tools_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tool_palette_height"
+                android:background="?colorSurface"
+                android:fadingEdgeLength="@dimen/l1"
+                android:requiresFadingEdge="horizontal"
+                android:scrollbars="none"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/main_nav_home"
-                    style="@style/WidgetFoundation.TopNav.Item">
+                    android:id="@+id/main_tools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/l_25"
+                    android:paddingEnd="@dimen/l_25" />
 
-                    <ImageView
-                        android:id="@+id/main_nav_home_icon"
-                        style="@style/WidgetFoundation.TopNav.Icon"
-                        android:src="@drawable/ic_home_outlined" />
-
-                    <TextView
-                        android:id="@+id/main_nav_home_label"
-                        style="@style/WidgetFoundation.TopNav.Label"
-                        android:text="@string/section_home" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/main_nav_superuser"
-                    style="@style/WidgetFoundation.TopNav.Item">
-
-                    <ImageView
-                        android:id="@+id/main_nav_superuser_icon"
-                        style="@style/WidgetFoundation.TopNav.Icon"
-                        android:src="@drawable/ic_superuser_outlined" />
-
-                    <TextView
-                        android:id="@+id/main_nav_superuser_label"
-                        style="@style/WidgetFoundation.TopNav.Label"
-                        android:text="@string/superuser" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/main_nav_modules"
-                    style="@style/WidgetFoundation.TopNav.Item">
-
-                    <ImageView
-                        android:id="@+id/main_nav_modules_icon"
-                        style="@style/WidgetFoundation.TopNav.Icon"
-                        android:src="@drawable/ic_module_outlined" />
-
-                    <TextView
-                        android:id="@+id/main_nav_modules_label"
-                        style="@style/WidgetFoundation.TopNav.Label"
-                        android:text="@string/modules" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/main_nav_settings"
-                    style="@style/WidgetFoundation.TopNav.Item">
-
-                    <ImageView
-                        android:id="@+id/main_nav_settings_icon"
-                        style="@style/WidgetFoundation.TopNav.Icon"
-                        android:src="@drawable/ic_settings_outlined" />
-
-                    <TextView
-                        android:id="@+id/main_nav_settings_label"
-                        style="@style/WidgetFoundation.TopNav.Label"
-                        android:text="@string/settings" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            </HorizontalScrollView>
 
             <View
                 android:layout_width="match_parent"
