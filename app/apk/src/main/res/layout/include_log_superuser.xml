@@ -23,8 +23,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingTop="@dimen/internal_action_bar_size"
-            app:fitsSystemWindowsInsets="top|bottom"
+            android:paddingBottom="96dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_log_access"
             tools:paddingTop="24dp" />
@@ -51,8 +50,7 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/snackbar_container"
-            app:fitsSystemWindowsInsets="top|bottom"/>
+            android:id="@+id/snackbar_container" />
 
     </FrameLayout>
 

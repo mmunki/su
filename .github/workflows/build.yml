@@ -1,4 +1,4 @@
-name: Build SuperSU
+name: Build :Plugin
 
 on:
     push:
@@ -58,7 +58,7 @@ jobs:
             - name: Task :upload:uploadArtifact
               uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
               with:
-                  name: magisk_${{ matrix.build_type }}
+                  name: plugin_${{ matrix.build_type }}
                   path: out/app-release.apk
                   compression-level: 9
 
@@ -67,16 +67,18 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   if [ "${{ matrix.build_type }}" = "release" ]; then
-                      tag="SuperSU"
+                      tag="plugin"
+                      title=":Plugin"
                       file="out/app-release.apk"
                   else
                       tag="canary_build"
+                      title="canary_build"
                       file="out/app-debug.apk"
                   fi
                   commit=$(git rev-parse --short HEAD)
                   branch=${GITHUB_REF#refs/heads/}
                   build_time=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-                  body=$(printf "SuperSU automated build\n\nBranch: %s\nCommit: %s\nBuild type: %s\nBuild time: %s\nActor: %s\nRepository: %s\n" \
+                  body=$(printf ":Plugin automated build\n\nBranch: %s\nCommit: %s\nBuild type: %s\nBuild time: %s\nActor: %s\nRepository: %s\n" \
                       "$branch" \
                       "$commit" \
                       "${{ matrix.build_type }}" \
@@ -89,5 +91,5 @@ jobs:
                   git tag "$tag"
                   git push origin "$tag"
                   gh release create "$tag" "$file" \
-                      --title "$tag" \
+                      --title "$title" \
                       --notes "$body"

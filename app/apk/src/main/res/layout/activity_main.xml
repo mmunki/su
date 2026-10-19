@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <!--
+        Old style layout: a flat top bar made of the title toolbar plus the
+        navigation row (which replaced the bottom navigation bar). The app bar
+        is part of the layout flow, so it always sits above the content.
+    -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:consumeSystemWindowsInsets="start|end"
+        android:background="?colorSurface"
+        android:orientation="vertical"
+        app:consumeSystemWindowsInsets="start|end|bottom"
         app:edgeToEdge="true"
-        app:fitsSystemWindowsInsets="start|end"
+        app:fitsSystemWindowsInsets="start|end|bottom"
         tools:ignore="RtlHardcoded">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_nav_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/main" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/main_toolbar_wrapper"
@@ -25,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?colorSurfaceSurfaceVariant"
-            android:elevation="4dp"
             app:fitsSystemWindowsInsets="top">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -34,8 +32,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?colorSurfaceSurfaceVariant"
-                app:layout_scrollFlags="noScroll"
                 tools:title="Home" />
+
+            <LinearLayout
+                android:id="@+id/main_top_nav"
+                style="@style/WidgetFoundation.TopNav"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/top_nav_height"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/main_nav_home"
+                    style="@style/WidgetFoundation.TopNav.Item">
+
+                    <ImageView
+                        android:id="@+id/main_nav_home_icon"
+                        style="@style/WidgetFoundation.TopNav.Icon"
+                        android:src="@drawable/ic_home_outlined" />
+
+                    <TextView
+                        android:id="@+id/main_nav_home_label"
+                        style="@style/WidgetFoundation.TopNav.Label"
+                        android:text="@string/section_home" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/main_nav_superuser"
+                    style="@style/WidgetFoundation.TopNav.Item">
+
+                    <ImageView
+                        android:id="@+id/main_nav_superuser_icon"
+                        style="@style/WidgetFoundation.TopNav.Icon"
+                        android:src="@drawable/ic_superuser_outlined" />
+
+                    <TextView
+                        android:id="@+id/main_nav_superuser_label"
+                        style="@style/WidgetFoundation.TopNav.Label"
+                        android:text="@string/superuser" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/main_nav_modules"
+                    style="@style/WidgetFoundation.TopNav.Item">
+
+                    <ImageView
+                        android:id="@+id/main_nav_modules_icon"
+                        style="@style/WidgetFoundation.TopNav.Icon"
+                        android:src="@drawable/ic_module_outlined" />
+
+                    <TextView
+                        android:id="@+id/main_nav_modules_label"
+                        style="@style/WidgetFoundation.TopNav.Label"
+                        android:text="@string/modules" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/main_nav_settings"
+                    style="@style/WidgetFoundation.TopNav.Item">
+
+                    <ImageView
+                        android:id="@+id/main_nav_settings_icon"
+                        style="@style/WidgetFoundation.TopNav.Icon"
+                        android:src="@drawable/ic_settings_outlined" />
+
+                    <TextView
+                        android:id="@+id/main_nav_settings_label"
+                        style="@style/WidgetFoundation.TopNav.Label"
+                        android:text="@string/settings" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -44,23 +114,15 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/main_navigation"
-            style="@style/Widget.MaterialComponents.BottomNavigationView"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/main_nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:background="?colorSurfaceSurfaceVariant"
-            app:elevation="0dp"
-            app:itemIconTint="@color/color_menu_tint"
-            app:itemTextColor="@color/color_menu_tint"
-            app:labelVisibilityMode="selected"
-            app:fitsSystemWindowsInsets="start|end|bottom"
-            app:menu="@menu/menu_bottom_nav" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
 </layout>

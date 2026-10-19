@@ -16,4 +16,7 @@
 
     <!-- Old style square shapes -->
     <dimen name="foundation_corner">0dp</dimen>
+
+    <!-- Old style top navigation bar (replaces the bottom navigation bar) -->
+    <dimen name="top_nav_height">48dp</dimen>
 </resources>

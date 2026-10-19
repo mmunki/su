@@ -9,15 +9,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.core.view.forEach
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import su.android.MainDirections
 import su.android.R
 import su.android.arch.BaseViewModel
@@ -59,10 +59,22 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             val fragmentAnchor = currentFragment?.snackbarAnchorView
             return when {
                 fragmentAnchor?.isVisible == true -> fragmentAnchor
-                binding.mainNavigation.isVisible -> return binding.mainNavigation
                 else -> null
             }
         }
+
+    /**
+     * One entry of the top navigation bar (old style, replaces the bottom bar).
+     */
+    private class TopNavItem(
+        val id: Int,
+        val root: View,
+        val icon: ImageView,
+        val iconSelected: Int,
+        val iconNormal: Int
+    )
+
+    private var topNavItems: List<TopNavItem> = emptyList()
 
     private var isRootFragment = true
 
@@ -105,26 +117,42 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             setDisplayHomeAsUpEnabled(!isRootFragment)
             requestNavigationHidden(!isRootFragment)
 
-            binding.mainNavigation.menu.forEach {
-                if (it.itemId == destination.id) {
-                    it.isChecked = true
-                }
+            topNavItems.forEach { item ->
+                val selected = item.id == destination.id
+                item.root.isSelected = selected
+                item.icon.setImageResource(if (selected) item.iconSelected else item.iconNormal)
             }
         }
 
         setSupportActionBar(binding.mainToolbar)
 
-        binding.mainNavigation.setOnItemSelectedListener {
-            getScreen(it.itemId)?.navigate()
-            true
+        topNavItems = listOf(
+            TopNavItem(
+                R.id.homeFragment, binding.mainNavHome, binding.mainNavHomeIcon,
+                R.drawable.ic_home_filled, R.drawable.ic_home_outlined
+            ),
+            TopNavItem(
+                R.id.superuserFragment, binding.mainNavSuperuser, binding.mainNavSuperuserIcon,
+                R.drawable.ic_superuser_filled, R.drawable.ic_superuser_outlined
+            ),
+            TopNavItem(
+                R.id.modulesFragment, binding.mainNavModules, binding.mainNavModulesIcon,
+                R.drawable.ic_module_filled, R.drawable.ic_module_outlined
+            ),
+            TopNavItem(
+                R.id.settingsFragment, binding.mainNavSettings, binding.mainNavSettingsIcon,
+                R.drawable.ic_settings_filled, R.drawable.ic_settings_outlined
+            )
+        )
+        topNavItems.forEach { item ->
+            item.root.setOnClickListener {
+                if (!item.root.isSelected) {
+                    getScreen(item.id)?.navigate()
+                }
+            }
         }
-        binding.mainNavigation.setOnItemReselectedListener {
-        }
-        binding.mainNavigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
-        binding.mainNavigation.menu.apply {
-            findItem(R.id.superuserFragment)?.isEnabled = Info.showSuperUser
-            findItem(R.id.modulesFragment)?.isEnabled = Info.env.isActive && LocalModule.loaded()
-        }
+        binding.mainNavSuperuser.isEnabled = Info.showSuperUser
+        binding.mainNavModules.isEnabled = Info.env.isActive && LocalModule.loaded()
 
         val section =
             if (intent.action == Intent.ACTION_APPLICATION_PREFERENCES)
@@ -156,12 +184,15 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
     }
 
     internal fun requestNavigationHidden(hide: Boolean = true, requiresAnimation: Boolean = true) {
-        val bottomView = binding.mainNavigation
+        val topNav = binding.mainTopNav
         if (requiresAnimation) {
-            bottomView.isVisible = true
-            bottomView.translationY = if (hide) bottomView.height.toFloat() + (20 * resources.displayMetrics.density) else 0f
+            TransitionManager.beginDelayedTransition(
+                binding.mainToolbarWrapper,
+                AutoTransition().setDuration(200)
+            )
+            topNav.isVisible = !hide
         } else {
-            bottomView.isGone = hide
+            topNav.isGone = hide
         }
     }
 

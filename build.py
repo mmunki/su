@@ -200,7 +200,7 @@ def build_apk(module: str):
 
 
 def build_app():
-    header("* Building the SuperSU app")
+    header("* Building the :Plugin app")
     apk = build_apk(":apk")
 
     build_type = "release" if args.release else "debug"
@@ -305,7 +305,7 @@ def load_config():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="SuperSU build script")
+    parser = argparse.ArgumentParser(description=":Plugin build script")
     parser.set_defaults(func=lambda x: None)
     parser.add_argument(
         "-r", "--release", action="store_true", help="compile in release mode"
@@ -322,7 +322,7 @@ def parse_args():
     subparsers = parser.add_subparsers(title="actions")
 
     all_parser = subparsers.add_parser("all", help="build everything")
-    app_parser = subparsers.add_parser("app", help="build the SuperSU app")
+    app_parser = subparsers.add_parser("app", help="build the :Plugin app")
     clean_parser = subparsers.add_parser("clean", help="cleanup")
 
     all_parser.set_defaults(func=build_all)
