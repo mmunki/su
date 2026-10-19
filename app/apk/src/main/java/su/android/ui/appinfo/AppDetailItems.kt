@@ -42,8 +42,7 @@ class AppDetailSectionItem(
 class AppDetailInfoItem(
     val icon: Int,
     val label: String,
-    val value: String,
-    val selectable: Boolean = true
+    val value: String
 ) : AppDetailRvItem() {
 
     override val layoutRes get() = R.layout.item_app_detail_info

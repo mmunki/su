@@ -3,7 +3,6 @@ package su.android.ui.appinfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import su.android.R
 import su.android.arch.UIActivity
 import su.android.arch.viewModel
@@ -67,7 +66,7 @@ class AppInfoActivity : UIActivity<ActivityAppInfoBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun openApp(view: View, item: AppInfoRvItem) {
+    fun openApp(item: AppInfoRvItem) {
         startActivity(AppDetailActivity.intent(this, item.packageName))
     }
 }

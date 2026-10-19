@@ -24,7 +24,7 @@
         android:layout_marginBottom="@dimen/l_50"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{(view) -> viewModel.openApp(view, item)}">
+        android:onClick="@{() -> viewModel.openApp(item)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
