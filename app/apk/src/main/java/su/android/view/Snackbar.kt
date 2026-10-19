@@ -40,13 +40,13 @@ class Snackbar private constructor(
     }
 
     fun setAction(text: CharSequence?, listener: View.OnClickListener?): Snackbar {
-        val action = action
+        val actionView = action
         if (text == null) {
-            action.isVisible = false
+            actionView.isVisible = false
         } else {
-            action.text = text
-            action.isVisible = true
-            action.setOnClickListener {
+            actionView.text = text
+            actionView.isVisible = true
+            actionView.setOnClickListener {
                 listener?.onClick(it)
                 dismiss()
             }

@@ -61,6 +61,15 @@
         <item name="checkboxStyle">@style/WidgetFoundation.Checkbox</item>
         <item name="radioButtonStyle">@style/WidgetFoundation.RadioButton</item>
         <!--endregion-->
+
+        <!--region Text appearance roles-->
+        <item name="textAppearanceHeadline6">@style/AppearanceFoundation.Large</item>
+        <item name="textAppearanceSubtitle1">@style/AppearanceFoundation.Title</item>
+        <item name="textAppearanceBody1">@style/AppearanceFoundation.Body</item>
+        <item name="textAppearanceCaption">@style/AppearanceFoundation.Caption</item>
+        <item name="textAppearanceOverline">@style/AppearanceFoundation.Tiny</item>
+        <item name="textAppearanceButton">@style/AppearanceFoundation.Caption</item>
+        <!--endregion-->
     </style>
 
     <style name="Base.V23.Theme.Foundation.Light" parent="Base.V23.Theme.Foundation" />

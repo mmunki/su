@@ -25,6 +25,18 @@
     <attr name="colorSecondaryVariant" format="color" />
     <attr name="colorOnError" format="color" />
 
+    <!--
+        Text appearance roles. These used to be provided by the Material
+        Components library; the app owns them now and maps them on the flat
+        Holo appearances below.
+    -->
+    <attr name="textAppearanceHeadline6" format="reference" />
+    <attr name="textAppearanceSubtitle1" format="reference" />
+    <attr name="textAppearanceBody1" format="reference" />
+    <attr name="textAppearanceCaption" format="reference" />
+    <attr name="textAppearanceOverline" format="reference" />
+    <attr name="textAppearanceButton" format="reference" />
+
     <!--endregion-->
 
 </resources>
