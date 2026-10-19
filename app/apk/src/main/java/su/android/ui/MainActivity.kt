@@ -5,6 +5,9 @@ import android.Manifest.permission.REQUEST_INSTALL_PACKAGES
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -14,6 +17,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -210,14 +215,14 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
         }
 
         if (destinationId != R.id.logFragment) {
-            addToolButton(container, R.drawable.ic_folder_list, getString(R.string.logs)) {
+            addToolButton(container, appIcon(R.drawable.ic_folder_list), getString(R.string.logs)) {
                 getScreen(R.id.logFragment)?.navigate()
             }
         }
 
         if (destinationId != R.id.denyFragment) {
             addToolButton(
-                container, R.drawable.ic_shield,
+                container, appIcon(R.drawable.ic_shield),
                 getString(R.string.settings_denylist_config_title)
             ) {
                 getScreen(R.id.denyFragment)?.navigate()
@@ -225,7 +230,7 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
         }
 
         if (destinationId != R.id.settingsFragment) {
-            addToolButton(container, R.drawable.ic_settings_outlined, getString(R.string.settings)) {
+            addToolButton(container, appIcon(R.drawable.ic_settings_outlined), getString(R.string.settings)) {
                 getScreen(R.id.settingsFragment)?.navigate()
             }
         }
@@ -233,14 +238,17 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
         binding.mainToolsScroll.isVisible = container.childCount > 0
     }
 
+    private fun appIcon(@DrawableRes res: Int): Drawable =
+        AppCompatResources.getDrawable(this, res) ?: ColorDrawable(Color.TRANSPARENT)
+
     private fun addToolButton(
         parent: LinearLayout,
-        iconRes: Int,
+        icon: Drawable,
         title: CharSequence?,
         onClick: () -> Unit
     ) {
         val button = layoutInflater.inflate(R.layout.tool_button, parent, false) as ImageView
-        button.setImageResource(iconRes)
+        button.setImageDrawable(icon)
         button.contentDescription = title
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             button.tooltipText = title
