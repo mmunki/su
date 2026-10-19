@@ -1,22 +1,21 @@
 package su.android.ui.theme
 
 import su.android.R
-import su.android.core.Config
 
 enum class Theme(
     val themeName: String,
     val themeRes: Int
 ) {
 
-    Azure(
-        themeName = "Azure",
-        themeRes = R.style.ThemeFoundationMD3_Azure
+    Holo(
+        themeName = "Holo Dark",
+        themeRes = R.style.ThemeFoundationMD3_Holo
     );
 
-    val isSelected get() = Config.themeOrdinal == ordinal
+    val isSelected get() = true
 
     companion object {
-        val selected get() = values().getOrNull(Config.themeOrdinal) ?: Azure
+        val selected get() = Holo
     }
 
 }

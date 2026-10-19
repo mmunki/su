@@ -195,3 +195,9 @@ object Uninstall : BaseSettingsItem.Blank() {
     override val title = CoreR.string.uninstall.asText()
     override val description = CoreR.string.uninstall_summary.asText()
 }
+
+object AppInfo : BaseSettingsItem.Blank() {
+    override val icon: Int? = R.drawable.ic_apps
+    override val title = CoreR.string.app_info_title.asText()
+    override val description = CoreR.string.app_info_summary.asText()
+}

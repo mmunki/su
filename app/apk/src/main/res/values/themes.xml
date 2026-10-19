@@ -1,27 +1,28 @@
 <resources>
 
-    <style name="Base.V23.Theme.Foundation.Light" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Base.V23.Theme.Foundation.Light" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="dialogTheme">@style/ThemeOverlay.Foundation.Dialog</item>
-        <item name="android:statusBarColor">#40bdbdbd</item>
-        <item name="android:navigationBarColor">#38000000</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="colorPrimary">#007AFF</item>
-        <item name="colorSecondary">#007AFF</item>
-        <item name="colorTertiary">#007AFF</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorPrimary">#33B5E5</item>
+        <item name="colorSecondary">#33B5E5</item>
+        <item name="colorTertiary">#AA66CC</item>
         <item name="materialCardViewStyle">@style/Widget.Foundation.CardView</item>
     </style>
 
-    <style name="Base.V23.Theme.Foundation" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.V23.Theme.Foundation" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="dialogTheme">@style/ThemeOverlay.Foundation.Dialog</item>
-        <item name="android:statusBarColor">#60000000</item>
-        <item name="android:navigationBarColor">#60000000</item>
-        <item name="colorPrimary">#007AFF</item>
-        <item name="colorSecondary">#007AFF</item>
-        <item name="colorTertiary">#007AFF</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorPrimary">#33B5E5</item>
+        <item name="colorSecondary">#33B5E5</item>
+        <item name="colorTertiary">#AA66CC</item>
         <item name="materialCardViewStyle">@style/Widget.Foundation.CardView</item>
     </style>
 
@@ -43,7 +44,7 @@
 
     <style name="ShapeAppearance.Foundation.Card" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">24dp</item>
+        <item name="cornerSize">0dp</item>
     </style>
 
 </resources>

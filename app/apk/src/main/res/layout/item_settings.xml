@@ -24,7 +24,7 @@
         android:clickable="@{item.enabled}"
         android:focusable="@{item.enabled}"
         android:onClick="@{(view) -> item.onPressed(view, handler)}"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:strokeWidth="0dp"
         tools:layout_gravity="center">

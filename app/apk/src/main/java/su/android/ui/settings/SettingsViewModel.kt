@@ -1,6 +1,7 @@
 package su.android.ui.settings
 
 import android.os.Build
+import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ import su.android.databinding.bindExtra
 import su.android.dialog.UninstallDialog
 import su.android.events.AuthEvent
 import su.android.events.SnackbarEvent
+import su.android.ui.appinfo.AppInfoActivity
 
 class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
 
@@ -31,6 +33,8 @@ class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
 
         val generalList = mutableListOf<BaseSettingsItem>(DoHToggle, DownloadPath)
         resultList.add(SettingsGroupItem.CardGroup(children = generalList))
+
+        resultList.add(SettingsGroupItem.CardGroup(children = listOf(AppInfo)))
 
         if (Info.env.isActive) {
             val systemList = mutableListOf<BaseSettingsItem>(SystemlessHosts)
@@ -78,6 +82,9 @@ class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
         when (item) {
             SystemlessHosts -> createHosts()
             DenyListConfig -> SettingsFragmentDirections.actionSettingsFragmentToDenyFragment().navigate()
+            AppInfo -> view.context.startActivity(
+                Intent(view.context, AppInfoActivity::class.java)
+            )
             Zygisk -> if (Zygisk.mismatch) SnackbarEvent(R.string.reboot_apply_change).publish()
             else -> Unit
         }

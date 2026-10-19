@@ -94,6 +94,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.appinfo.AppInfoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.appinfo.AppDetailActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

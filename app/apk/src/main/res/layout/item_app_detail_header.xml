@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="su.android.R" />
+
+        <variable
+            name="item"
+            type="su.android.ui.appinfo.AppDetailHeaderItem" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/WidgetFoundation.Card.Elevated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/l_50"
+        android:layout_marginTop="@dimen/l1"
+        android:layout_marginEnd="@dimen/l_50"
+        android:layout_marginBottom="@dimen/l_50">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/l1">
+
+            <ImageView
+                android:id="@+id/detail_icon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@{item.icon}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/detail_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:text="@{item.label}"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/detail_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="SuperSU" />
+
+            <TextView
+                android:id="@+id/detail_package"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:text="@{item.packageName}"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?colorOnSurfaceVariant"
+                app:layout_constraintEnd_toEndOf="@+id/detail_name"
+                app:layout_constraintStart_toStartOf="@+id/detail_name"
+                app:layout_constraintTop_toBottomOf="@+id/detail_name"
+                tools:text="su.android" />
+
+            <TextView
+                android:id="@+id/detail_version"
+                gone="@{item.versionName.empty}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:text="@{@string/app_info_version_format(item.versionName)}"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/detail_name"
+                app:layout_constraintStart_toStartOf="@+id/detail_name"
+                app:layout_constraintTop_toBottomOf="@+id/detail_package"
+                tools:text="Version 1.0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
