@@ -22,31 +22,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageButton
             gone="@{viewModel.loading}"
             android:id="@+id/log_filter_toggle"
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            style="@style/WidgetFoundation.Fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginStart="@dimen/l1"
             android:layout_marginEnd="@dimen/l1"
             android:layout_marginBottom="72dp"
-            app:backgroundTint="?colorSurfaceSurfaceVariant"
+            android:backgroundTint="?colorSurfaceSurfaceVariant"
             app:layout_fitsSystemWindowsInsets="bottom"
             app:srcCompat="@drawable/ic_folder_list"
             app:tint="?colorPrimary"
             tools:layout_marginBottom="64dp" />
 
-        <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+        <FrameLayout
             android:id="@+id/log_filter"
             style="@style/WidgetFoundation.Card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:visibility="invisible"
-            app:cardBackgroundColor="?colorSurface"
-            app:cardCornerRadius="0dp">
+            android:background="?colorSurface">
 
             <include
                 android:id="@+id/log_filter_superuser"
@@ -55,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+        </FrameLayout>
 
     </FrameLayout>
 

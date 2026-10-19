@@ -6,10 +6,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.appcompat.widget.AppCompatImageButton
 
 /**
- * A [FloatingActionButton] that can be dragged anywhere inside its parent.
+ * An [AppCompatImageButton] that can be dragged anywhere inside its parent.
  *
  * A simple tap is still dispatched as a regular click, only touch sequences
  * that move further than the touch slop turn into a drag.
@@ -17,8 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MovableFab @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = com.google.android.material.R.attr.floatingActionButtonStyle
-) : FloatingActionButton(context, attrs, defStyleAttr) {
+    defStyleAttr: Int = android.R.attr.imageButtonStyle
+) : AppCompatImageButton(context, attrs, defStyleAttr) {
 
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     private val edgeMargin = (resources.displayMetrics.density * 8).toInt()

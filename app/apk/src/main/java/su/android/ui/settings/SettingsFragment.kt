@@ -41,24 +41,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         populateCards()
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.settingsScrollView) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            val tv = TypedValue()
-            val actionBarSize = if (requireContext().theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-                TypedValue.complexToDimensionPixelSize(tv.data, resources.displayMetrics)
-            } else 0
-
-            val extraBottom = (80 * resources.displayMetrics.density).toInt()
-
-            v.updatePadding(
-                top = systemBars.top + actionBarSize,
-                bottom = systemBars.bottom + extraBottom
-            )
-
-            insets
-        }
     }
 
     private fun populateCards() {

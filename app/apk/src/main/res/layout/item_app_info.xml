@@ -17,7 +17,7 @@
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <FrameLayout
         style="@style/WidgetFoundation.Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,6 +98,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
 </layout>

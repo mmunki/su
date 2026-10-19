@@ -2,10 +2,11 @@ package su.android.view
 
 import android.app.Activity
 import android.content.DialogInterface
-import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,6 @@ import androidx.databinding.Bindable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.color.MaterialColors
-import com.google.android.material.shape.MaterialShapeDrawable
 import su.android.BR
 import su.android.R
 import su.android.arch.UIActivity
@@ -130,19 +129,26 @@ class MaterialDialog(
         super.onCreate(savedInstanceState)
         super.setContentView(binding.root)
 
-        val default = MaterialColors.getColor(context, com.google.android.material.R.attr.colorSurface, javaClass.canonicalName)
-        val surfaceColor = MaterialColors.getColor(context, R.attr.colorSurfaceSurfaceVariant, default)
-        val materialShapeDrawable = MaterialShapeDrawable(context, null, androidx.appcompat.R.attr.alertDialogStyle, com.google.android.material.R.style.MaterialAlertDialog_MaterialComponents)
-        materialShapeDrawable.initializeElevationOverlay(context)
-        materialShapeDrawable.fillColor = ColorStateList.valueOf(surfaceColor)
-        materialShapeDrawable.elevation = context.resources.getDimension(R.dimen.margin_generic)
-        materialShapeDrawable.setCornerSize(context.resources.getDimension(R.dimen.foundation_corner))
+        // Flat, square dialog surface painted with the app owned color roles.
+        val surface = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(resolveColor(R.attr.colorSurfaceSurfaceVariant, android.graphics.Color.BLACK))
+            setStroke(
+                resources.displayMetrics.density.toInt().coerceAtLeast(1),
+                resolveColor(R.attr.colorBorder, android.graphics.Color.DKGRAY)
+            )
+        }
 
-        val inset = context.resources.getDimensionPixelSize(com.google.android.material.R.dimen.appcompat_dialog_background_inset)
+        val inset = resources.getDimensionPixelSize(R.dimen.margin_generic)
         window?.apply {
-            setBackgroundDrawable(InsetDrawable(materialShapeDrawable, inset, inset, inset, inset))
+            setBackgroundDrawable(InsetDrawable(surface, inset, inset, inset, inset))
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
+    }
+
+    private fun resolveColor(attr: Int, fallback: Int): Int {
+        val typedValue = TypedValue()
+        return if (context.theme.resolveAttribute(attr, typedValue, true)) typedValue.data else fallback
     }
 
     override fun setTitle(@StringRes titleId: Int) { data.title = context.getString(titleId) }

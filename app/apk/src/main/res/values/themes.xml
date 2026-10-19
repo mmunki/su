@@ -1,11 +1,11 @@
 <resources>
 
     <!--
-        Holo Dark built strictly on the classic Material Design theme
-        (Material Components before Material 3 existed): flat surfaces,
-        square shapes, Holo blue accents and classic control colors.
+        Holo Dark, built purely on AndroidX/AppCompat (no Google Material
+        library anywhere): flat surfaces, square shapes, Holo blue accents and
+        classic control colors.
     -->
-    <style name="Base.V23.Theme.Foundation" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Base.V23.Theme.Foundation" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="dialogTheme">@style/ThemeOverlay.Foundation.Dialog</item>
@@ -13,7 +13,7 @@
         <item name="android:navigationBarColor">#000000</item>
         <item name="android:windowLightStatusBar">false</item>
 
-        <!--region Holo Dark palette (classic Material color roles)-->
+        <!--region Holo Dark palette-->
         <item name="android:colorBackground">#000000</item>
         <item name="colorOnBackground">#FFFFFF</item>
 
@@ -21,6 +21,7 @@
         <item name="colorOnSurface">#FFFFFF</item>
 
         <item name="colorPrimary">#33B5E5</item>
+        <item name="colorPrimaryDark">#1B7B9E</item>
         <item name="colorPrimaryVariant">#1B7B9E</item>
         <item name="colorOnPrimary">#FFFFFF</item>
 
@@ -31,7 +32,7 @@
         <item name="colorError">#FF4444</item>
         <item name="colorOnError">#FFFFFF</item>
 
-        <!--region Classic Material / Holo control colors-->
+        <!--region Classic control colors-->
         <item name="colorAccent">#33B5E5</item>
         <item name="android:colorAccent">#33B5E5</item>
         <item name="colorControlNormal">#B0B0B0</item>
@@ -42,10 +43,6 @@
         <item name="android:colorBackgroundFloating">#1A1A1A</item>
         <!--endregion-->
 
-        <!-- Flat, non tinted surfaces: classic Material had no tonal elevation -->
-        <item name="elevationOverlayEnabled">false</item>
-        <item name="elevationOverlayColor">#00000000</item>
-
         <!--region Flat Holo highlights instead of Material ripples-->
         <item name="selectableItemBackground">@drawable/foundation_selectable_item_background</item>
         <item name="selectableItemBackgroundBorderless">@drawable/foundation_selectable_item_background_borderless</item>
@@ -53,14 +50,17 @@
         <item name="android:selectableItemBackgroundBorderless">@drawable/foundation_selectable_item_background_borderless</item>
         <!--endregion-->
 
-        <!--region Foundation roles (app owned, not Material 3 roles)-->
+        <!--region Foundation roles (app owned)-->
         <item name="colorSurfaceSurfaceVariant">#1A1A1A</item>
         <item name="colorTextSecondary">#B0B0B0</item>
         <item name="colorBorder">#333333</item>
         <!--endregion-->
 
-        <item name="materialCardViewStyle">@style/Widget.Foundation.CardView</item>
-        <item name="popupMenuBackground">@drawable/foundation_popup_background</item>
+        <!--region Square, flat widgets-->
+        <item name="buttonStyle">@style/WidgetFoundation.Button</item>
+        <item name="checkboxStyle">@style/WidgetFoundation.Checkbox</item>
+        <item name="radioButtonStyle">@style/WidgetFoundation.RadioButton</item>
+        <!--endregion-->
     </style>
 
     <style name="Base.V23.Theme.Foundation.Light" parent="Base.V23.Theme.Foundation" />
@@ -69,10 +69,9 @@
 
     <style name="Theme.Foundation" parent="Base.V23.Theme.Foundation" />
 
-    <style name="Base.V23.ThemeOverlay.Foundation.Dialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <style name="Base.V23.ThemeOverlay.Foundation.Dialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="android:windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
         <item name="android:windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Foundation.Card</item>
 
         <!-- Force the classic dark dialog look on every API level -->
         <item name="android:colorBackground">#1A1A1A</item>
@@ -88,19 +87,5 @@
     </style>
 
     <style name="ThemeOverlay.Foundation.Dialog" parent="Base.V23.ThemeOverlay.Foundation.Dialog" />
-
-    <style name="Widget.Foundation.CardView" parent="Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Foundation.Card</item>
-    </style>
-
-    <style name="ShapeAppearance.Foundation.Card" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">0dp</item>
-    </style>
-
-    <style name="ShapeAppearance.Foundation.Button" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">0dp</item>
-    </style>
 
 </resources>

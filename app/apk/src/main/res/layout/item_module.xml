@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.card.MaterialCardView
+        <FrameLayout
             android:id="@+id/module"
             style="@style/WidgetFoundation.Card"
             isEnabled="@{!item.removed &amp;&amp; item.enabled &amp;&amp; !item.showNotice}"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:focusable="@{!item.removed &amp;&amp; item.enabled &amp;&amp; !item.showNotice}"
             android:nextFocusRight="@id/module_indicator"
-            app:cardBackgroundColor="@color/color_card_background_color_selector"
+            android:background="@color/color_card_background_color_selector"
             tools:isEnabled="false"
             tools:layout_gravity="center"
             tools:layout_margin="@dimen/l1">
@@ -89,7 +89,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/module_title"
                     tools:text="@tools:sample/lorem" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/module_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -140,8 +140,7 @@
                     android:onClick="@{() -> viewModel.downloadPressed(item.item.updateInfo)}"
                     android:text="@string/update"
                     android:textAllCaps="false"
-                    app:icon="@drawable/ic_update"
-                    app:iconGravity="textEnd"
+                    android:drawableStart="@drawable/ic_update"
                     app:layout_constraintBottom_toBottomOf="@+id/module_remove"
                     app:layout_constraintEnd_toStartOf="@+id/module_remove"
                     app:layout_constraintTop_toTopOf="@+id/module_remove"
@@ -160,7 +159,6 @@
                     android:textAllCaps="false"
                     android:theme="@style/ThemeOverlay.Button.Text.Secondary"
                     app:icon="@{item.removed ? @drawable/ic_restart : @drawable/ic_delete}"
-                    app:iconGravity="textEnd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/module_divider"
                     tools:icon="@drawable/ic_delete"
@@ -205,8 +203,7 @@
                     android:text="@string/module_action"
                     android:textAllCaps="false"
                     android:visibility="gone"
-                    app:icon="@drawable/ic_action"
-                    app:iconGravity="textStart"
+                    android:drawableStart="@drawable/ic_action"
                     app:layout_constraintBottom_toBottomOf="@+id/module_remove"
                     app:layout_constraintTop_toTopOf="@+id/module_remove"
                     app:layout_constraintStart_toStartOf="parent"
@@ -214,7 +211,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
     </FrameLayout>
 

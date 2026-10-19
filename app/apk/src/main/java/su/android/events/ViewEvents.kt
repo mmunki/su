@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.navigation.NavDirections
-import com.google.android.material.snackbar.Snackbar
 import su.android.arch.ActivityExecutor
 import su.android.arch.ContextExecutor
 import su.android.arch.NavigationActivity
@@ -16,6 +15,7 @@ import su.android.utils.TextHolder
 import su.android.utils.asText
 import su.android.view.MaterialDialog
 import su.android.view.Shortcuts
+import su.android.view.Snackbar
 
 class PermissionEvent(
     private val permission: String,

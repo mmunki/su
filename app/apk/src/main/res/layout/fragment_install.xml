@@ -30,16 +30,14 @@
             android:orientation="vertical"
             android:paddingTop="@dimen/l_50">
 
-            <com.google.android.material.card.MaterialCardView
+            <FrameLayout
                 style="@style/WidgetFoundation.Card.Elevated"
                 gone="@{viewModel.skipOptions}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/l1"
                 android:layout_marginEnd="@dimen/l1"
-                android:focusable="false"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
+                android:focusable="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,18 +119,16 @@
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
-            <com.google.android.material.card.MaterialCardView
+            <FrameLayout
                 style="@style/WidgetFoundation.Card.Elevated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/l1"
                 android:layout_marginTop="@dimen/l1"
                 android:layout_marginEnd="@dimen/l1"
-                android:focusable="false"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
+                android:focusable="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -167,8 +163,7 @@
                             android:layout_height="wrap_content"
                             android:onClick="@{() -> viewModel.install()}"
                             android:text="@string/install_start"    
-                            app:icon="@drawable/ic_forth"
-                            app:iconGravity="textEnd" />
+                            android:drawableStart="@drawable/ic_forth" />
 
                     </LinearLayout>
 
@@ -214,9 +209,9 @@
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
-            <com.google.android.material.card.MaterialCardView
+            <FrameLayout
                 style="@style/WidgetFoundation.Card.Elevated"
                 gone="@{viewModel.notes.length == 0}"
                 android:layout_width="match_parent"
@@ -224,9 +219,7 @@
                 android:layout_marginStart="@dimen/l1"
                 android:layout_marginTop="@dimen/l1"
                 android:layout_marginEnd="@dimen/l1"
-                android:focusable="false"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
+                android:focusable="false">
 
                 <TextView
                     android:id="@+id/release_notes"
@@ -241,7 +234,7 @@
                     tools:text="@tools:sample/lorem/random"
                     tools:visibility="visible" />
 
-            </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
         </LinearLayout>
 

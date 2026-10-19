@@ -16,7 +16,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
-import com.google.android.material.snackbar.Snackbar
 import su.android.BR
 import su.android.R
 import su.android.core.Config
@@ -25,6 +24,7 @@ import su.android.core.base.IActivityExtension
 import su.android.core.isRunningAsStub
 import su.android.core.ktx.reflectField
 import su.android.core.wrap
+import su.android.view.Snackbar
 import rikka.insets.WindowInsetsHelper
 import rikka.layoutinflater.view.LayoutInflaterFactory
 

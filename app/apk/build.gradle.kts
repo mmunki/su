@@ -77,7 +77,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.collection.ktx)
     implementation(libs.profileinstaller)
-    implementation(libs.material)
+    implementation(libs.coordinatorlayout)
 
     compileOnly(libs.test.junit)
     compileOnly(libs.test.uiautomator)
@@ -88,7 +88,6 @@ dependencies {
     implementation(libs.rikka.recyclerview)
 
     implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
 
     implementation(libs.constraintlayout)
     implementation(libs.swiperefreshlayout)
@@ -99,6 +98,12 @@ dependencies {
 
     // Make sure kapt runs with a proper kotlin-stdlib
     kapt(kotlin("stdlib"))
+}
+
+// The app is built purely on AndroidX/AppCompat: the Google Material library is
+// neither used nor wanted, not even as a transitive dependency.
+configurations.configureEach {
+    exclude(group = "com.google.android.material", module = "material")
 }
 
 tasks.matching { it.name.contains("JniLibs") }.configureEach {

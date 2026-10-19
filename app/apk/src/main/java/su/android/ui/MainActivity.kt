@@ -5,20 +5,12 @@ import android.Manifest.permission.REQUEST_INSTALL_PACKAGES
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ApplicationInfo
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.DrawableRes
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -30,7 +22,6 @@ import su.android.MainDirections
 import su.android.R
 import su.android.arch.BaseViewModel
 import su.android.arch.NavigationActivity
-import su.android.arch.ToolPaletteProvider
 import su.android.arch.startAnimations
 import su.android.arch.viewModel
 import su.android.core.Config
@@ -74,12 +65,11 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
 
     /**
      * One entry of the primary navigation bar (old style, replaces the bottom bar).
+     * The tabs are text only now, so a toggle is just its label.
      */
     private class NavToggle(
         val id: Int,
-        val icon: ImageView,
-        val iconSelected: Int,
-        val iconNormal: Int
+        val view: TextView
     )
 
     private var navToggles: List<NavToggle> = emptyList()
@@ -123,47 +113,24 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             }
 
             setDisplayHomeAsUpEnabled(!isRootFragment)
-            requestNavigationHidden(!isRootFragment)
 
             navToggles.forEach { toggle ->
-                val selected = toggle.id == destination.id
-                toggle.icon.isSelected = selected
-                toggle.icon.setImageResource(if (selected) toggle.iconSelected else toggle.iconNormal)
+                toggle.view.isSelected = toggle.id == destination.id
             }
-
-            binding.mainTools.post { rebuildToolPalette(destination.id) }
         }
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        binding.mainBarBrand.setOnClickListener {
-            if (navigation.currentDestination?.id != R.id.homeFragment) {
-                getScreen(R.id.homeFragment)?.navigate()
-            }
-        }
-
         navToggles = listOf(
-            NavToggle(
-                R.id.homeFragment, binding.mainNavHome,
-                R.drawable.ic_home_filled, R.drawable.ic_home_outlined
-            ),
-            NavToggle(
-                R.id.superuserFragment, binding.mainNavSuperuser,
-                R.drawable.ic_superuser_filled, R.drawable.ic_superuser_outlined
-            ),
-            NavToggle(
-                R.id.modulesFragment, binding.mainNavModules,
-                R.drawable.ic_module_filled, R.drawable.ic_module_outlined
-            ),
-            NavToggle(
-                R.id.settingsFragment, binding.mainNavSettings,
-                R.drawable.ic_settings_filled, R.drawable.ic_settings_outlined
-            )
+            NavToggle(R.id.homeFragment, binding.mainNavHome),
+            NavToggle(R.id.superuserFragment, binding.mainNavSuperuser),
+            NavToggle(R.id.modulesFragment, binding.mainNavModules),
+            NavToggle(R.id.settingsFragment, binding.mainNavSettings)
         )
         navToggles.forEach { toggle ->
-            toggle.icon.setOnClickListener {
-                if (!toggle.icon.isSelected) {
+            toggle.view.setOnClickListener {
+                if (!toggle.view.isSelected) {
                     getScreen(toggle.id)?.navigate()
                 }
             }
@@ -178,87 +145,6 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
                 intent.getStringExtra(Const.Key.OPEN_SECTION)
 
         getScreen(section)?.navigate()
-
-        if (!isRootFragment) {
-            requestNavigationHidden(requiresAnimation = savedInstanceState == null)
-        }
-
-        binding.mainTools.post {
-            rebuildToolPalette(navigation.currentDestination?.id ?: R.id.homeFragment)
-        }
-    }
-
-    /**
-     * Rebuilds the dense, scrollable tool palette (the second action bar row) out
-     * of the tools provided by the current screen plus the global quick tools.
-     */
-    private fun rebuildToolPalette(destinationId: Int) {
-        val container = binding.mainTools
-        container.removeAllViews()
-
-        val provider = currentFragment as? ToolPaletteProvider
-        if (provider != null && provider.paletteMenuRes != 0) {
-            val holder = PopupMenu(this, container)
-            menuInflater.inflate(provider.paletteMenuRes, holder.menu)
-            val menu = holder.menu
-            for (i in 0 until menu.size()) {
-                val item = menu.getItem(i)
-                val icon = item.icon ?: continue
-                addToolButton(container, icon, item.title) {
-                    provider.onPaletteItemSelected(item.itemId)
-                }
-            }
-        }
-
-        if (container.childCount > 0) {
-            addToolDivider(container)
-        }
-
-        if (destinationId != R.id.logFragment) {
-            addToolButton(container, appIcon(R.drawable.ic_folder_list), getString(R.string.logs)) {
-                getScreen(R.id.logFragment)?.navigate()
-            }
-        }
-
-        if (destinationId != R.id.denyFragment) {
-            addToolButton(
-                container, appIcon(R.drawable.ic_shield),
-                getString(R.string.settings_denylist_config_title)
-            ) {
-                getScreen(R.id.denyFragment)?.navigate()
-            }
-        }
-
-        if (destinationId != R.id.settingsFragment) {
-            addToolButton(container, appIcon(R.drawable.ic_settings_outlined), getString(R.string.settings)) {
-                getScreen(R.id.settingsFragment)?.navigate()
-            }
-        }
-
-        binding.mainToolsScroll.isVisible = container.childCount > 0
-    }
-
-    private fun appIcon(@DrawableRes res: Int): Drawable =
-        AppCompatResources.getDrawable(this, res) ?: ColorDrawable(Color.TRANSPARENT)
-
-    private fun addToolButton(
-        parent: LinearLayout,
-        icon: Drawable,
-        title: CharSequence?,
-        onClick: () -> Unit
-    ) {
-        val button = layoutInflater.inflate(R.layout.tool_button, parent, false) as ImageView
-        button.setImageDrawable(icon)
-        button.contentDescription = title
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            button.tooltipText = title
-        }
-        button.setOnClickListener { onClick() }
-        parent.addView(button)
-    }
-
-    private fun addToolDivider(parent: LinearLayout) {
-        parent.addView(layoutInflater.inflate(R.layout.tool_divider, parent, false))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

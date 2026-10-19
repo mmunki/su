@@ -10,7 +10,7 @@
 
     <!--endregion-->
 
-    <style name="Foundation.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+    <style name="Foundation.PopupMenu" parent="Widget.AppCompat.PopupMenu">
         <item name="android:itemTextAppearance">@style/AppearanceFoundation.Caption</item>
         <item name="android:textStyle">bold</item>
         <item name="android:popupBackground">@drawable/foundation_popup_background</item>

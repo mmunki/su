@@ -28,7 +28,7 @@
             tools:listitem="@layout/item_log_access"
             tools:paddingTop="24dp" />
 
-        <com.google.android.material.progressindicator.LinearProgressIndicator
+        <ProgressBar
             style="@style/WidgetFoundation.ProgressBar.Indeterminate"
             goneUnless="@{viewModel.loading}"
             android:layout_marginTop="@dimen/l1" />

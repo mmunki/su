@@ -2,7 +2,7 @@ package su.android.ui.log
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textview.MaterialTextView
+import android.widget.TextView
 import su.android.R
 import su.android.databinding.DiffItem
 import su.android.databinding.ItemWrapper
@@ -15,7 +15,7 @@ class LogRvItem(
     override val layoutRes = R.layout.item_log_textview
 
     override fun onBind(binding: ViewDataBinding, recyclerView: RecyclerView) {
-        val view = binding.root as MaterialTextView
+        val view = binding.root as TextView
         view.measure(0, 0)
         val desiredWidth = view.measuredWidth
         val layoutParams = view.layoutParams

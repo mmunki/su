@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <com.google.android.material.card.MaterialCardView
+        <FrameLayout
             android:id="@+id/policy"
             style="@style/WidgetFoundation.Card"
             android:layout_width="match_parent"
@@ -87,32 +87,42 @@
                         app:layout_constraintVertical_bias="0"
                         tools:text="su.android" />
 
-                    <FrameLayout
+                    <LinearLayout
                         android:id="@+id/policy_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/l1"
+                        android:gravity="center_vertical"
                         android:nextFocusLeft="@id/policy"
+                        android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <com.google.android.material.switchmaterial.SwitchMaterial
+                        <TextView
+                            goneUnless="@{item.showSlider}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:minWidth="48dp"
+                            android:text="@{item.policyLabel}"
+                            android:textAppearance="@style/AppearanceFoundation.Caption.Primary"
+                            android:textStyle="bold"
+                            tools:text="@string/deny" />
+
+                        <androidx.appcompat.widget.SwitchCompat
                             gone="@{item.showSlider}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="@={item.enabled}" />
 
-                        <com.google.android.material.slider.Slider
+                        <SeekBar
                             goneUnless="@{item.showSlider}"
-                            labelFormatter="@{item.sliderValueToPolicyString}"
                             android:layout_width="96dp"
                             android:layout_height="wrap_content"
-                            android:stepSize="1"
-                            android:value="@={DataBindingAdaptersKt.policyToSliderValue(item.sliderValue)}"
-                            android:valueFrom="1"
-                            android:valueTo="3" />
-                    </FrameLayout>
+                            android:max="3"
+                            app:seekProgress="@={DataBindingAdaptersKt.policyToSeekBarProgress(item.sliderValue)}" />
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -138,8 +148,8 @@
                         android:textAllCaps="false"
                         android:textAppearance="@style/AppearanceFoundation.Tiny"
                         android:textColor="@color/color_state_primary_transient"
-                        app:icon="@drawable/ic_notifications"
-                        app:iconTint="@color/color_state_primary_transient"
+                        android:drawableTint="@color/color_state_primary_transient"
+                        android:drawableStart="@drawable/ic_notifications"
                         app:tint="@color/color_state_primary_transient" />
 
                     <View
@@ -162,8 +172,8 @@
                         android:textAllCaps="false"
                         android:textAppearance="@style/AppearanceFoundation.Tiny"
                         android:textColor="@color/color_state_primary_transient"
-                        app:icon="@drawable/ic_bug"
-                        app:iconTint="@color/color_state_primary_transient"
+                        android:drawableTint="@color/color_state_primary_transient"
+                        android:drawableStart="@drawable/ic_bug"
                         app:tint="@color/color_state_primary_transient" />
 
                     <View
@@ -185,15 +195,14 @@
                         android:textAllCaps="false"
                         android:textColor="?colorError"
                         android:textSize="12sp"
-                        app:icon="@drawable/ic_delete"
-                        app:iconTint="?colorError"
-                        app:rippleColor="?colorError" />
+                        android:drawableTint="?colorError"
+                        android:drawableStart="@drawable/ic_delete" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
     </FrameLayout>
 

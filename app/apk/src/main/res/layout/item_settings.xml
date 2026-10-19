@@ -15,7 +15,7 @@
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <FrameLayout
         style="@style/WidgetFoundation.Card"
         isEnabled="@{item.enabled}"
         android:layout_width="match_parent"
@@ -24,9 +24,6 @@
         android:clickable="@{item.enabled}"
         android:focusable="@{item.enabled}"
         android:onClick="@{(view) -> item.onPressed(view, handler)}"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp"
         tools:layout_gravity="center">
 
         <LinearLayout
@@ -76,7 +73,7 @@
 
             </LinearLayout>
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/selector_indicator"
                 goneUnless="@{item.showSwitch}"
                 isEnabled="@{item.enabled}"
@@ -88,6 +85,6 @@
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
 </layout>

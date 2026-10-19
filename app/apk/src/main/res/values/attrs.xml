@@ -10,6 +10,21 @@
     <attr name="colorTextSecondary" format="color" />
     <attr name="colorBorder" format="color" />
 
+    <!--
+        Classic color roles that used to be provided by the Material Components
+        library. They are owned by this app now that the app is built purely on
+        AndroidX/AppCompat widgets.
+    -->
+    <attr name="colorSurface" format="color" />
+    <attr name="colorOnSurface" format="color" />
+    <attr name="colorOnBackground" format="color" />
+    <attr name="colorOnPrimary" format="color" />
+    <attr name="colorSecondary" format="color" />
+    <attr name="colorOnSecondary" format="color" />
+    <attr name="colorPrimaryVariant" format="color" />
+    <attr name="colorSecondaryVariant" format="color" />
+    <attr name="colorOnError" format="color" />
+
     <!--endregion-->
 
 </resources>

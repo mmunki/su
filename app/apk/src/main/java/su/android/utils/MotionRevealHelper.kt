@@ -1,86 +1,50 @@
 package su.android.utils
 
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.view.View
-import androidx.core.animation.addListener
-import androidx.core.text.layoutDirection
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
-import androidx.core.view.marginEnd
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import com.google.android.material.circularreveal.CircularRevealCompat
-import com.google.android.material.circularreveal.CircularRevealWidget
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import su.android.core.utils.LocaleSetting
-import kotlin.math.hypot
 
+/**
+ * Reveals or hides an overlay panel while travelling its toggle button between
+ * the corner of the screen and the center of the panel.
+ *
+ * This used to be a circular reveal animation built on the Material library; it
+ * is now a plain fade plus a translation, which fits the flat, classic look of
+ * the rest of the UI.
+ */
 object MotionRevealHelper {
 
-    fun <CV> withViews(
-        revealable: CV,
-        fab: FloatingActionButton,
-        expanded: Boolean
-    ) where CV : CircularRevealWidget, CV : View {
-        revealable.revealInfo = revealable.createRevealInfo(!expanded)
+    private const val DURATION = 180L
 
-        val revealInfo = revealable.createRevealInfo(expanded)
-        val revealAnim = revealable.createRevealAnim(revealInfo)
-        val moveAnim = fab.createMoveAnim(revealInfo)
-
-        AnimatorSet().also {
-            if (expanded) {
-                it.play(revealAnim).after(moveAnim)
-            } else {
-                it.play(moveAnim).after(revealAnim)
-            }
-        }.start()
-    }
-
-    private fun <CV> CV.createRevealAnim(
-        revealInfo: CircularRevealWidget.RevealInfo
-    ): Animator where CV : CircularRevealWidget, CV : View =
-        CircularRevealCompat.createCircularReveal(
-            this,
-            revealInfo.centerX,
-            revealInfo.centerY,
-            revealInfo.radius
-        ).apply {
-            addListener(onStart = {
-                isVisible = true
-            }, onEnd = {
-                if (revealInfo.radius == 0f) {
-                    isInvisible = true
-                }
-            })
+    fun withViews(revealable: View, fab: View, expanded: Boolean) {
+        if (expanded) {
+            revealable.animate().cancel()
+            revealable.isVisible = true
+            revealable.alpha = 0f
+            revealable.animate()
+                .alpha(1f)
+                .setDuration(DURATION)
+                .start()
+        } else {
+            revealable.animate().cancel()
+            revealable.alpha = 1f
+            revealable.isInvisible = true
         }
 
-    private fun FloatingActionButton.createMoveAnim(
-        revealInfo: CircularRevealWidget.RevealInfo
-    ): Animator = AnimatorSet().also {
-        it.interpolator = FastOutSlowInInterpolator()
-        it.addListener(onStart = { show() }, onEnd = { if (revealInfo.radius != 0f) hide() })
+        val parent = fab.parent as? View
+        val targetX = if (expanded && parent != null)
+            (parent.width - fab.width) / 2f - fab.left - fab.translationX
+        else 0f
+        val targetY = if (expanded && parent != null)
+            (parent.height - fab.height) / 2f - fab.top - fab.translationY
+        else 0f
 
-        val rtlMod =
-            if (LocaleSetting.instance.currentLocale.layoutDirection == View.LAYOUT_DIRECTION_RTL)
-                1f else -1f
-        val maxX = revealInfo.centerX - marginEnd - measuredWidth / 2f
-        val targetX = if (revealInfo.radius == 0f) 0f else maxX * rtlMod
-        val moveX = ObjectAnimator.ofFloat(this, View.TRANSLATION_X, targetX)
-
-        val maxY = revealInfo.centerY - marginBottom - measuredHeight / 2f
-        val targetY = if (revealInfo.radius == 0f) 0f else -maxY
-        val moveY = ObjectAnimator.ofFloat(this, View.TRANSLATION_Y, targetY)
-
-        it.playTogether(moveX, moveY)
+        fab.animate()
+            .translationX(targetX)
+            .translationY(targetY)
+            .setDuration(DURATION)
+            .setInterpolator(FastOutSlowInInterpolator())
+            .start()
     }
-
-    private fun View.createRevealInfo(expanded: Boolean): CircularRevealWidget.RevealInfo {
-        val cX = measuredWidth / 2f
-        val cY = measuredHeight / 2f - paddingBottom
-        return CircularRevealWidget.RevealInfo(cX, cY, if (expanded) hypot(cX, cY) else 0f)
-    }
-
 }

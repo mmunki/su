@@ -15,12 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.card.MaterialCardView
+        <FrameLayout
             gone="@{viewModel.loading}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:clipToPadding="false">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/module_list"
@@ -34,7 +33,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_module" />
 
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
         <su.android.view.MovableFab
             android:id="@+id/fab_install"
@@ -44,10 +43,8 @@
             android:layout_margin="16dp"
             android:layout_marginBottom="128dp"
             android:contentDescription="@string/menu_install_module"
+            android:elevation="0dp"
             android:onClick="@{() -> viewModel.installPressed()}"
-            app:elevation="0dp"
-            app:pressedTranslationZ="0dp"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Foundation.Button"
             app:srcCompat="@drawable/ic_add" />
 
         <LinearLayout
@@ -66,8 +63,8 @@
                 
                 android:textStyle="bold" />
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                style="@style/Widget.MaterialComponents.CircularProgressIndicator"
+            <ProgressBar
+                style="@style/WidgetFoundation.ProgressBar.Circular"
                 goneUnless="@{viewModel.loading}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

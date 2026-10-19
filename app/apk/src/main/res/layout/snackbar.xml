@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/foundation_snackbar_background"
+    android:elevation="4dp"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/l1"
+    android:paddingTop="@dimen/l_50"
+    android:paddingEnd="@dimen/l_50"
+    android:paddingBottom="@dimen/l_50">
+
+    <TextView
+        android:id="@+id/snackbar_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:textAppearance="@style/AppearanceFoundation.Body"
+        android:textColor="?colorOnSurface" />
+
+    <Button
+        android:id="@+id/snackbar_action"
+        style="@style/WidgetFoundation.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="?colorPrimary"
+        android:visibility="gone" />
+
+</LinearLayout>

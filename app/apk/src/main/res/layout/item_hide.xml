@@ -17,7 +17,7 @@
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <FrameLayout
         style="@style/WidgetFoundation.Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -109,13 +109,13 @@
 
         </LinearLayout>
 
-        <com.google.android.material.progressindicator.LinearProgressIndicator
+        <ProgressBar
             style="@style/WidgetFoundation.ProgressBar"
             gone="@{item.checkedPercent == 0}"
             android:layout_width="match_parent"
             android:layout_gravity="top"
             android:progress="@{item.checkedPercent}" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
 </layout>

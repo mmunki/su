@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Text only navigation tabs: primary when selected. -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?colorDisabledVariant" android:state_enabled="false" />
+
+    <item android:color="?colorDisabled" android:state_enabled="false" />
     <item android:color="?colorPrimary" android:state_selected="true" />
-    <item android:color="?colorOnSurface" />
+    <item android:color="?colorTextSecondary" />
+
 </selector>

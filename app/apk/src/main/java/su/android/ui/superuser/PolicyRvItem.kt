@@ -50,18 +50,20 @@ class PolicyRvItem(
         get() = item.policy
         set(value) = setImpl(value, sliderValue) {
             notifyPropertyChanged(BR.sliderValue)
+            notifyPropertyChanged(BR.policyLabel)
             notifyPropertyChanged(BR.enabled)
             viewModel.updatePolicy(this, it)
         }
 
-    val sliderValueToPolicyString: (Float) -> Int = { value ->
-        when (value.toInt()) {
-            1 -> CoreR.string.deny
-            2 -> CoreR.string.restrict
-            3 -> CoreR.string.grant
+    /** Label of the current policy, shown next to the policy slider. */
+    @get:Bindable
+    val policyLabel: Int
+        get() = when (item.policy) {
+            Policy.DENY -> CoreR.string.deny
+            Policy.RESTRICT -> CoreR.string.restrict
+            Policy.ALLOW -> CoreR.string.grant
             else -> CoreR.string.deny
         }
-    }
 
     @get:Bindable
     var shouldNotify

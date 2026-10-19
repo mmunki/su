@@ -17,7 +17,8 @@
         android:background="?colorSurface"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/app_detail_appbar"
             style="@style/WidgetFoundation.Appbar"
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             android:background="?colorSurfaceSurfaceVariant"
             app:fitsSystemWindowsInsets="top">
 
-            <com.google.android.material.appbar.MaterialToolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/app_detail_toolbar"
                 style="@style/WidgetFoundation.Toolbar"
                 android:layout_width="match_parent"
@@ -36,7 +37,7 @@
                 android:layout_height="2dp"
                 android:background="?colorPrimary" />
 
-        </com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -56,14 +57,13 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_app_detail_info" />
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
+            <ProgressBar
+                style="@style/WidgetFoundation.ProgressBar.Circular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:indeterminate="true"
                 android:visibility="@{viewModel.loading ? android.view.View.VISIBLE : android.view.View.GONE}"
-                app:indicatorSize="48dp"
-                app:trackCornerRadius="8dp"
                 tools:visibility="visible" />
 
         </FrameLayout>

@@ -24,7 +24,8 @@
         android:paddingEnd="16dp"
         android:paddingBottom="128dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageButton
+            style="@style/WidgetFoundation.Fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.installPressed()}"

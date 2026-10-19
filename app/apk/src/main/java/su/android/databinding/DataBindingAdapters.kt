@@ -12,11 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.SeekBar
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.updateLayoutParams
@@ -31,11 +32,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
-import com.google.android.material.chip.Chip
-import com.google.android.material.slider.Slider
-import com.google.android.material.textfield.TextInputLayout
 import su.android.R
 import su.android.core.di.ServiceLocator
 import su.android.core.model.policy.Policy
@@ -130,15 +126,6 @@ fun setEnabled(view: View, isEnabled: Boolean) {
     view.isEnabled = isEnabled
 }
 
-@BindingAdapter("error")
-fun TextInputLayout.setErrorString(error: String) {
-    val newError = error.let { if (it.isEmpty()) null else it }
-    if (this.error == null && newError == null) return
-    this.error = newError
-}
-
-// material3
-
 @BindingAdapter(
     "android:layout_marginLeft",
     "android:layout_marginTop",
@@ -188,29 +175,24 @@ fun RecyclerView.setDividers(dividerVertical: Drawable?, dividerHorizontal: Draw
     }
 }
 
+/**
+ * Compound drawable icon of a button or text view, used by buttons that carry a
+ * leading icon.
+ */
 @BindingAdapter("icon")
-fun Button.setIconRes(res: Int) {
-    (this as MaterialButton).setIconResource(res)
+fun TextView.setIconRes(@DrawableRes res: Int) {
+    if (res == 0) setIconDrawable(null) else setIconDrawable(AppCompatResources.getDrawable(context, res))
 }
 
 @BindingAdapter("icon")
-fun Button.setIcon(drawable: Drawable) {
-    (this as MaterialButton).icon = drawable
-}
-
-@BindingAdapter("strokeWidth")
-fun MaterialCardView.setCardStrokeWidthBound(stroke: Float) {
-    strokeWidth = stroke.roundToInt()
+fun TextView.setIconDrawable(drawable: Drawable?) {
+    val current = compoundDrawablesRelative
+    setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, current[1], current[2], current[3])
 }
 
 @BindingAdapter("onMenuClick")
 fun Toolbar.setOnMenuClickListener(listener: Toolbar.OnMenuItemClickListener) {
     setOnMenuItemClickListener(listener)
-}
-
-@BindingAdapter("onCloseClicked")
-fun Chip.setOnCloseClickedListenerBinding(listener: View.OnClickListener) {
-    setOnCloseIconClickListener(listener)
 }
 
 @BindingAdapter("progressAnimated")
@@ -274,13 +256,6 @@ fun setListeners(
     }
 }
 
-@BindingAdapter("cardBackgroundColorAttr")
-fun CardView.setCardBackgroundColorAttr(attr: Int) {
-    val tv = TypedValue()
-    context.theme.resolveAttribute(attr, tv, true)
-    setCardBackgroundColor(tv.data)
-}
-
 @BindingAdapter("tint")
 fun ImageView.setTint(color: Int) {
     ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(color))
@@ -310,37 +285,42 @@ fun Spinner.setAdapter(items: Array<Any>, layoutRes: Int) {
     adapter = ArrayAdapter(context, layoutRes, items)
 }
 
-@BindingAdapter("labelFormatter")
-fun Slider.setLabelFormatter(formatter: (Float) -> Int) {
-    setLabelFormatter { value -> resources.getString(formatter(value)) }
+@BindingAdapter("seekProgress")
+fun SeekBar.setSeekProgress(progress: Int) {
+    if (this.progress != progress) this.progress = progress
 }
 
-@InverseBindingAdapter(attribute = "android:value")
-fun Slider.getValueBinding() = value
+@InverseBindingAdapter(attribute = "seekProgress")
+fun SeekBar.getSeekProgress() = progress
 
-@BindingAdapter("android:valueAttrChanged")
-fun Slider.setListener(attrChange: InverseBindingListener) {
-    addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-        override fun onStartTrackingTouch(slider: Slider) = Unit
-        override fun onStopTrackingTouch(slider: Slider) = attrChange.onChange()
+@BindingAdapter("seekProgressAttrChanged")
+fun SeekBar.setSeekProgressListener(attrChange: InverseBindingListener) {
+    setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+            if (fromUser) attrChange.onChange()
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar) = Unit
+
+        override fun onStopTrackingTouch(seekBar: SeekBar) = Unit
     })
 }
 
-@InverseMethod("sliderValueToPolicy")
-fun policyToSliderValue(policy: Int): Float {
+@InverseMethod("seekBarProgressToPolicy")
+fun policyToSeekBarProgress(policy: Int): Int {
     return when (policy) {
-        Policy.DENY -> 1f
-        Policy.RESTRICT -> 2f
-        Policy.ALLOW -> 3f
-        else -> 1f
+        Policy.DENY -> 1
+        Policy.RESTRICT -> 2
+        Policy.ALLOW -> 3
+        else -> 1
     }
 }
 
-fun sliderValueToPolicy(value: Float): Int {
-    return when (value) {
-        1f -> Policy.DENY
-        2f -> Policy.RESTRICT
-        3f -> Policy.ALLOW
+fun seekBarProgressToPolicy(progress: Int): Int {
+    return when (progress) {
+        1 -> Policy.DENY
+        2 -> Policy.RESTRICT
+        3 -> Policy.ALLOW
         else -> Policy.DENY
     }
 }

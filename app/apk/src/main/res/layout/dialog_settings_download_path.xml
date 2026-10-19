@@ -28,20 +28,14 @@
             android:textStyle="bold"
             tools:text="/storage/emulated/0/Download/SuperSU" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
+            style="@style/WidgetFoundation.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/l_50"
-            style="@style/WidgetFoundation.TextInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@={data.inputResult}"
-                android:inputType="text"
-                tools:text="SuperSU" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:inputType="text"
+            android:text="@={data.inputResult}"
+            tools:text="SuperSU" />
 
     </LinearLayout>
 

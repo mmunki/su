@@ -15,7 +15,7 @@
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <FrameLayout
         style="@style/WidgetFoundation.Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     android:text="@string/update"
                     android:textAllCaps="false"
                     android:layout_gravity="end"
-                    app:icon="@drawable/ic_update" />
+                    android:drawableStart="@drawable/ic_update" />
 
                 <Button
                     style="@style/WidgetFoundation.Button.Text"
@@ -81,7 +81,7 @@
                     android:onClick="@{() -> viewModel.onSystemPressed()}"
                     android:text="@string/install"
                     android:textAllCaps="false"
-                    app:icon="@drawable/ic_install"/>
+                    android:drawableStart="@drawable/ic_install"/>
 
             </FrameLayout>
 
@@ -169,6 +169,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
 </layout>

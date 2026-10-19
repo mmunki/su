@@ -29,14 +29,13 @@
                 app:fitsSystemWindowsInsets="start|end|bottom"
                 app:items="@{viewModel.items}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/item_console" />
 
         </HorizontalScrollView>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <Button
             android:id="@+id/restart_btn"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            style="@style/WidgetFoundation.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -49,10 +48,9 @@
             android:textAllCaps="false"
             android:textColor="?colorOnPrimary"
             android:visibility="gone"
-            app:backgroundTint="?colorPrimary"
-            app:cornerRadius="24dp"
-            app:icon="@drawable/ic_restart"
-            app:iconTint="?colorOnPrimary"
+            android:backgroundTint="?colorPrimary"
+            android:drawableStart="@drawable/ic_restart"
+            android:drawableTint="?colorOnPrimary"
             app:layout_fitsSystemWindowsInsets="bottom" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout

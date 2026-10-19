@@ -28,14 +28,13 @@
             tools:listitem="@layout/item_hide"
             tools:paddingTop="40dp" />
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
+        <ProgressBar
+            style="@style/WidgetFoundation.ProgressBar.Circular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
             android:visibility="@{viewModel.loading ? android.view.View.VISIBLE : android.view.View.GONE}"
-            app:indicatorSize="48dp"
-            app:trackCornerRadius="8dp"
             tools:visibility="visible" />
 
     </FrameLayout>

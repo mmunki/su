@@ -2,8 +2,9 @@
 <resources>
 
     <!--region Display-->
-    <style name="AppearanceFoundation.Large" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="AppearanceFoundation.Large" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="AppearanceFoundation.Large.Secondary">
@@ -13,8 +14,9 @@
     <!--endregion-->
 
     <!--region Title-->
-    <style name="AppearanceFoundation.Title" parent="TextAppearance.MaterialComponents.Subtitle1">
+    <style name="AppearanceFoundation.Title" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -25,14 +27,14 @@
     <!--endregion-->
 
     <!--region Body-->
-    <style name="AppearanceFoundation.Body" parent="TextAppearance.MaterialComponents.Body1">
+    <style name="AppearanceFoundation.Body" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
     <!--endregion-->
 
     <!--region Caption-->
-    <style name="AppearanceFoundation.Caption" parent="TextAppearance.MaterialComponents.Caption">
+    <style name="AppearanceFoundation.Caption" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
@@ -51,7 +53,7 @@
     <!--endregion-->
 
     <!--region Tiny-->
-    <style name="AppearanceFoundation.Tiny" parent="TextAppearance.MaterialComponents.Caption">
+    <style name="AppearanceFoundation.Tiny" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">11sp</item>
     </style>
