@@ -1,5 +1,4 @@
 
-import org.eclipse.jgit.internal.storage.file.FileRepository
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.provideDelegate
@@ -66,8 +65,42 @@ class SuperSuPlugin : Plugin<Project> {
         // Commandline override
         findProperty("abiList")?.let { props.put("abiList", it) }
 
-        val repo = FileRepository(rootFile(".git"))
-        val refId = repo.refDatabase.exactRef("HEAD").objectId
-        commitHash = repo.newObjectReader().abbreviate(refId, 8).name()
+        commitHash = resolveCommitHash()
     }
+}
+
+// Read the commit hash directly from .git so configuration time never starts
+// an external process. JGit used to invoke the system git binary for its
+// system configuration, which made the Gradle configuration cache fail.
+private fun Project.resolveCommitHash(): String {
+    val gitEntry = rootFile(".git")
+    if (!gitEntry.exists()) return ""
+
+    val gitDir = if (gitEntry.isFile) {
+        val line = gitEntry.readText().lineSequence()
+            .firstOrNull { it.startsWith("gitdir:") }
+            ?.substringAfter("gitdir:")?.trim()
+            ?: return ""
+        val dir = File(line)
+        if (dir.isAbsolute) dir else File(gitEntry.parentFile, line)
+    } else {
+        gitEntry
+    }
+
+    val headFile = File(gitDir, "HEAD")
+    if (!headFile.exists()) return ""
+    val head = headFile.readText().trim()
+    if (!head.startsWith("ref: ")) return head.take(8)
+
+    val ref = head.substringAfter("ref: ").trim()
+    val refFile = File(gitDir, ref)
+    if (refFile.exists()) return refFile.readText().trim().take(8)
+
+    val packedRefs = File(gitDir, "packed-refs")
+    if (!packedRefs.exists()) return ""
+    return packedRefs.readLines()
+        .firstOrNull { it.endsWith(" $ref") }
+        ?.substringBefore(' ')
+        ?.take(8)
+        ?: ""
 }

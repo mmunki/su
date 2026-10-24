@@ -22,5 +22,4 @@ dependencies {
     implementation(libs.android.kapt.plugin)
     implementation(libs.navigation.safe.args.plugin)
     implementation(libs.moshi.plugin)
-    implementation(libs.jgit)
 }

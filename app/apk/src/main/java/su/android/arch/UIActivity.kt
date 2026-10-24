@@ -1,6 +1,7 @@
 package su.android.arch
 
 import android.content.Context
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.res.use
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -72,6 +74,7 @@ abstract class UIActivity<Binding : ViewDataBinding>
             .also { window.setBackgroundDrawable(it) }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        applySystemBarAppearance()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window?.decorView?.post {
@@ -88,6 +91,15 @@ abstract class UIActivity<Binding : ViewDataBinding>
                     }
                 }
             }
+        }
+    }
+
+    private fun applySystemBarAppearance() {
+        val night = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+            Configuration.UI_MODE_NIGHT_YES
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = !night
+            isAppearanceLightNavigationBars = !night
         }
     }
 

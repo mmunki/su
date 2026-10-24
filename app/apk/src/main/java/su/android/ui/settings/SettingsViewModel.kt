@@ -1,6 +1,7 @@
 package su.android.ui.settings
 
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
@@ -16,10 +17,12 @@ import su.android.R
 import su.android.core.ktx.toast
 import su.android.core.utils.RootUtils
 import su.android.databinding.bindExtra
+import su.android.core.ktx.activity
 import su.android.dialog.UninstallDialog
 import su.android.events.AuthEvent
 import su.android.events.SnackbarEvent
 import su.android.ui.appinfo.AppInfoActivity
+import su.android.view.MaterialDialog
 
 class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
 
@@ -31,7 +34,7 @@ class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
     private fun createItems(): List<BaseSettingsItem> {
         val resultList = mutableListOf<BaseSettingsItem>()
 
-        val generalList = mutableListOf<BaseSettingsItem>(DoHToggle, DownloadPath)
+        val generalList = mutableListOf<BaseSettingsItem>(ThemeMode, DoHToggle, DownloadPath)
         resultList.add(SettingsGroupItem.CardGroup(children = generalList))
 
         resultList.add(SettingsGroupItem.CardGroup(children = listOf(AppInfo)))
@@ -85,9 +88,35 @@ class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
             AppInfo -> view.context.startActivity(
                 Intent(view.context, AppInfoActivity::class.java)
             )
+            ThemeMode -> showThemeModeDialog(view)
             Zygisk -> if (Zygisk.mismatch) SnackbarEvent(R.string.reboot_apply_change).publish()
             else -> Unit
         }
+    }
+
+    private fun showThemeModeDialog(view: View) = MaterialDialog(view.activity).apply {
+        setTitle(R.string.settings_dark_mode_title)
+        setMessage(R.string.settings_dark_mode_message)
+        setButton(MaterialDialog.ButtonType.POSITIVE) {
+            text = R.string.settings_dark_mode_light
+            icon = R.drawable.ic_day
+            onClick { selectThemeMode(AppCompatDelegate.MODE_NIGHT_NO) }
+        }
+        setButton(MaterialDialog.ButtonType.NEUTRAL) {
+            text = R.string.settings_dark_mode_system
+            icon = R.drawable.ic_day_night
+            onClick { selectThemeMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) }
+        }
+        setButton(MaterialDialog.ButtonType.NEGATIVE) {
+            text = R.string.settings_dark_mode_dark
+            icon = R.drawable.ic_night
+            onClick { selectThemeMode(AppCompatDelegate.MODE_NIGHT_YES) }
+        }
+    }.show()
+
+    private fun selectThemeMode(mode: Int) {
+        Config.darkTheme = mode
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
     private fun createHosts() {
