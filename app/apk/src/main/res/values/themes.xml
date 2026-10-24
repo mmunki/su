@@ -1,9 +1,9 @@
 <resources>
 
     <!--
-        Holo Dark, built purely on AndroidX/AppCompat (no Google Material
-        library anywhere): flat surfaces, square shapes, Holo blue accents and
-        classic control colors.
+        Miuix / HyperOS theme, built purely on AndroidX/AppCompat (no Google
+        Material library anywhere): dark surfaces, rounded cards and the MIUI
+        blue accent.
     -->
     <style name="Base.V23.Theme.Foundation" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">?attr/colorSurface</item>
@@ -13,37 +13,37 @@
         <item name="android:navigationBarColor">#000000</item>
         <item name="android:windowLightStatusBar">false</item>
 
-        <!--region Holo Dark palette-->
+        <!--region Miuix / HyperOS palette-->
         <item name="android:colorBackground">#000000</item>
         <item name="colorOnBackground">#FFFFFF</item>
 
         <item name="colorSurface">#000000</item>
         <item name="colorOnSurface">#FFFFFF</item>
 
-        <item name="colorPrimary">#33B5E5</item>
-        <item name="colorPrimaryDark">#1B7B9E</item>
-        <item name="colorPrimaryVariant">#1B7B9E</item>
+        <item name="colorPrimary">#3482FF</item>
+        <item name="colorPrimaryDark">#2A6BFF</item>
+        <item name="colorPrimaryVariant">#2A6BFF</item>
         <item name="colorOnPrimary">#FFFFFF</item>
 
-        <item name="colorSecondary">#33B5E5</item>
-        <item name="colorSecondaryVariant">#1B7B9E</item>
+        <item name="colorSecondary">#3482FF</item>
+        <item name="colorSecondaryVariant">#2A6BFF</item>
         <item name="colorOnSecondary">#FFFFFF</item>
 
-        <item name="colorError">#FF4444</item>
+        <item name="colorError">#FF453A</item>
         <item name="colorOnError">#FFFFFF</item>
 
-        <!--region Classic control colors-->
-        <item name="colorAccent">#33B5E5</item>
-        <item name="android:colorAccent">#33B5E5</item>
-        <item name="colorControlNormal">#B0B0B0</item>
-        <item name="colorControlActivated">#33B5E5</item>
-        <item name="colorControlHighlight">#4033B5E5</item>
-        <item name="colorButtonNormal">#1A1A1A</item>
-        <item name="colorBackgroundFloating">#1A1A1A</item>
-        <item name="android:colorBackgroundFloating">#1A1A1A</item>
+        <!--region Miuix control colors-->
+        <item name="colorAccent">#3482FF</item>
+        <item name="android:colorAccent">#3482FF</item>
+        <item name="colorControlNormal">#8E8E93</item>
+        <item name="colorControlActivated">#3482FF</item>
+        <item name="colorControlHighlight">#333482FF</item>
+        <item name="colorButtonNormal">#1C1C1E</item>
+        <item name="colorBackgroundFloating">#1C1C1E</item>
+        <item name="android:colorBackgroundFloating">#1C1C1E</item>
         <!--endregion-->
 
-        <!--region Flat Holo highlights instead of Material ripples-->
+        <!--region Miuix highlights instead of Material ripples-->
         <item name="selectableItemBackground">@drawable/foundation_selectable_item_background</item>
         <item name="selectableItemBackgroundBorderless">@drawable/foundation_selectable_item_background_borderless</item>
         <item name="android:selectableItemBackground">@drawable/foundation_selectable_item_background</item>
@@ -51,12 +51,12 @@
         <!--endregion-->
 
         <!--region Foundation roles (app owned)-->
-        <item name="colorSurfaceSurfaceVariant">#1A1A1A</item>
-        <item name="colorTextSecondary">#B0B0B0</item>
-        <item name="colorBorder">#333333</item>
+        <item name="colorSurfaceSurfaceVariant">#1C1C1E</item>
+        <item name="colorTextSecondary">#8E8E93</item>
+        <item name="colorBorder">#2C2C2E</item>
         <!--endregion-->
 
-        <!--region Square, flat widgets-->
+        <!--region Miuix widgets-->
         <item name="buttonStyle">@style/WidgetFoundation.Button</item>
         <item name="checkboxStyle">@style/WidgetFoundation.Checkbox</item>
         <item name="radioButtonStyle">@style/WidgetFoundation.RadioButton</item>
@@ -82,17 +82,17 @@
         <item name="android:windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
         <item name="android:windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
 
-        <!-- Force the classic dark dialog look on every API level -->
-        <item name="android:colorBackground">#1A1A1A</item>
-        <item name="colorSurface">#1A1A1A</item>
+        <!-- Miuix dialog surface -->
+        <item name="android:colorBackground">#1C1C1E</item>
+        <item name="colorSurface">#1C1C1E</item>
         <item name="colorOnSurface">#FFFFFF</item>
-        <item name="colorSurfaceSurfaceVariant">#242424</item>
-        <item name="colorTextSecondary">#B0B0B0</item>
-        <item name="colorPrimary">#33B5E5</item>
-        <item name="colorSecondary">#33B5E5</item>
-        <item name="colorAccent">#33B5E5</item>
+        <item name="colorSurfaceSurfaceVariant">#2C2C2E</item>
+        <item name="colorTextSecondary">#8E8E93</item>
+        <item name="colorPrimary">#3482FF</item>
+        <item name="colorSecondary">#3482FF</item>
+        <item name="colorAccent">#3482FF</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#B0B0B0</item>
+        <item name="android:textColorSecondary">#8E8E93</item>
     </style>
 
     <style name="ThemeOverlay.Foundation.Dialog" parent="Base.V23.ThemeOverlay.Foundation.Dialog" />

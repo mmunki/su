@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--
-        Old style, densely packed action bar.
+        Miuix action bar.
 
-        A single bar holds the primary navigation as text only: four equally
-        sized, uppercase tabs that share the whole width of the display. The
-        bar keeps its compact height, only the width of the tabs grows.
+        A single bar holds the primary navigation as four equally sized
+        sentence case pills that share the whole width of the display.
     -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             style="@style/WidgetFoundation.Appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?colorSurfaceSurfaceVariant"
+            android:background="?colorSurface"
             app:fitsSystemWindowsInsets="top">
 
             <androidx.appcompat.widget.Toolbar
@@ -32,7 +31,7 @@
                 style="@style/WidgetFoundation.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dense_bar_height"
-                android:background="?colorSurfaceSurfaceVariant"
+                android:background="?colorSurface"
                 app:contentInsetStart="0dp"
                 app:contentInsetStartWithNavigation="0dp"
                 tools:title="Home">
@@ -73,11 +72,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?colorBorder" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?colorPrimary" />
 
         </LinearLayout>
 

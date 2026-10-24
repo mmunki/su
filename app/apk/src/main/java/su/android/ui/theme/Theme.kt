@@ -7,15 +7,15 @@ enum class Theme(
     val themeRes: Int
 ) {
 
-    Holo(
-        themeName = "Holo Dark",
-        themeRes = R.style.ThemeFoundationBase_Holo
+    Miuix(
+        themeName = "Miuix",
+        themeRes = R.style.ThemeFoundationBase_Miuix
     );
 
     val isSelected get() = true
 
     companion object {
-        val selected get() = Holo
+        val selected get() = Miuix
     }
 
 }

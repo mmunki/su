@@ -2,7 +2,7 @@
 <resources>
 
     <style name="WidgetFoundation.Appbar">
-        <item name="android:background">?colorSurfaceSurfaceVariant</item>
+        <item name="android:background">?colorSurface</item>
         <item name="android:elevation">0dp</item>
         <item name="android:orientation">vertical</item>
     </style>
@@ -12,7 +12,7 @@
         <item name="titleTextColor">?colorOnSurface</item>
         <item name="subtitleTextAppearance">@style/AppearanceFoundation.Caption</item>
         <item name="subtitleTextColor">?colorTextSecondary</item>
-        <item name="android:background">?colorSurfaceSurfaceVariant</item>
+        <item name="android:background">?colorSurface</item>
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
         <item name="android:layout_height">?actionBarSize</item>
@@ -21,28 +21,34 @@
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
-    <!-- Old style dense action bar: text only, uppercase navigation tabs. -->
+    <!-- Miuix segmented navigation: sentence case pills. -->
     <style name="WidgetFoundation.NavToggleBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/l_50</item>
+        <item name="android:paddingEnd">@dimen/l_50</item>
     </style>
 
     <style name="WidgetFoundation.NavToggle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/foundation_selectable_item_background_borderless</item>
+        <item name="android:layout_marginStart">@dimen/l_25</item>
+        <item name="android:layout_marginTop">@dimen/l_50</item>
+        <item name="android:layout_marginEnd">@dimen/l_25</item>
+        <item name="android:layout_marginBottom">@dimen/l_50</item>
+        <item name="android:background">@drawable/foundation_top_nav_item_background</item>
         <item name="android:clickable">true</item>
         <item name="android:ellipsize">end</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/color_nav_toggle</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="WidgetFoundation.Card">
