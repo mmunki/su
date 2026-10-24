@@ -14,8 +14,8 @@
 
     <dimen name="internal_action_bar_size">56dp</dimen>
 
-    <!-- Old style square shapes -->
-    <dimen name="foundation_corner">0dp</dimen>
+    <!-- Miuix rounded surfaces -->
+    <dimen name="foundation_corner">20dp</dimen>
 
     <!-- Old style dense multi row action bar -->
     <dimen name="dense_bar_height">44dp</dimen>

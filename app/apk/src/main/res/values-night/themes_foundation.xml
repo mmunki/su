@@ -24,4 +24,27 @@
         <item name="colorDisabledVariant">#44666666</item>
     </style>
 
+    <style name="ThemeFoundationBase.Miuix" parent="ThemeFoundationBase">
+        <!-- Miuix / HyperOS dark color roles -->
+        <item name="colorPrimary">#3482FF</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <item name="colorSecondary">#3482FF</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <item name="colorError">#FF453A</item>
+        <item name="colorOnError">#FFFFFF</item>
+
+        <item name="colorOnBackground">#FFFFFF</item>
+        <item name="colorSurface">#000000</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+
+        <!-- App specific tokens -->
+        <item name="colorSurfaceSurfaceVariant">#1C1C1E</item>
+        <item name="colorTextSecondary">#8E8E93</item>
+        <item name="colorBorder">#2C2C2E</item>
+        <item name="colorDisabled">#636366</item>
+        <item name="colorDisabledVariant">#44636366</item>
+    </style>
+
 </resources>
