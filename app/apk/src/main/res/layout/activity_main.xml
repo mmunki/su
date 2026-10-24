@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--
-        Miuix action bar.
+        Miuix / HyperOS shell.
 
-        A single bar holds the primary navigation as four equally sized
-        sentence case pills that share the whole width of the display.
+        A single toolbar sits at the top, the content fills the middle and the
+        primary navigation lives in a rounded bottom navigation bar.
     -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?colorSurface"
         android:orientation="vertical"
-        app:consumeSystemWindowsInsets="start|end|bottom"
+        app:consumeSystemWindowsInsets="start|end"
         app:edgeToEdge="true"
-        app:fitsSystemWindowsInsets="start|end|bottom">
+        app:fitsSystemWindowsInsets="start|end">
 
         <LinearLayout
             android:id="@+id/main_toolbar_wrapper"
@@ -30,48 +30,11 @@
                 android:id="@+id/main_toolbar"
                 style="@style/WidgetFoundation.Toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dense_bar_height"
+                android:layout_height="@dimen/internal_action_bar_size"
                 android:background="?colorSurface"
                 app:contentInsetStart="0dp"
                 app:contentInsetStartWithNavigation="0dp"
-                tools:title="Home">
-
-                <LinearLayout
-                    android:id="@+id/main_nav_group"
-                    style="@style/WidgetFoundation.NavToggleBar">
-
-                    <TextView
-                        android:id="@+id/main_nav_home"
-                        style="@style/WidgetFoundation.NavToggle"
-                        android:contentDescription="@string/section_home"
-                        android:text="@string/section_home" />
-
-                    <TextView
-                        android:id="@+id/main_nav_superuser"
-                        style="@style/WidgetFoundation.NavToggle"
-                        android:contentDescription="@string/superuser"
-                        android:text="@string/superuser" />
-
-                    <TextView
-                        android:id="@+id/main_nav_modules"
-                        style="@style/WidgetFoundation.NavToggle"
-                        android:contentDescription="@string/modules"
-                        android:text="@string/modules" />
-
-                    <TextView
-                        android:id="@+id/main_nav_settings"
-                        style="@style/WidgetFoundation.NavToggle"
-                        android:contentDescription="@string/settings"
-                        android:text="@string/settings" />
-
-                </LinearLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?colorBorder" />
+                tools:title="Home" />
 
         </LinearLayout>
 
@@ -83,6 +46,83 @@
             android:layout_weight="1"
             app:defaultNavHost="true"
             app:navGraph="@navigation/main" />
+
+        <LinearLayout
+            android:id="@+id/main_navigation"
+            style="@style/WidgetFoundation.BottomNavBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:fitsSystemWindowsInsets="start|end|bottom">
+
+            <LinearLayout
+                android:id="@+id/main_nav_home"
+                style="@style/WidgetFoundation.BottomNavItem"
+                android:contentDescription="@string/section_home">
+
+                <ImageView
+                    style="@style/WidgetFoundation.BottomNavItem.Icon"
+                    android:duplicateParentState="true"
+                    android:src="@drawable/ic_nav_home" />
+
+                <TextView
+                    style="@style/WidgetFoundation.BottomNavItem.Label"
+                    android:duplicateParentState="true"
+                    android:text="@string/section_home" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_nav_superuser"
+                style="@style/WidgetFoundation.BottomNavItem"
+                android:contentDescription="@string/superuser">
+
+                <ImageView
+                    style="@style/WidgetFoundation.BottomNavItem.Icon"
+                    android:duplicateParentState="true"
+                    android:src="@drawable/ic_nav_superuser" />
+
+                <TextView
+                    style="@style/WidgetFoundation.BottomNavItem.Label"
+                    android:duplicateParentState="true"
+                    android:text="@string/superuser" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_nav_modules"
+                style="@style/WidgetFoundation.BottomNavItem"
+                android:contentDescription="@string/modules">
+
+                <ImageView
+                    style="@style/WidgetFoundation.BottomNavItem.Icon"
+                    android:duplicateParentState="true"
+                    android:src="@drawable/ic_nav_modules" />
+
+                <TextView
+                    style="@style/WidgetFoundation.BottomNavItem.Label"
+                    android:duplicateParentState="true"
+                    android:text="@string/modules" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_nav_settings"
+                style="@style/WidgetFoundation.BottomNavItem"
+                android:contentDescription="@string/settings">
+
+                <ImageView
+                    style="@style/WidgetFoundation.BottomNavItem.Icon"
+                    android:duplicateParentState="true"
+                    android:src="@drawable/ic_nav_settings" />
+
+                <TextView
+                    style="@style/WidgetFoundation.BottomNavItem.Label"
+                    android:duplicateParentState="true"
+                    android:text="@string/settings" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

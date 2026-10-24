@@ -4,4 +4,19 @@
         <item name="colorPrimary">?colorSecondary</item>
     </style>
 
+    <style name="ThemeOverlay.Foundation.Toolbar" parent="ThemeOverlay.AppCompat.DayNight">
+        <item name="colorPrimary">?colorPrimary</item>
+        <item name="android:textColorPrimary">?colorOnSurface</item>
+        <item name="android:textColorSecondary">?colorTextSecondary</item>
+        <item name="colorControlNormal">?colorOnSurface</item>
+        <item name="android:colorControlNormal">?colorOnSurface</item>
+    </style>
+
+    <style name="ThemeOverlay.Foundation.Toolbar.ActionBar" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
+        <item name="android:textColorPrimary">?colorOnSurface</item>
+        <item name="android:textColorSecondary">?colorTextSecondary</item>
+        <item name="colorControlNormal">?colorOnSurface</item>
+        <item name="android:colorControlNormal">?colorOnSurface</item>
+    </style>
+
 </resources>

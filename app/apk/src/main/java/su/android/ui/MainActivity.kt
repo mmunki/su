@@ -9,15 +9,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import su.android.MainDirections
 import su.android.R
 import su.android.arch.BaseViewModel
@@ -63,13 +60,10 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             }
         }
 
-    /**
-     * One entry of the primary navigation bar (old style, replaces the bottom bar).
-     * The tabs are text only now, so a toggle is just its label.
-     */
+    /** One entry of the bottom navigation bar. */
     private class NavToggle(
         val id: Int,
-        val view: TextView
+        val view: View
     )
 
     private var navToggles: List<NavToggle> = emptyList()
@@ -113,6 +107,7 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             }
 
             setDisplayHomeAsUpEnabled(!isRootFragment)
+            requestNavigationHidden(!isRootFragment, savedInstanceState == null)
 
             navToggles.forEach { toggle ->
                 toggle.view.isSelected = toggle.id == destination.id
@@ -120,7 +115,6 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
         }
 
         setSupportActionBar(binding.mainToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         navToggles = listOf(
             NavToggle(R.id.homeFragment, binding.mainNavHome),
@@ -164,15 +158,18 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
     }
 
     internal fun requestNavigationHidden(hide: Boolean = true, requiresAnimation: Boolean = true) {
-        val navGroup = binding.mainNavGroup
+        val navigation = binding.mainNavigation
         if (requiresAnimation) {
-            TransitionManager.beginDelayedTransition(
-                binding.mainToolbarWrapper,
-                AutoTransition().setDuration(200)
-            )
-            navGroup.isVisible = !hide
+            navigation.isVisible = true
+            navigation.translationY =
+                if (hide) navigation.height.toFloat() + (20 * resources.displayMetrics.density) else 0f
+            navigation.animate()
+                .translationY(if (hide) navigation.height.toFloat() + (20 * resources.displayMetrics.density) else 0f)
+                .setDuration(200)
+                .start()
         } else {
-            navGroup.isGone = hide
+            navigation.translationY = 0f
+            navigation.isGone = hide
         }
     }
 

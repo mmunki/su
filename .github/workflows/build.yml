@@ -7,9 +7,14 @@ on:
         branches: [main, master, app]
     workflow_dispatch:
 
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     build:
         runs-on: ubuntu-24.04
+        timeout-minutes: 45
 
         permissions:
             contents: write
@@ -29,16 +34,6 @@ jobs:
               run: |
                   sudo apt-get update
                   sudo apt-get install -y python3 gh
-
-            - name: Task :cache:cacheGradle
-              uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
-              with:
-                  path: |
-                      ~/.gradle/caches
-                      ~/.gradle/wrapper
-                  key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*','**/gradle-wrapper.properties') }}
-                  restore-keys: |
-                      gradle-${{ runner.os }}-
 
             - name: Task :setup:installJava
               uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
