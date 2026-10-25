@@ -10,16 +10,28 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
+import top.yukonga.miuix.kmp.icon.MiuixIcons
+import top.yukonga.miuix.kmp.icon.extended.Home
+import top.yukonga.miuix.kmp.icon.extended.Layers
+import top.yukonga.miuix.kmp.icon.extended.Lock
+import top.yukonga.miuix.kmp.icon.extended.Settings
+import top.yukonga.miuix.kmp.theme.ColorSchemeMode
+import top.yukonga.miuix.kmp.theme.MiuixTheme
+import top.yukonga.miuix.kmp.theme.ThemeController
 import su.android.MainDirections
 import su.android.R
 import su.android.arch.BaseViewModel
 import su.android.arch.NavigationActivity
-import su.android.arch.startAnimations
 import su.android.arch.viewModel
 import su.android.core.Config
 import su.android.core.Const
@@ -56,22 +68,28 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
             val fragmentAnchor = currentFragment?.snackbarAnchorView
             return when {
                 fragmentAnchor?.isVisible == true -> fragmentAnchor
+                navVisible -> binding.mainNavigation
                 else -> null
             }
         }
 
-    /** One entry of the bottom navigation bar. */
-    private class NavToggle(
-        val id: Int,
-        val view: View
-    )
-
-    private var navToggles: List<NavToggle> = emptyList()
+    private var selectedTab by mutableIntStateOf(R.id.homeFragment)
+    private var backEnabled by mutableStateOf(false)
+    private var navVisible by mutableStateOf(true)
+    private var screenTitle by mutableStateOf("")
+    private var colorSchemeMode by mutableStateOf(ColorSchemeMode.System)
+    private var superuserEnabled by mutableStateOf(true)
+    private var modulesEnabled by mutableStateOf(true)
 
     private var isRootFragment = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Theme.selected.themeRes)
+        colorSchemeMode = when (Config.darkTheme) {
+            AppCompatDelegate.MODE_NIGHT_NO -> ColorSchemeMode.Light
+            AppCompatDelegate.MODE_NIGHT_YES -> ColorSchemeMode.Dark
+            else -> ColorSchemeMode.System
+        }
         splashController.preOnCreate()
         super.onCreate(savedInstanceState)
         splashController.onCreate(savedInstanceState)
@@ -96,6 +114,32 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
+        screenTitle = getString(CoreR.string.section_home)
+        superuserEnabled = Info.showSuperUser
+        modulesEnabled = Info.env.isActive && LocalModule.loaded()
+
+        binding.mainToolbar.setContent {
+            MiuixTheme(controller = remember(colorSchemeMode) { ThemeController(colorSchemeMode) }) {
+                MiuixShellTopBar(
+                    title = screenTitle,
+                    backEnabled = backEnabled,
+                    onBack = { onBackPressed() },
+                )
+            }
+        }
+        binding.mainBottomNav.setContent {
+            MiuixTheme(controller = remember(colorSchemeMode) { ThemeController(colorSchemeMode) }) {
+                MiuixShellBottomBar(
+                    items = navItems(),
+                    selectedId = selectedTab,
+                    visible = navVisible,
+                    onSelect = { id ->
+                        if (id != selectedTab) getScreen(id)?.navigate()
+                    },
+                )
+            }
+        }
+
         navigation.addOnDestinationChangedListener { _, destination, _ ->
             isRootFragment = when (destination.id) {
                 R.id.homeFragment,
@@ -106,31 +150,10 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
                 else -> false
             }
 
+            selectedTab = destination.id
             setDisplayHomeAsUpEnabled(!isRootFragment)
-            requestNavigationHidden(!isRootFragment, savedInstanceState == null)
-
-            navToggles.forEach { toggle ->
-                toggle.view.isSelected = toggle.id == destination.id
-            }
+            requestNavigationHidden(!isRootFragment)
         }
-
-        setSupportActionBar(binding.mainToolbar)
-
-        navToggles = listOf(
-            NavToggle(R.id.homeFragment, binding.mainNavHome),
-            NavToggle(R.id.superuserFragment, binding.mainNavSuperuser),
-            NavToggle(R.id.modulesFragment, binding.mainNavModules),
-            NavToggle(R.id.settingsFragment, binding.mainNavSettings)
-        )
-        navToggles.forEach { toggle ->
-            toggle.view.setOnClickListener {
-                if (!toggle.view.isSelected) {
-                    getScreen(toggle.id)?.navigate()
-                }
-            }
-        }
-        binding.mainNavSuperuser.isEnabled = Info.showSuperUser
-        binding.mainNavModules.isEnabled = Info.env.isActive && LocalModule.loaded()
 
         val section =
             if (intent.action == Intent.ACTION_APPLICATION_PREFERENCES)
@@ -149,33 +172,52 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
         return true
     }
 
+    override fun setTitle(title: CharSequence?) {
+        super.setTitle(title)
+        screenTitle = title?.toString().orEmpty()
+    }
+
+    override fun setTitle(titleId: Int) {
+        super.setTitle(titleId)
+        screenTitle = getString(titleId)
+    }
+
     fun setDisplayHomeAsUpEnabled(isEnabled: Boolean) {
-        binding.mainToolbar.startAnimations()
-        when {
-            isEnabled -> binding.mainToolbar.setNavigationIcon(R.drawable.ic_back)
-            else -> binding.mainToolbar.navigationIcon = null
-        }
+        backEnabled = isEnabled
     }
 
     internal fun requestNavigationHidden(hide: Boolean = true, requiresAnimation: Boolean = true) {
-        val navigation = binding.mainNavigation
-        if (requiresAnimation) {
-            navigation.isVisible = true
-            navigation.translationY =
-                if (hide) navigation.height.toFloat() + (20 * resources.displayMetrics.density) else 0f
-            navigation.animate()
-                .translationY(if (hide) navigation.height.toFloat() + (20 * resources.displayMetrics.density) else 0f)
-                .setDuration(200)
-                .start()
-        } else {
-            navigation.translationY = 0f
-            navigation.isGone = hide
-        }
+        navVisible = !hide
     }
 
     fun invalidateToolbar() {
-        binding.mainToolbar.invalidate()
+        screenTitle = title?.toString().orEmpty()
     }
+
+    private fun navItems() = listOf(
+        MiuixNavItem(
+            id = R.id.homeFragment,
+            label = getString(CoreR.string.section_home),
+            icon = MiuixIcons.Home,
+        ),
+        MiuixNavItem(
+            id = R.id.superuserFragment,
+            label = getString(CoreR.string.superuser),
+            icon = MiuixIcons.Lock,
+            enabled = superuserEnabled,
+        ),
+        MiuixNavItem(
+            id = R.id.modulesFragment,
+            label = getString(CoreR.string.modules),
+            icon = MiuixIcons.Layers,
+            enabled = modulesEnabled,
+        ),
+        MiuixNavItem(
+            id = R.id.settingsFragment,
+            label = getString(CoreR.string.settings),
+            icon = MiuixIcons.Settings,
+        ),
+    )
 
     private fun getScreen(name: String?): NavDirections? {
         return when (name) {
