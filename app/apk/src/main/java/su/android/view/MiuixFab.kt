@@ -3,8 +3,6 @@ package su.android.view
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.size
@@ -36,7 +34,6 @@ open class MiuixFab @JvmOverloads constructor(
     private var iconRes by mutableIntStateOf(0)
     private var iconPainter by mutableStateOf<Painter?>(null)
     private val composeView = ComposeView(context)
-    private var touchListener: OnTouchListener? = null
 
     init {
         background = null
@@ -77,13 +74,4 @@ open class MiuixFab @JvmOverloads constructor(
         iconRes = 0
         iconPainter = drawable?.let { BitmapPainter(it.toBitmap().asImageBitmap()) }
     }
-
-    override fun setOnTouchListener(l: OnTouchListener?) {
-        touchListener = l
-        super.setOnTouchListener(l)
-        composeView.setOnTouchListener { view, event -> handleTouch(view, event) }
-    }
-
-    private fun handleTouch(view: View, event: MotionEvent): Boolean =
-        touchListener?.onTouch(view, event) ?: false
 }

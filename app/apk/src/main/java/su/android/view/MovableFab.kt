@@ -1,6 +1,5 @@
 package su.android.view
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -27,12 +26,7 @@ class MovableFab @JvmOverloads constructor(
     private var downTranslationY = 0f
     private var dragging = false
 
-    init {
-        setOnTouchListener { _, event -> onFabTouch(event) }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private fun onFabTouch(event: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 downRawX = event.rawX
@@ -48,10 +42,21 @@ class MovableFab @JvmOverloads constructor(
                 if (!dragging && (dx * dx + dy * dy) > (touchSlop * touchSlop)) {
                     dragging = true
                     isPressed = false
+                    return true
                 }
+            }
+
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> dragging = false
+        }
+        return false
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_MOVE -> {
                 if (dragging) {
-                    translationX = clampX(downTranslationX + dx)
-                    translationY = clampY(downTranslationY + dy)
+                    translationX = clampX(downTranslationX + event.rawX - downRawX)
+                    translationY = clampY(downTranslationY + event.rawY - downRawY)
                     return true
                 }
             }
@@ -65,7 +70,7 @@ class MovableFab @JvmOverloads constructor(
                 }
             }
         }
-        return false
+        return super.onTouchEvent(event)
     }
 
     /** Minimum translation along X keeping the button inside its parent. */
