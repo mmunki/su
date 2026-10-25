@@ -148,15 +148,17 @@
     </style>
 
     <style name="WidgetFoundation.Fab" parent="Widget.AppCompat.ImageButton">
-        <item name="android:layout_width">56dp</item>
-        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
         <item name="android:background">@null</item>
         <item name="android:elevation">0dp</item>
     </style>
 
     <style name="WidgetFoundation.Checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:paddingStart">@dimen/l1</item>
-        <item name="android:paddingEnd">@dimen/l1</item>
+        <item name="android:button">@drawable/foundation_checkbox</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">@dimen/l_50</item>
+        <item name="android:drawablePadding">@dimen/l_50</item>
     </style>
 
     <style name="WidgetFoundation.RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
@@ -164,22 +166,22 @@
         <item name="android:paddingEnd">@dimen/l1</item>
     </style>
 
-    <style name="WidgetFoundation.ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="WidgetFoundation.ProgressBar">
+        <item name="miuixProgressStyle">linear</item>
         <item name="android:indeterminate">false</item>
-        <item name="android:layout_height">4dp</item>
-        <item name="android:progressDrawable">@drawable/foundation_progress_bar</item>
+        <item name="android:layout_height">6dp</item>
     </style>
 
-    <style name="WidgetFoundation.ProgressBar.Indeterminate" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="WidgetFoundation.ProgressBar.Indeterminate">
+        <item name="miuixProgressStyle">linear</item>
         <item name="android:indeterminate">true</item>
-        <item name="android:indeterminateTint">?colorPrimary</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">6dp</item>
         <item name="android:layout_width">100dp</item>
     </style>
 
-    <style name="WidgetFoundation.ProgressBar.Circular" parent="Widget.AppCompat.ProgressBar">
+    <style name="WidgetFoundation.ProgressBar.Circular">
+        <item name="miuixProgressStyle">circular</item>
         <item name="android:indeterminate">true</item>
-        <item name="android:indeterminateTint">?colorPrimary</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>

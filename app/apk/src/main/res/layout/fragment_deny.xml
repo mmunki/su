@@ -28,7 +28,7 @@
             tools:listitem="@layout/item_hide"
             tools:paddingTop="40dp" />
 
-        <ProgressBar
+        <su.android.view.MiuixProgressBar
             style="@style/WidgetFoundation.ProgressBar.Circular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

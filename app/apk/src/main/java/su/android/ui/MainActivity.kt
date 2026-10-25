@@ -46,8 +46,8 @@ import su.android.core.ktx.toast
 import su.android.core.model.module.LocalModule
 import su.android.core.tasks.AppMigration
 import su.android.databinding.ActivityMainBinding
-import su.android.ui.home.RebootMenu
 import su.android.ui.theme.Theme
+import su.android.ui.home.MiuixRebootMenu
 import su.android.view.MaterialDialog
 import su.android.view.Shortcuts
 import kotlinx.coroutines.launch
@@ -84,6 +84,7 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
     private var colorSchemeMode by mutableStateOf(ColorSchemeMode.System)
     private var superuserEnabled by mutableStateOf(true)
     private var modulesEnabled by mutableStateOf(true)
+    private var rebootMenuVisible by mutableStateOf(false)
 
     private var isRootFragment = true
 
@@ -130,14 +131,7 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
                     onBack = { onBackPressed() },
                     actions = {
                         if (!backEnabled && selectedTab == R.id.homeFragment && Info.isRooted) {
-                            IconButton(
-                                onClick = {
-                                    RebootMenu.inflate(
-                                        this@MainActivity,
-                                        binding.mainToolbarWrapper
-                                    ).show()
-                                }
-                            ) {
+                            IconButton(onClick = { rebootMenuVisible = true }) {
                                 Icon(
                                     MiuixIcons.RotateLeft,
                                     contentDescription = getString(CoreR.string.reboot),
@@ -145,6 +139,10 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
                             }
                         }
                     },
+                )
+                MiuixRebootMenu(
+                    show = rebootMenuVisible,
+                    onDismiss = { rebootMenuVisible = false },
                 )
             }
         }

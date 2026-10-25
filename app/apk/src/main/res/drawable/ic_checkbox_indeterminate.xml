@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Square, flat checkbox in the indeterminate (partially checked) state. -->
+<!-- Miuix indeterminate checkbox: a filled circle with a round dash. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
@@ -7,13 +7,14 @@
     android:viewportHeight="24">
 
     <path
-        android:fillColor="#33B5E5"
-        android:pathData="M5,5h14v14h-14z"
-        android:strokeColor="#33B5E5"
-        android:strokeWidth="1.5" />
+        android:fillColor="#FF3482FF"
+        android:pathData="M12,2.5A9.5,9.5 0 1,0 12,21.5A9.5,9.5 0 1,0 12,2.5Z" />
 
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M7.5,11h9v2h-9z" />
+        android:fillColor="#00000000"
+        android:pathData="M7.6,12H16.4"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="2.2" />
 
 </vector>

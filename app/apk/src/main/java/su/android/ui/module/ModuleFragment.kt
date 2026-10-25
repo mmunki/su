@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import su.android.R
 import su.android.arch.BaseFragment
@@ -55,13 +54,9 @@ class ModuleFragment : BaseFragment<FragmentModuleBinding>() {
             post { addInvalidateItemDecorationsObserver() }
         }
 
-        val extraBottom = (100 * resources.displayMetrics.density).toInt()
+        val extraBottom = (72 * resources.displayMetrics.density).toInt()
 
         binding.moduleList.updatePadding(bottom = extraBottom + 100)
-        
-        binding.fabInstall.updateLayoutParams<androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams> {
-            this.bottomMargin = extraBottom
-        }
     }
 
     override fun onPreBind(binding: FragmentModuleBinding) = Unit

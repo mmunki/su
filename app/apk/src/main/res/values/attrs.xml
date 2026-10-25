@@ -48,8 +48,17 @@
     <attr name="checked" format="boolean" />
     <attr name="onCheckedChanged" format="string" />
 
+    <attr name="miuixProgressStyle" format="enum">
+        <enum name="linear" value="0" />
+        <enum name="circular" value="1" />
+    </attr>
+
     <declare-styleable name="MiuixButton">
         <attr name="miuixButtonStyle" />
+    </declare-styleable>
+
+    <declare-styleable name="MiuixProgressBar">
+        <attr name="miuixProgressStyle" />
     </declare-styleable>
 
 </resources>
