@@ -8,8 +8,8 @@
         android:fillColor="#00000000"
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="2"
-        android:strokeLineCap="butt"
-        android:strokeLineJoin="miter"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
         android:pathData="M12,2.4 L20.4,5.4 V11.6 C20.4,16.8 16.8,20.5 12,21.6 C7.2,20.5 3.6,16.8 3.6,11.6 V5.4 Z" />
     <path
         android:fillColor="#FFFFFFFF"

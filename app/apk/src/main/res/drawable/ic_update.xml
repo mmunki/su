@@ -8,8 +8,8 @@
         android:fillColor="#00000000"
         android:strokeColor="#FFFFFFFF"
         android:strokeWidth="2.3"
-        android:strokeLineCap="butt"
-        android:strokeLineJoin="miter"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
         android:pathData="M18.92,15.38L18.16,16.62L17.18,17.69L16.02,18.57L14.71,19.21L13.31,19.59L11.86,19.7L10.41,19.53L9.02,19.1L7.74,18.41L6.61,17.5L5.67,16.38L4.96,15.11L4.5,13.73L4.31,12.29L4.39,10.84L4.74,9.42L5.36,8.11L6.21,6.92L7.27,5.93L8.5,5.14L9.85,4.61L11.28,4.33L12.73,4.33L14.16,4.61L15.51,5.15L16.74,5.93" />
     <path
         android:fillColor="#FFFFFFFF"

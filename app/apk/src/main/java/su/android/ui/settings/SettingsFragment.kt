@@ -1,21 +1,16 @@
 package su.android.ui.settings
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import su.android.R
 import su.android.arch.BaseFragment
 import su.android.arch.viewModel
 import su.android.databinding.FragmentSettingsBinding
 import su.android.databinding.ItemSettingsBinding
-import su.android.databinding.ItemSettingsCardBinding
 import su.android.R as CoreR
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
@@ -23,6 +18,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override val layoutRes = R.layout.fragment_settings
     override val viewModel by viewModel<SettingsViewModel>()
     override val snackbarView: View get() = binding.snackbarContainer
+
+    private val adapter = SettingsAdapter()
 
     override fun onStart() {
         super.onStart()
@@ -40,50 +37,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.settingsList.adapter = adapter
         populateCards()
     }
 
     private fun populateCards() {
-        val rootContainer = binding.settingsContainer
-        rootContainer.removeAllViews()
-
-        val cardMargin = resources.getDimensionPixelSize(R.dimen.l1)
-        val handler = viewModel as? BaseSettingsItem.Handler
-
-        viewModel.items.forEach { group ->
-            if (group is SettingsGroupItem.CardGroup) {
-                val cardBinding = DataBindingUtil.inflate<ItemSettingsCardBinding>(
-                    layoutInflater,
-                    R.layout.item_settings_card,
-                    rootContainer,
-                    false
-                )
-
-                group.children.forEach { childItem ->
-                    val itemBinding = DataBindingUtil.inflate<ItemSettingsBinding>(
-                        layoutInflater,
-                        R.layout.item_settings,
-                        cardBinding.cardContainer,
-                        false
-                    )
-
-                    itemBinding.item = childItem
-                    itemBinding.handler = handler
-                    itemBinding.lifecycleOwner = viewLifecycleOwner
-
-                    cardBinding.cardContainer.addView(itemBinding.root)
-                }
-
-                val lp = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(0, cardMargin / 2, 0, cardMargin / 2)
-                }
-
-                rootContainer.addView(cardBinding.root, lp)
-            }
-        }
+        val items = viewModel.items
+            .filterIsInstance<SettingsGroupItem.CardGroup>()
+            .flatMap { it.children }
+        adapter.submit(items)
     }
 
     override fun onResume() {
@@ -98,4 +60,43 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     override fun onPreBind(binding: FragmentSettingsBinding) = Unit
+
+    private inner class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.Holder>() {
+
+        private val items = mutableListOf<BaseSettingsItem>()
+        private val margin by lazy { resources.getDimensionPixelSize(R.dimen.l1) / 2 }
+
+        fun submit(newItems: List<BaseSettingsItem>) {
+            items.clear()
+            items.addAll(newItems)
+            notifyDataSetChanged()
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+            val binding = DataBindingUtil.inflate<ItemSettingsBinding>(
+                layoutInflater,
+                R.layout.item_settings,
+                parent,
+                false
+            )
+            return Holder(binding)
+        }
+
+        override fun getItemCount() = items.size
+
+        override fun onBindViewHolder(holder: Holder, position: Int) {
+            val item = items[position]
+            holder.binding.item = item
+            holder.binding.handler = viewModel as? BaseSettingsItem.Handler
+            holder.binding.lifecycleOwner = viewLifecycleOwner
+            holder.binding.executePendingBindings()
+
+            (holder.itemView.layoutParams as? RecyclerView.LayoutParams)?.apply {
+                setMargins(0, margin, 0, margin)
+            }
+        }
+
+        inner class Holder(val binding: ItemSettingsBinding) :
+            RecyclerView.ViewHolder(binding.root)
+    }
 }
