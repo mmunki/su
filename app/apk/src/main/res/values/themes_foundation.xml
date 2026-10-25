@@ -28,6 +28,12 @@
 
     <style name="ThemeFoundationBase.Miuix" parent="ThemeFoundationBase">
         <!-- Miuix / HyperOS light color roles -->
+        <item name="isLightTheme">true</item>
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#7A7A7E</item>
+        <item name="android:textColorTertiary">#7A7A7E</item>
+        <item name="android:textColorPrimaryInverse">#FFFFFF</item>
+        <item name="android:textColorHint">#7A7A7E</item>
         <item name="android:windowBackground">#F7F7F7</item>
         <item name="android:statusBarColor">#F7F7F7</item>
         <item name="android:navigationBarColor">#F7F7F7</item>
