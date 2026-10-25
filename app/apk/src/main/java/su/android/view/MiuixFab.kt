@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -18,10 +19,12 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import top.yukonga.miuix.kmp.basic.FloatingActionButton
 import top.yukonga.miuix.kmp.basic.Icon
-import top.yukonga.miuix.kmp.theme.LocalContentColor
+import top.yukonga.miuix.kmp.theme.MiuixTheme
+import kotlin.math.roundToInt
 
 /**
  * A Miuix floating action button that keeps the classic [android.widget.ImageButton]
@@ -54,12 +57,17 @@ open class MiuixFab @JvmOverloads constructor(
                     onClick = { performClick() },
                     modifier = Modifier.size(56.dp),
                 ) {
-                    if (iconRes != 0 || iconPainter != null) {
+                    val resourcePainter = remember(iconRes) {
+                        if (iconRes == 0) null
+                        else runCatching { loadDrawablePainter(iconRes) }.getOrNull()
+                    }
+                    val icon = iconPainter ?: resourcePainter
+                    if (icon != null) {
                         Icon(
-                            painter = iconPainter ?: androidx.compose.ui.res.painterResource(iconRes),
+                            painter = icon,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = LocalContentColor.current,
+                            tint = MiuixTheme.colorScheme.onPrimary,
                         )
                     }
                 }
@@ -86,4 +94,10 @@ open class MiuixFab @JvmOverloads constructor(
 
     private fun handleTouch(view: View, event: MotionEvent): Boolean =
         touchListener?.onTouch(view, event) ?: false
+
+    private fun loadDrawablePainter(res: Int): Painter? {
+        val drawable = AppCompatResources.getDrawable(context, res) ?: return null
+        val size = (24 * resources.displayMetrics.density).roundToInt().coerceAtLeast(1)
+        return BitmapPainter(drawable.toBitmap(size, size).asImageBitmap())
+    }
 }

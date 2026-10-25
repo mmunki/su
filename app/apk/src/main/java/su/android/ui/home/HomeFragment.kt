@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import su.android.R
 import su.android.arch.BaseFragment
 import su.android.arch.viewModel
-import su.android.core.Info
 import su.android.core.download.DownloadEngine
 import su.android.databinding.FragmentHomeBinding
 import su.android.R as CoreR
@@ -50,13 +48,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
         with(binding.homeManagerWrapper) {
             checkTitle(homeManagerTitle, homeManagerIcon)
-        }
-
-        // The reboot entry lives on the home screen, next to the other system actions,
-        // instead of taking room in the action bar.
-        with(binding.homeReboot) {
-            isVisible = Info.isRooted
-            setOnClickListener { RebootMenu.inflate(requireActivity(), this).show() }
         }
 
         return binding.root

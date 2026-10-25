@@ -12,19 +12,23 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.ComposeView
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
@@ -33,6 +37,7 @@ import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.theme.LocalContentColor
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import su.android.R
+import kotlin.math.roundToInt
 
 /**
  * A Miuix styled button that keeps the classic [android.widget.Button] workflow used by
@@ -49,6 +54,7 @@ class MiuixButton @JvmOverloads constructor(
     private var iconPainter by mutableStateOf<Painter?>(null)
     private var enabledState by mutableStateOf(true)
     private var selectedState by mutableStateOf(false)
+    private var textSizeSp by mutableStateOf(0f)
 
     private var textColors: ColorStateList? = null
     private var textColorDefault = 0
@@ -73,6 +79,11 @@ class MiuixButton @JvmOverloads constructor(
         val styled = context.obtainStyledAttributes(attrs, R.styleable.MiuixButton)
         style = styled.getInt(R.styleable.MiuixButton_miuixButtonStyle, STYLE_FILLED)
         styled.recycle()
+
+        val size = context.obtainStyledAttributes(attrs, intArrayOf(android.R.attr.textSize))
+        val scaledDensity = resources.displayMetrics.density * resources.configuration.fontScale
+        textSizeSp = if (scaledDensity > 0f) size.getDimension(0, 0f) / scaledDensity else 0f
+        size.recycle()
 
         attrs?.getAttributeValue(ANDROID_NS, "textColor")?.let { _ ->
             val color = context.obtainStyledAttributes(attrs, intArrayOf(android.R.attr.textColor))
@@ -113,13 +124,23 @@ class MiuixButton @JvmOverloads constructor(
                     modifier = modifier,
                     enabled = enabledState,
                     colors = colors,
+                    insideMargin = if (style == STYLE_TEXT) {
+                        PaddingValues(horizontal = 6.dp, vertical = 4.dp)
+                    } else {
+                        ButtonDefaults.InsideMargin
+                    },
                 ) {
-                    if (iconRes != 0 || iconPainter != null) {
+                    val resourcePainter = remember(iconRes, selectedState, enabledState) {
+                        if (iconRes == 0) null
+                        else runCatching { loadDrawablePainter(iconRes) }.getOrNull()
+                    }
+                    val icon = iconPainter ?: resourcePainter
+                    if (icon != null) {
                         Icon(
-                            painter = iconPainter ?: painterResource(iconRes),
+                            painter = icon,
                             contentDescription = null,
                             modifier = Modifier
-                                .padding(end = 6.dp)
+                                .padding(end = 4.dp)
                                 .size(18.dp),
                             tint = LocalContentColor.current,
                         )
@@ -127,6 +148,7 @@ class MiuixButton @JvmOverloads constructor(
                     Text(
                         text = label,
                         style = MiuixTheme.textStyles.button,
+                        fontSize = if (textSizeSp > 0f) textSizeSp.sp else TextUnit.Unspecified,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -179,6 +201,18 @@ class MiuixButton @JvmOverloads constructor(
         if (selectedState) android.R.attr.state_selected else -android.R.attr.state_selected,
         if (enabledState) android.R.attr.state_enabled else -android.R.attr.state_enabled,
     )
+
+    /**
+     * Material/Miuix painters only understand vector or raster resources. The app also
+     * uses state-list drawables (for example the log icon), so resolve the drawable with
+     * the platform and hand Compose a bitmap instead of letting painterResource throw.
+     */
+    private fun loadDrawablePainter(res: Int): Painter? {
+        val drawable = AppCompatResources.getDrawable(context, res)?.mutate() ?: return null
+        drawable.state = currentState()
+        val size = (24 * resources.displayMetrics.density).roundToInt().coerceAtLeast(1)
+        return BitmapPainter(drawable.toBitmap(size, size).asImageBitmap())
+    }
 
     companion object {
         const val STYLE_FILLED = 0

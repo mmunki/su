@@ -3,6 +3,7 @@ package su.android.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +29,7 @@ fun MiuixShellTopBar(
     title: String,
     backEnabled: Boolean,
     onBack: () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     SmallTopAppBar(
         title = title,
@@ -39,6 +41,7 @@ fun MiuixShellTopBar(
                 }
             }
         },
+        actions = actions,
         defaultWindowInsetsPadding = false,
     )
 }

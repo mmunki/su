@@ -24,7 +24,10 @@ import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Home
 import top.yukonga.miuix.kmp.icon.extended.Layers
 import top.yukonga.miuix.kmp.icon.extended.Lock
+import top.yukonga.miuix.kmp.icon.extended.RotateLeft
 import top.yukonga.miuix.kmp.icon.extended.Settings
+import top.yukonga.miuix.kmp.basic.Icon
+import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.theme.ColorSchemeMode
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.theme.ThemeController
@@ -43,6 +46,7 @@ import su.android.core.ktx.toast
 import su.android.core.model.module.LocalModule
 import su.android.core.tasks.AppMigration
 import su.android.databinding.ActivityMainBinding
+import su.android.ui.home.RebootMenu
 import su.android.ui.theme.Theme
 import su.android.view.MaterialDialog
 import su.android.view.Shortcuts
@@ -124,6 +128,23 @@ class MainActivity : NavigationActivity<ActivityMainBinding>(), SplashScreenHost
                     title = screenTitle,
                     backEnabled = backEnabled,
                     onBack = { onBackPressed() },
+                    actions = {
+                        if (!backEnabled && selectedTab == R.id.homeFragment && Info.isRooted) {
+                            IconButton(
+                                onClick = {
+                                    RebootMenu.inflate(
+                                        this@MainActivity,
+                                        binding.mainToolbarWrapper
+                                    ).show()
+                                }
+                            ) {
+                                Icon(
+                                    MiuixIcons.RotateLeft,
+                                    contentDescription = getString(CoreR.string.reboot),
+                                )
+                            }
+                        }
+                    },
                 )
             }
         }
