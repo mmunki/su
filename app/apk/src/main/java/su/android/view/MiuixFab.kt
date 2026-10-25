@@ -52,7 +52,7 @@ open class MiuixFab @JvmOverloads constructor(
             MiuixControlTheme {
                 FloatingActionButton(
                     onClick = { performClick() },
-                    modifier = Modifier.size(56.dp),
+                    modifier = Modifier.size(60.dp),
                 ) {
                     val resourcePainter = remember(iconRes) {
                         if (iconRes == 0) null

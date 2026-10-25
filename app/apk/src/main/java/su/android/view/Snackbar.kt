@@ -1,55 +1,55 @@
 package su.android.view
 
-import android.os.Handler
-import android.os.Looper
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.isVisible
 import su.android.R
+import top.yukonga.miuix.kmp.basic.SnackbarDuration
+import top.yukonga.miuix.kmp.basic.SnackbarHost
+import top.yukonga.miuix.kmp.basic.SnackbarHostState
+import top.yukonga.miuix.kmp.basic.SnackbarResult
 
 /**
- * Drop in replacement for the old Material snackbar, using a plain, square Holo
- * styled bar that is attached to the closest [FrameLayout] or
- * [CoordinatorLayout] above the given view.
+ * Miuix snackbar. The old implementation inflated a fixed dark Holo bar, so it
+ * ignored the light theme and did not look like the rest of the app. This
+ * implementation hosts the official Miuix [SnackbarHost] in a small
+ * [ComposeView] and keeps the same builder API the activities already use.
  */
 class Snackbar private constructor(
     private val parent: ViewGroup,
-    private val layout: View,
-    private val duration: Int
+    private val duration: Int,
+    initialMessage: CharSequence,
 ) {
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val dismissRunnable = Runnable { dismiss() }
+    private val message = mutableStateOf(initialMessage)
+    private val actionText = mutableStateOf<CharSequence?>(null)
+    private var actionListener: View.OnClickListener? = null
 
+    private val composeView = ComposeView(parent.context)
     private var anchor: View? = null
     private var isShown = false
 
-    private val text: TextView get() = layout.findViewById(R.id.snackbar_text)
-    private val action: MiuixButton get() = layout.findViewById(R.id.snackbar_action)
-
     fun setText(message: CharSequence): Snackbar {
-        text.text = message
+        this.message.value = message
         return this
     }
 
     fun setAction(text: CharSequence?, listener: View.OnClickListener?): Snackbar {
-        val actionView = action
-        if (text == null) {
-            actionView.isVisible = false
-        } else {
-            actionView.setText(text)
-            actionView.isVisible = true
-            actionView.setOnClickListener {
-                listener?.onClick(it)
-                dismiss()
-            }
-        }
+        actionText.value = text
+        actionListener = listener
         return this
     }
 
@@ -62,35 +62,53 @@ class Snackbar private constructor(
         if (isShown) return this
         isShown = true
 
-        parent.addView(layout, createLayoutParams())
-        layout.alpha = 0f
-        layout.translationY = layout.resources.displayMetrics.density * 16
-        layout.animate()
-            .alpha(1f)
-            .translationY(0f)
-            .setDuration(ANIMATION_DURATION)
-            .start()
+        composeView.setContent {
+            MiuixControlTheme {
+                val hostState = remember { SnackbarHostState() }
+                val currentMessage by message
+                val currentAction by actionText
 
-        if (duration != LENGTH_INDEFINITE) {
-            handler.postDelayed(dismissRunnable, if (duration == LENGTH_LONG) 3500L else 2000L)
+                LaunchedEffect(currentMessage, currentAction) {
+                    val result = hostState.showSnackbar(
+                        message = currentMessage.toString(),
+                        actionLabel = currentAction?.toString(),
+                        duration = when (duration) {
+                            LENGTH_LONG -> SnackbarDuration.Long
+                            LENGTH_INDEFINITE -> SnackbarDuration.Indefinite
+                            else -> SnackbarDuration.Short
+                        },
+                    )
+                    if (result == SnackbarResult.ActionPerformed) {
+                        actionListener?.onClick(composeView)
+                    }
+                    parent.post { dismiss() }
+                }
+
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.BottomCenter,
+                ) {
+                    SnackbarHost(
+                        state = hostState,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            }
         }
+
+        parent.addView(composeView, createLayoutParams())
         return this
     }
 
     fun dismiss() {
-        handler.removeCallbacks(dismissRunnable)
         if (!isShown) return
         isShown = false
-        layout.animate()
-            .alpha(0f)
-            .setDuration(ANIMATION_DURATION)
-            .withEndAction { parent.removeView(layout) }
-            .start()
+        parent.removeView(composeView)
     }
 
     private fun createLayoutParams(): ViewGroup.LayoutParams {
-        val margin = layout.resources.getDimensionPixelSize(R.dimen.l1)
-        val bottom = anchor?.let { anchorTop() + it.height } ?: 0
+        val margin = composeView.resources.getDimensionPixelSize(R.dimen.l1)
+        val bottom = anchor?.let { anchorTop(it) } ?: 0
 
         val params: ViewGroup.MarginLayoutParams = when (parent) {
             is CoordinatorLayout ->
@@ -113,17 +131,16 @@ class Snackbar private constructor(
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         }
-        params.setMargins(margin, 0, margin, bottom + margin)
+        params.setMargins(0, 0, 0, bottom + margin)
         return params
     }
 
-    private fun anchorTop(): Int {
-        val anchor = anchor ?: return 0
+    private fun anchorTop(anchor: View): Int {
         val parentLocation = IntArray(2)
         val anchorLocation = IntArray(2)
         parent.getLocationOnScreen(parentLocation)
         anchor.getLocationOnScreen(anchorLocation)
-        return parentLocation[1] + parent.height - anchorLocation[1] - anchor.height
+        return parentLocation[1] + parent.height - anchorLocation[1]
     }
 
     companion object {
@@ -132,15 +149,10 @@ class Snackbar private constructor(
         const val LENGTH_LONG = 1
         const val LENGTH_INDEFINITE = 2
 
-        private const val ANIMATION_DURATION = 180L
-
         @JvmStatic
         fun make(view: View, message: CharSequence, duration: Int): Snackbar {
             val parent = findParent(view)
-            val layout = LayoutInflater.from(parent.context)
-                .inflate(R.layout.snackbar, parent, false)
-                .also { it.findViewById<TextView>(R.id.snackbar_text).text = message }
-            return Snackbar(parent, layout, duration)
+            return Snackbar(parent, duration, message)
         }
 
         /** Walks up the hierarchy looking for a container that can host an overlay. */

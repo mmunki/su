@@ -28,7 +28,7 @@
             tools:listitem="@layout/item_log_access"
             tools:paddingTop="24dp" />
 
-        <ProgressBar
+        <su.android.view.MiuixProgressBar
             style="@style/WidgetFoundation.ProgressBar.Indeterminate"
             goneUnless="@{viewModel.loading}"
             android:layout_marginTop="@dimen/l1" />

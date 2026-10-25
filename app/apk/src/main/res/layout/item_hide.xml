@@ -83,11 +83,9 @@
                 <su.android.view.IndeterminateCheckBox
                     android:id="@+id/hide_expand_icon"
                     state="@={item.state}"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/l1"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
                     android:nextFocusLeft="@id/hide_expand"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +107,7 @@
 
         </LinearLayout>
 
-        <ProgressBar
+        <su.android.view.MiuixProgressBar
             style="@style/WidgetFoundation.ProgressBar"
             gone="@{item.checkedPercent == 0}"
             android:layout_width="match_parent"

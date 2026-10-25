@@ -57,7 +57,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_app_detail_info" />
 
-            <ProgressBar
+            <su.android.view.MiuixProgressBar
                 style="@style/WidgetFoundation.ProgressBar.Circular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

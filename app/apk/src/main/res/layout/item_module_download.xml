@@ -22,7 +22,7 @@
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="128dp">
+        android:paddingBottom="16dp">
 
         <su.android.view.MiuixFab
             style="@style/WidgetFoundation.Fab"

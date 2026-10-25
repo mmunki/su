@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:layout_marginBottom="128dp"
+            android:layout_marginBottom="16dp"
             android:contentDescription="@string/menu_install_module"
             android:elevation="0dp"
             android:onClick="@{() -> viewModel.installPressed()}"
@@ -63,7 +63,7 @@
                 
                 android:textStyle="bold" />
 
-            <ProgressBar
+            <su.android.view.MiuixProgressBar
                 style="@style/WidgetFoundation.ProgressBar.Circular"
                 goneUnless="@{viewModel.loading}"
                 android:layout_width="wrap_content"
