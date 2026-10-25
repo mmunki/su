@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.V23.ThemeOverlay.Foundation.Dialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowMinWidthMajor">@dimen/abc_dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@dimen/abc_dialog_min_width_minor</item>
+
+        <!-- Miuix dialog surface (dark) -->
+        <item name="android:colorBackground">#1C1C1E</item>
+        <item name="colorSurface">#1C1C1E</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+        <item name="colorSurfaceSurfaceVariant">#1C1C1E</item>
+        <item name="colorTextSecondary">#8E8E93</item>
+        <item name="colorPrimary">#3482FF</item>
+        <item name="colorSecondary">#3482FF</item>
+        <item name="colorAccent">#3482FF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#8E8E93</item>
+    </style>
+
+</resources>

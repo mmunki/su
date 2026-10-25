@@ -4,6 +4,7 @@ plugins {
     id("com.android.legacy-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("dev.zacsweers.moshix")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 setupMainApk()
@@ -23,6 +24,7 @@ android {
         dataBinding = true
         aidl = true
         buildConfig = true
+        compose = true
     }
 
     compileOptions {
@@ -75,6 +77,9 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.core.ktx)
     implementation(libs.activity)
+    implementation(libs.activity.compose)
+    implementation(libs.miuix.ui)
+    implementation(libs.miuix.icons)
     implementation(libs.collection.ktx)
     implementation(libs.profileinstaller)
     implementation(libs.coordinatorlayout)
@@ -95,14 +100,16 @@ dependencies {
     implementation(libs.fragment.ktx)
     implementation(libs.appcompat)
 
-    // Make sure kapt runs with a proper kotlin-stdlib
+    // Make sure kapt runs with a proper kotlin-stdlib and metadata reader
     kapt(kotlin("stdlib"))
+    kapt("org.jetbrains.kotlin:kotlin-metadata-jvm:${libs.versions.kotlin.get()}")
 }
 
 // The app is built purely on AndroidX/AppCompat: the Google Material library is
 // neither used nor wanted, not even as a transitive dependency.
 configurations.configureEach {
     exclude(group = "com.google.android.material", module = "material")
+    resolutionStrategy.force("org.jetbrains.kotlin:kotlin-metadata-jvm:${libs.versions.kotlin.get()}")
 }
 
 tasks.matching { it.name.contains("JniLibs") }.configureEach {

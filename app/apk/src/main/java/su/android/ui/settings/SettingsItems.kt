@@ -2,6 +2,7 @@ package su.android.ui.settings
 
 import android.content.Context
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import android.view.LayoutInflater
 import androidx.databinding.Bindable
 import su.android.BR
@@ -21,6 +22,16 @@ sealed class SettingsGroupItem : BaseSettingsItem() {
         val categoryTitle: CharSequence? = null,
         val children: List<BaseSettingsItem>
     ) : SettingsGroupItem()
+}
+
+object ThemeMode : BaseSettingsItem.Blank() {
+    override val icon: Int? = R.drawable.ic_day_night
+    override val title = CoreR.string.settings_dark_mode_title.asText()
+    override val description get() = when (Config.darkTheme) {
+        AppCompatDelegate.MODE_NIGHT_NO -> CoreR.string.settings_dark_mode_light.asText()
+        AppCompatDelegate.MODE_NIGHT_YES -> CoreR.string.settings_dark_mode_dark.asText()
+        else -> CoreR.string.settings_dark_mode_system.asText()
+    }
 }
 
 object DownloadPath : BaseSettingsItem.Input() {

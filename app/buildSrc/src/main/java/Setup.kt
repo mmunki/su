@@ -45,16 +45,16 @@ internal fun Project.androidAppComponents(configure: Action<ApplicationAndroidCo
 fun Project.setupCommon() {
     android {
         compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
+            version = release(37) {
+                minorApiLevel = 0
             }
         }
-        buildToolsVersion = "36.1.0"
+        buildToolsVersion = "37.0.0"
         ndkPath = "${androidComponents.sdkComponents.sdkDirectory.get().asFile}/ndk/magisk"
         ndkVersion = "29.0.14206865"
 
         defaultConfig.apply {
-            minSdk = 23
+            minSdk = 24
         }
 
         compileOptions.apply {
