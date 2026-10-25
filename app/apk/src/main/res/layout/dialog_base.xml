@@ -72,7 +72,7 @@
             android:paddingEnd="@dimen/l_50"
             android:paddingBottom="@dimen/l_50">
 
-            <Button
+            <su.android.view.MiuixButton
                 gone="@{data.buttonNegative.gone}"
                 enabled="@{data.buttonNegative.enabled}"
                 style="@style/WidgetFoundation.Button.Text"
@@ -83,7 +83,7 @@
                 android:text="@{data.buttonNegative.message}"
                 tools:text="@android:string/cancel" />
 
-            <Button
+            <su.android.view.MiuixButton
                 gone="@{data.buttonNeutral.gone}"
                 enabled="@{data.buttonNeutral.enabled}"
                 style="@style/WidgetFoundation.Button.Text"
@@ -94,7 +94,7 @@
                 android:text="@{data.buttonNeutral.message}"
                 tools:text="@android:string/ok" />
 
-            <Button
+            <su.android.view.MiuixButton
                 gone="@{data.buttonPositive.gone}"
                 enabled="@{data.buttonPositive.enabled}"
                 style="@style/WidgetFoundation.Button"

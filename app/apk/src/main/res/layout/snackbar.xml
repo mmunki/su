@@ -19,7 +19,7 @@
         android:textAppearance="@style/AppearanceFoundation.Body"
         android:textColor="?colorOnSurface" />
 
-    <Button
+    <su.android.view.MiuixButton
         android:id="@+id/snackbar_action"
         style="@style/WidgetFoundation.Button.Text"
         android:layout_width="wrap_content"

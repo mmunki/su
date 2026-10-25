@@ -45,7 +45,7 @@
             android:contentDescription="@string/menu_install_module"
             android:elevation="0dp"
             android:onClick="@{() -> viewModel.installPressed()}"
-            app:srcCompat="@drawable/ic_add" />
+            android:src="@drawable/ic_add" />
 
         <LinearLayout
             android:layout_width="match_parent"

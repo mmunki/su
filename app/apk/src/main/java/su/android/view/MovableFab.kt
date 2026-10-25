@@ -6,10 +6,9 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
-import androidx.appcompat.widget.AppCompatImageButton
 
 /**
- * An [AppCompatImageButton] that can be dragged anywhere inside its parent.
+ * A [MiuixFab] that can be dragged anywhere inside its parent.
  *
  * A simple tap is still dispatched as a regular click, only touch sequences
  * that move further than the touch slop turn into a drag.
@@ -17,8 +16,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 class MovableFab @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = android.R.attr.imageButtonStyle
-) : AppCompatImageButton(context, attrs, defStyleAttr) {
+) : MiuixFab(context, attrs) {
 
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     private val edgeMargin = (resources.displayMetrics.density * 8).toInt()

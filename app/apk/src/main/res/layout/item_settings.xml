@@ -73,15 +73,15 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.SwitchCompat
+            <su.android.view.MiuixSwitch
                 android:id="@+id/selector_indicator"
                 goneUnless="@{item.showSwitch}"
                 isEnabled="@{item.enabled}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="@{item.checked}"
+                app:checked="@{item.checked}"
                 android:focusable="@{item.enabled}"
-                android:onCheckedChanged="@{(v, c) -> item.onToggle(v, handler, c)}" />
+                app:onCheckedChanged="@{(v, c) -> item.onToggle(v, handler, c)}" />
 
         </LinearLayout>
 

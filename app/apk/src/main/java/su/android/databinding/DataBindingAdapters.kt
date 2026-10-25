@@ -9,7 +9,6 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.SeekBar
@@ -37,6 +36,8 @@ import su.android.core.di.ServiceLocator
 import su.android.core.model.policy.Policy
 import su.android.utils.TextHolder
 import su.android.view.IndeterminateCheckBox
+import su.android.view.MiuixButton
+import su.android.view.MiuixSwitch
 import com.topjohnwu.superuser.internal.UiThreadHandler
 import kotlin.math.roundToInt
 
@@ -76,7 +77,7 @@ fun setImageResource(view: ImageView, @DrawableRes resId: Int) {
 }
 
 @BindingAdapter("srcCompat")
-fun setImageResource(view: ImageView, drawable: Drawable) {
+fun setImageResource(view: ImageView, drawable: Drawable?) {
     view.setImageDrawable(drawable)
 }
 
@@ -323,4 +324,47 @@ fun seekBarProgressToPolicy(progress: Int): Int {
         3 -> Policy.ALLOW
         else -> Policy.DENY
     }
+}
+
+@BindingAdapter("checked")
+fun MiuixSwitch.setCheckedBinding(checked: Boolean) {
+    setChecked(checked)
+}
+
+@InverseBindingAdapter(attribute = "checked")
+fun MiuixSwitch.getCheckedBinding(): Boolean = isChecked
+
+@BindingAdapter("checkedAttrChanged")
+fun MiuixSwitch.setCheckedAttrChanged(listener: InverseBindingListener) {
+    setOnCheckedChangeListener { _, _ -> listener.onChange() }
+}
+
+@BindingAdapter("onCheckedChanged")
+fun MiuixSwitch.setOnCheckedChanged(listener: MiuixSwitch.OnCheckedChangeListener?) {
+    setOnCheckedChangeListener(listener)
+}
+
+@BindingAdapter("icon")
+fun MiuixButton.setIconRes(@DrawableRes res: Int) {
+    setIconResource(res)
+}
+
+@BindingAdapter("icon")
+fun MiuixButton.setIconDrawable(drawable: Drawable?) {
+    setIconDrawable(drawable)
+}
+
+@BindingAdapter("android:text")
+fun MiuixButton.setTextSafe(text: Int) {
+    setText(text)
+}
+
+@BindingAdapter("android:text")
+fun MiuixButton.setTextValue(text: CharSequence?) {
+    setText(text)
+}
+
+@BindingAdapter("android:text")
+fun MiuixButton.setTextHolder(text: TextHolder) {
+    setText(text.getText(context.resources))
 }

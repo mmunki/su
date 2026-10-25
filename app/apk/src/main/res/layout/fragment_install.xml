@@ -64,7 +64,7 @@
                             android:text="@string/install_options_title"
                             android:textStyle="bold" />
 
-                        <Button
+                        <su.android.view.MiuixButton
                             style="@style/WidgetFoundation.Button.Text"
                             gone="@{viewModel.step != 0}"
                             android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                             android:text="@string/install_method_title"
                             android:textStyle="bold" />
 
-                        <Button
+                        <su.android.view.MiuixButton
                             style="@style/WidgetFoundation.Button.Text"
                             gone="@{viewModel.step != 1}"
                             isEnabled="@{viewModel.method == @id/method_patch ? viewModel.data != null : viewModel.method != -1}"

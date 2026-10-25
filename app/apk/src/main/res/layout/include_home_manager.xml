@@ -60,7 +60,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/home_manager_title"
                 app:layout_constraintTop_toTopOf="@+id/home_manager_title">
 
-                <Button
+                <su.android.view.MiuixButton
                     style="@style/WidgetFoundation.Button"
                     gone="@{viewModel.appState != State.OUTDATED}"
                     android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                     android:layout_gravity="end"
                     android:drawableStart="@drawable/ic_update" />
 
-                <Button
+                <su.android.view.MiuixButton
                     style="@style/WidgetFoundation.Button.Text"
                     gone="@{viewModel.appState != State.UP_TO_DATE}"
                     android:layout_width="wrap_content"
