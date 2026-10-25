@@ -6,7 +6,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -32,7 +31,7 @@ class Snackbar private constructor(
     private var isShown = false
 
     private val text: TextView get() = layout.findViewById(R.id.snackbar_text)
-    private val action: Button get() = layout.findViewById(R.id.snackbar_action)
+    private val action: MiuixButton get() = layout.findViewById(R.id.snackbar_action)
 
     fun setText(message: CharSequence): Snackbar {
         text.text = message
@@ -44,7 +43,7 @@ class Snackbar private constructor(
         if (text == null) {
             actionView.isVisible = false
         } else {
-            actionView.text = text
+            actionView.setText(text)
             actionView.isVisible = true
             actionView.setOnClickListener {
                 listener?.onClick(it)

@@ -89,12 +89,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/module_title"
                     tools:text="@tools:sample/lorem" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <su.android.view.MiuixSwitch
                     android:id="@+id/module_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/l_50"
-                    android:checked="@={item.enabled}"
+                    app:checked="@={item.enabled}"
                     android:nextFocusLeft="@id/module"
                     app:layout_constraintBottom_toBottomOf="@+id/module_version_author"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +128,7 @@
                     android:background="?colorSurfaceSurfaceVariant"
                     app:layout_constraintTop_toBottomOf="@+id/module_description" />
 
-                <Button
+                <su.android.view.MiuixButton
                     android:id="@+id/module_update"
                     style="@style/WidgetFoundation.Button.Text"
                     goneUnless="@{item.showUpdate}"
@@ -143,10 +143,9 @@
                     android:drawableStart="@drawable/ic_update"
                     app:layout_constraintBottom_toBottomOf="@+id/module_remove"
                     app:layout_constraintEnd_toStartOf="@+id/module_remove"
-                    app:layout_constraintTop_toTopOf="@+id/module_remove"
-                    app:srcCompat="@drawable/ic_download" />
+                    app:layout_constraintTop_toTopOf="@+id/module_remove" />
 
-                <Button
+                <su.android.view.MiuixButton
                     android:id="@+id/module_remove"
                     style="@style/WidgetFoundation.Button.Text"
                     android:layout_width="wrap_content"
@@ -157,7 +156,7 @@
                     android:onClick="@{() -> item.delete()}"
                     android:text="@{item.removed ? @string/module_state_restore : @string/module_state_remove}"
                     android:textAllCaps="false"
-                    android:theme="@style/ThemeOverlay.Button.Text.Secondary"
+                    android:textColor="?colorTextSecondary"
                     app:icon="@{item.removed ? @drawable/ic_restart : @drawable/ic_delete}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/module_divider"
@@ -190,7 +189,7 @@
                     tools:text="@tools:sample/lorem/random"
                     tools:visibility="visible" />
 
-                <Button
+                <su.android.view.MiuixButton
                     android:id="@+id/module_config"
                     style="@style/WidgetFoundation.Button.Text"
                     goneUnless="@{item.showAction}"
@@ -206,8 +205,7 @@
                     android:drawableStart="@drawable/ic_action"
                     app:layout_constraintBottom_toBottomOf="@+id/module_remove"
                     app:layout_constraintTop_toTopOf="@+id/module_remove"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/ic_download" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

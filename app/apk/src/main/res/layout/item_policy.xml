@@ -110,11 +110,11 @@
                             android:textStyle="bold"
                             tools:text="@string/deny" />
 
-                        <androidx.appcompat.widget.SwitchCompat
+                        <su.android.view.MiuixSwitch
                             gone="@{item.showSlider}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="@={item.enabled}" />
+                            app:checked="@={item.enabled}" />
 
                         <SeekBar
                             goneUnless="@{item.showSlider}"
@@ -135,7 +135,7 @@
                     android:orientation="horizontal"
                     tools:visibility="visible">
 
-                    <Button
+                    <su.android.view.MiuixButton
                         android:id="@+id/policy_notify"
                         style="@style/WidgetFoundation.Button.Text"
                         isSelected="@{item.shouldNotify}"
@@ -159,7 +159,7 @@
                         android:layout_marginBottom="@dimen/l_50"
                         android:background="?colorSurfaceSurfaceVariant" />
 
-                    <Button
+                    <su.android.view.MiuixButton
                         android:id="@+id/policy_log"
                         style="@style/WidgetFoundation.Button.Text"
                         isSelected="@{item.shouldLog}"
@@ -183,7 +183,7 @@
                         android:layout_marginBottom="@dimen/l_50"
                         android:background="?colorSurfaceSurfaceVariant" />
 
-                    <Button
+                    <su.android.view.MiuixButton
                         android:id="@+id/policy_delete"
                         style="@style/WidgetFoundation.Button.Text"
                         android:layout_width="0dp"

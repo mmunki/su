@@ -39,4 +39,17 @@
 
     <!--endregion-->
 
+    <attr name="miuixButtonStyle" format="enum">
+        <enum name="filled" value="0" />
+        <enum name="text" value="1" />
+        <enum name="outlined" value="2" />
+    </attr>
+
+    <attr name="checked" format="boolean" />
+    <attr name="onCheckedChanged" format="string" />
+
+    <declare-styleable name="MiuixButton">
+        <attr name="miuixButtonStyle" />
+    </declare-styleable>
+
 </resources>

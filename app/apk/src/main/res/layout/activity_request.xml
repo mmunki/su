@@ -125,7 +125,7 @@
                 android:paddingStart="@dimen/l2"
                 android:paddingEnd="@dimen/l2">
 
-                <Button
+                <su.android.view.MiuixButton
                     android:id="@+id/deny_btn"
                     style="@style/WidgetFoundation.Button.Text"
                     android:layout_width="0dp"
@@ -136,7 +136,7 @@
                     android:textColor="?colorTextSecondary"
                     tools:text="@string/deny" />
 
-                <Button
+                <su.android.view.MiuixButton
                     android:id="@+id/grant_btn"
                     style="@style/WidgetFoundation.Button.Text"
                     onTouch="@{viewModel.grantTouchListener}"

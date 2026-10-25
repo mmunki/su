@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <ImageButton
+        <su.android.view.MiuixFab
             gone="@{viewModel.loading}"
             android:id="@+id/log_filter_toggle"
             style="@style/WidgetFoundation.Fab"
@@ -32,10 +32,8 @@
             android:layout_marginStart="@dimen/l1"
             android:layout_marginEnd="@dimen/l1"
             android:layout_marginBottom="72dp"
-            android:backgroundTint="?colorSurfaceSurfaceVariant"
             app:layout_fitsSystemWindowsInsets="bottom"
-            app:srcCompat="@drawable/ic_folder_list"
-            app:tint="?colorPrimary"
+            android:src="@drawable/ic_folder_list"
             tools:layout_marginBottom="64dp" />
 
         <FrameLayout

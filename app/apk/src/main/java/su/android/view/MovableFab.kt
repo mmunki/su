@@ -1,15 +1,13 @@
 package su.android.view
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
-import androidx.appcompat.widget.AppCompatImageButton
 
 /**
- * An [AppCompatImageButton] that can be dragged anywhere inside its parent.
+ * A [MiuixFab] that can be dragged anywhere inside its parent.
  *
  * A simple tap is still dispatched as a regular click, only touch sequences
  * that move further than the touch slop turn into a drag.
@@ -17,8 +15,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 class MovableFab @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = android.R.attr.imageButtonStyle
-) : AppCompatImageButton(context, attrs, defStyleAttr) {
+) : MiuixFab(context, attrs) {
 
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     private val edgeMargin = (resources.displayMetrics.density * 8).toInt()
@@ -29,12 +26,7 @@ class MovableFab @JvmOverloads constructor(
     private var downTranslationY = 0f
     private var dragging = false
 
-    init {
-        setOnTouchListener { _, event -> onFabTouch(event) }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private fun onFabTouch(event: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 downRawX = event.rawX
@@ -50,10 +42,21 @@ class MovableFab @JvmOverloads constructor(
                 if (!dragging && (dx * dx + dy * dy) > (touchSlop * touchSlop)) {
                     dragging = true
                     isPressed = false
+                    return true
                 }
+            }
+
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> dragging = false
+        }
+        return false
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_MOVE -> {
                 if (dragging) {
-                    translationX = clampX(downTranslationX + dx)
-                    translationY = clampY(downTranslationY + dy)
+                    translationX = clampX(downTranslationX + event.rawX - downRawX)
+                    translationY = clampY(downTranslationY + event.rawY - downRawY)
                     return true
                 }
             }
@@ -67,7 +70,7 @@ class MovableFab @JvmOverloads constructor(
                 }
             }
         }
-        return false
+        return super.onTouchEvent(event)
     }
 
     /** Minimum translation along X keeping the button inside its parent. */
