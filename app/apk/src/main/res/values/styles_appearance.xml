@@ -24,6 +24,12 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
+    <style name="AppearanceFoundation.ToolbarTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--endregion-->
 
     <!--region Body-->
