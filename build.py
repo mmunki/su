@@ -65,6 +65,8 @@ cpu_count = multiprocessing.cpu_count()
 support_abis = {
     "armeabi-v7a": "thumbv7neon-linux-androideabi",
     "arm64-v8a": "aarch64-linux-android",
+    "x86": "i686-linux-android",
+    "x86_64": "x86_64-linux-android",
     "riscv64": "riscv64-linux-android",
 }
 abi_alias = {
